@@ -33,12 +33,12 @@ Feature: Question answer feedback
     And I answer "<answer>"
     Then I see feedback "<feedback>"
     Examples:
-      | answer                    | feedback   |
-      | Mars, Venus               | Correct!   |
-      | Mars, Venus, Titan        | Incorrect! |
-      | Mars, Pluto               | Incorrect! |
-      | Mars, Pluto, Venus, Titan | Incorrect! |
-      | Pluto, Titan              | Incorrect! |
+      | answer                    | feedback           |
+      | Mars, Venus               | Correct!           |
+      | Mars, Venus, Titan        | Partially correct! |
+      | Mars, Pluto               | Incorrect!         |
+      | Mars, Pluto, Venus, Titan | Incorrect!         |
+      | Pluto, Titan              | Incorrect!         |
 
   Scenario Outline: Multiple choice question per-answer feedback
     Upon submitting the question, each answer is marked with a color:

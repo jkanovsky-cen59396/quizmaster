@@ -57,12 +57,6 @@ export const enterImageUrl = async (world: QuizmasterWorld, imageUrl: string) =>
     world.questionWip.imageUrl = imageUrl
 }
 
-export const markQuestionAsPartiallyScored = async (world: QuizmasterWorld) => {
-    const newQuestion = `${world.questionWip.question} (Partial Score)`
-    await world.questionEditPage.enterQuestion(newQuestion)
-    world.questionWip.question = newQuestion
-}
-
 export async function submitQuestion(this: QuizmasterWorld) {
     await this.questionEditPage.submit()
 }

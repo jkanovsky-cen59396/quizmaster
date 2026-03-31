@@ -12,7 +12,6 @@ Feature: Take a question with partial score
       | Titan   |   |
       | Venus   | * |
       | Earth   | * |
-    * mark question as partially scored
     * saved and bookmarked as "Planets"
 
   Scenario Outline: Multiple choice question with score
@@ -26,10 +25,10 @@ Feature: Take a question with partial score
     Then I see score "Score: <score>"
     And I see feedback "<feedback>"
     Examples:
-      | answer                    | score | feedback                      | description                       |
-      | Mars, Venus, Earth        | 1     | Correct!                      | all correct answers               |
-      | Mars, Venus, Titan, Earth | 0.5   | Partially correct! (1 error)  | one incorrect answer              |
-      | Mars, Venus               | 0.5   | Partially correct! (1 error)  | one correct answer missing        |
-      | Mars, Pluto               | 0     | Incorrect!                    | two missing, one incorrect answer |
-      | Mars, Pluto, Venus, Titan | 0     | Incorrect!                    | two incorrect answers             |
-      | Pluto, Titan              | 0     | Incorrect!                    | two incorrect answers             |
+      | answer                    | score | feedback           | description                       |
+      | Mars, Venus, Earth        | 1     | Correct!           | all correct answers               |
+      | Mars, Venus, Titan, Earth | 0.5   | Partially correct! | one incorrect answer              |
+      | Mars, Venus               | 0.5   | Partially correct! | one correct answer missing        |
+      | Mars, Pluto               | 0     | Incorrect!         | two missing, one incorrect answer |
+      | Mars, Pluto, Venus, Titan | 0     | Incorrect!         | two incorrect answers             |
+      | Pluto, Titan              | 0     | Incorrect!         | two incorrect answers             |

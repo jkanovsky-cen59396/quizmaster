@@ -164,7 +164,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
                         <QuestionCorrectness
                             score={feedback.score.score}
                             errorCount={feedback.score.errorsCount}
-                            isPartialCorrectnessEnabled={props.question.question.includes('(Partial Score)')}
                         />
                         <QuestionScore score={feedback.score.score} />
                         <QuestionExplanation text={questionExplanation} />

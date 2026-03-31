@@ -1,7 +1,6 @@
 import './correctness.css'
 
 interface CorrectnessProps {
-    readonly isPartialCorrectnessEnabled: boolean
     readonly score: number
     readonly errorCount: number
 }
@@ -9,8 +8,8 @@ interface CorrectnessProps {
 export const Correctness = (props: CorrectnessProps) => {
     let label: string
     let className: string
-    if (props.isPartialCorrectnessEnabled && props.score < 1 && props.score > 0) {
-        label = `Partially correct! (${props.errorCount} error${props.errorCount !== 1 ? 's' : ''})`
+    if (props.score > 0 && props.score < 1) {
+        label = `Partially correct!`
         className = 'partial-correct'
     } else {
         label = props.score === 1 ? 'Correct!' : 'Incorrect!'

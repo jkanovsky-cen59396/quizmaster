@@ -12,7 +12,6 @@ import {
     enterImageUrl,
     enterQuestion,
     enterQuestionExplanation,
-    markQuestionAsPartiallyScored,
     markAnswerCorrectness,
     submitQuestion,
     enterAIPrompt,
@@ -286,10 +285,6 @@ When('I add another answer', async function () {
 
 When('I enter question explanation {string}', async function (explanation: string) {
     await enterQuestionExplanation(this, explanation)
-})
-
-When('mark question as partially scored', async function () {
-    await markQuestionAsPartiallyScored(this)
 })
 
 When('I enter image URL {string}', async function (imageUrl: string) {
