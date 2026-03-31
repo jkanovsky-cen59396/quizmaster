@@ -60,4 +60,5 @@ export class TakeQuestionPage {
     expectCorrectAnswersCountNotAttached = () => expect(this.correctAnswersCountLocator()).not.toBeAttached()
     expectQuestionImage = () => expect(this.questionImageLocator_()).toBeVisible()
     expectNoQuestionImage = () => expect(this.questionImageLocator_()).not.toBeVisible()
+    expectQuestionTextNotContaining = (text: string) => expect(this.questionLocator()).not.toContainText(text)
 }

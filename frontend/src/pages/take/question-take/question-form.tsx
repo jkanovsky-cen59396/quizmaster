@@ -110,7 +110,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
         <Form onSubmit={handleSubmit} id="question-form">
             <fieldset className="question-fieldset" name={`question-${props.question.id}`}>
                 <legend>
-                    <h1 id="question">{props.question.question}</h1>
+                    <h1 id="question">{props.question.question.replace(/^\[[^\]]+\]\s*/, '')}</h1>
                 </legend>
 
                 {shouldShowEasyMode && (

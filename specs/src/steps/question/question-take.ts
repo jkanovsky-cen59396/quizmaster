@@ -117,3 +117,7 @@ Then('I see the question image', async function () {
 Then('I do not see a question image', async function () {
     await this.takeQuestionPage.expectNoQuestionImage()
 })
+
+Then('I see question title {string}', async function (text: string) {
+    await this.takeQuestionPage.expectQuestionText(text)
+})
