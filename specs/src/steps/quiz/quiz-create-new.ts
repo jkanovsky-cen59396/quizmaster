@@ -44,6 +44,14 @@ When('I see quiz question {string}', async function (title: string) {
     await expect(this.quizCreatePage.getQuestion(title).first()).toBeVisible()
 })
 
+Then('I see tag badge {string} for quiz question {string}', async function (tag: string, question: string) {
+    await this.quizCreatePage.expectQuestionTagBadge(question, tag)
+})
+
+Then('I do not see tag badge for quiz question {string}', async function (question: string) {
+    await this.quizCreatePage.expectQuestionTagBadgeNotVisible(question)
+})
+
 When('I start editing a quiz {string}', async function (quiz: string) {
     await expect(this.quizCreatePage.getQuestion(quiz).first()).toBeVisible()
 })

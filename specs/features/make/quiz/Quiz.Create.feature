@@ -77,7 +77,8 @@ Feature: Create Quiz from Workspace
       | question                                   | answers           |
       | [geografie] Which countries are in Europe? | Italy (*), Canada |
     When I start creating a new quiz
-    Then I see quiz question "[geografie] Which countries are in Europe?"
+    Then I see quiz question "Which countries are in Europe?"
+    And I see tag badge "geografie" for quiz question "Which countries are in Europe?"
 
 @skip
 Scenario: Test backButton

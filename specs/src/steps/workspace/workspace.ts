@@ -23,6 +23,14 @@ Then('I see question in list {string}', async function (question: string) {
     await this.workspacePage.expectQuestionVisible(question)
 })
 
+Then('I see tag badge {string} for question {string}', async function (tag: string, question: string) {
+    await this.workspacePage.expectQuestionTagBadge(question, tag)
+})
+
+Then('I do not see tag badge for question {string}', async function (question: string) {
+    await this.workspacePage.expectQuestionTagBadgeNotVisible(question)
+})
+
 Then('I do not see question {string} in the list', async function (question: string) {
     await this.workspacePage.expectQuestionNotVisible(question)
 })

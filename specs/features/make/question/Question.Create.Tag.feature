@@ -3,8 +3,9 @@ Feature: Question tag field
   When a question is saved, the tag is combined into the stored title as [tag] title.
   When editing a tagged question, the tag is pre-filled in the tag field and the
   question field contains only the title without the bracket prefix.
+  Tags are displayed as colored badges in question lists.
 
-  Scenario: Creating a question with a tag shows bracket prefix in workspace
+  Scenario: Tag is displayed as badge in workspace question list
     Given workspace "Tags"
     When I start creating a new question
     * I enter tag "scrum"
@@ -13,7 +14,42 @@ Feature: Question tag field
       | A time-boxed iteration | * |
       | An agile ceremony      |   |
     * I submit the question
-    Then I see question in list "[scrum] What is a Sprint?"
+    Then I see question in list "What is a Sprint?"
+    And I see tag badge "scrum" for question "What is a Sprint?"
+
+  Scenario: No tag badge shown in workspace for question without tag
+    Given workspace "Tags"
+    When I start creating a new question
+    * I enter question "What is a Sprint?"
+    * I enter answers
+      | A time-boxed iteration | * |
+      | An agile ceremony      |   |
+    * I submit the question
+    Then I see question in list "What is a Sprint?"
+    And I do not see tag badge for question "What is a Sprint?"
+
+  Scenario: Tag is displayed as badge in quiz creation question list
+    Given workspace "Tags"
+    When I start creating a new question
+    * I enter tag "scrum"
+    * I enter question "What is a Sprint?"
+    * I enter answers
+      | A time-boxed iteration | * |
+      | An agile ceremony      |   |
+    * I submit the question
+    When I start creating a new quiz
+    Then I see tag badge "scrum" for quiz question "What is a Sprint?"
+
+  Scenario: No tag badge shown in quiz creation for question without tag
+    Given workspace "Tags"
+    When I start creating a new question
+    * I enter question "What is a Sprint?"
+    * I enter answers
+      | A time-boxed iteration | * |
+      | An agile ceremony      |   |
+    * I submit the question
+    When I start creating a new quiz
+    Then I do not see tag badge for quiz question "What is a Sprint?"
 
   Scenario: Taker does not see tag entered via tag field
     Given a question "What is a Sprint?"

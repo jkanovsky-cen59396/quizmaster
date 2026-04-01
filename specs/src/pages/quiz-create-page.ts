@@ -46,4 +46,13 @@ export class QuizCreatePage {
     expectSelectedQuestionCount = (count: number) =>
         expect(this.selectedQuestionCountLocator()).toHaveText(String(count))
     expectTotalQuestionCount = (count: number) => expect(this.totalQuestionCountLocator()).toHaveText(String(count))
+
+    // ── Question tag badge ───────────────────────────
+
+    private questionTagBadgeLocator = (question: string) =>
+        this.page.locator('.question-item').filter({ hasText: question }).locator('.question-tag-badge')
+    expectQuestionTagBadge = (question: string, tag: string) =>
+        expect(this.questionTagBadgeLocator(question)).toHaveText(tag)
+    expectQuestionTagBadgeNotVisible = (question: string) =>
+        expect(this.questionTagBadgeLocator(question)).not.toBeVisible()
 }

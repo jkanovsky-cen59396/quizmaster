@@ -3,6 +3,7 @@ import { updated } from 'helpers.ts'
 import type { Question } from 'model/question.ts'
 import type { QuestionApiData } from 'api/question.ts'
 import type { AiAssistantResponse } from '../../../../api/ai-assistant.ts'
+import { parseTag } from 'model/tag.ts'
 
 export interface AnswerState {
     readonly id: number
@@ -33,11 +34,6 @@ export interface QuestionFormState {
 
 export type QuestionType = 'single' | 'multiple' | 'numerical'
 
-const parseTagFromQuestion = (raw: string): { tag: string; title: string } => {
-    const match = /^\[([^\]]+)\] (.+)$/.exec(raw)
-    return match ? { tag: match[1], title: match[2] } : { tag: '', title: raw }
-}
-
 export const useQuestionFormState = (question?: Question) => {
     const isQuestionNumerical =
         (question?.answers?.length || 0) === 1 &&
@@ -45,7 +41,7 @@ export const useQuestionFormState = (question?: Question) => {
         question?.correctAnswers?.[0] === 0 &&
         /^-?\d+(\.\d+)?$/.test(question?.answers?.[0] || '')
 
-    const { tag: initialTag, title: initialTitle } = parseTagFromQuestion(question?.question || '')
+    const { tag: initialTag, title: initialTitle } = parseTag(question?.question || '')
 
     const [aiPromptText, setAiPromptText] = useState<string>(question?.aiPrompt || '')
     const [questionText, setQuestionText] = useState<string>(initialTitle)

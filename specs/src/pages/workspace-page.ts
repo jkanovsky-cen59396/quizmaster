@@ -16,7 +16,10 @@ export class WorkspacePage {
     // ── Question list ────────────────────────────────
 
     private questionsLocator = () => this.page.locator('.question-item')
-    private questionLocator = (question: string) => this.questionsLocator().filter({ hasText: question })
+    private questionLocator = (question: string) => {
+        const title = question.replace(/^\[[^\]]+\]\s*/, '')
+        return this.questionsLocator().filter({ hasText: title })
+    }
 
     expectQuestionCount = (count: number) => expect(this.questionsLocator()).toHaveCount(count)
     expectQuestionVisible = (question: string) => expect(this.questionLocator(question)).toBeVisible()
@@ -42,6 +45,15 @@ export class WorkspacePage {
     expectQuestionThumbnailVisible = (question: string) => expect(this.questionThumbnailLocator(question)).toBeVisible()
     expectQuestionThumbnailNotVisible = (question: string) =>
         expect(this.questionThumbnailLocator(question)).not.toBeVisible()
+
+    // ── Question tag badge ───────────────────────────
+
+    private questionTagBadgeLocator = (question: string) =>
+        this.questionLocator(question).locator('.question-tag-badge')
+    expectQuestionTagBadge = (question: string, tag: string) =>
+        expect(this.questionTagBadgeLocator(question)).toHaveText(tag)
+    expectQuestionTagBadgeNotVisible = (question: string) =>
+        expect(this.questionTagBadgeLocator(question)).not.toBeVisible()
 
     // ── Create new question / quiz ───────────────────
 
