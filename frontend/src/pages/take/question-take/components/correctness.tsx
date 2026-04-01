@@ -9,7 +9,7 @@ export const Correctness = (props: CorrectnessProps) => {
     let label: string
     let className: string
     if (props.score > 0 && props.score < 1) {
-        label = `Partially correct!`
+        label = 'Partially correct!'
         className = 'partial-correct'
     } else {
         label = props.score === 1 ? 'Correct!' : 'Incorrect!'

@@ -31,7 +31,7 @@ public class Quiz {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    @Column(name = "easy_mode", nullable = false)
+    @Column(name = "difficulty", nullable = false)
     private Difficulty difficulty = Difficulty.KEEP_QUESTION;
 
     private int passScore;

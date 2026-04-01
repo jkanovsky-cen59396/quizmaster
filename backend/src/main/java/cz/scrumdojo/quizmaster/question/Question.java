@@ -34,9 +34,9 @@ public class Question {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String workspaceGuid;
 
-    @Column(name = "easy_mode", columnDefinition = "boolean")
+    @Column(name = "is_easy", columnDefinition = "boolean")
     @JdbcTypeCode(SqlTypes.BOOLEAN)
-    private boolean isEasyMode;
+    private boolean isEasy;
 
     @Column(name = "image_url")
     private String imageUrl;

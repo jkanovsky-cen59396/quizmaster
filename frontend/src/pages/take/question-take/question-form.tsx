@@ -22,7 +22,7 @@ export interface QuestionFormProps {
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
-    const { correctAnswers, easyMode, answers, questionExplanation } = props.question
+    const { correctAnswers, isEasy, answers, questionExplanation } = props.question
     const isNumerical = isNumericalQuestion(props.question)
     const numericalInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -96,15 +96,15 @@ export const QuestionForm = (props: QuestionFormProps) => {
 
     const correctAnswersCount = correctAnswers.length
 
-    const shouldShowEasyMode =
+    const showCorrectAnswersCount =
         state.isMultipleChoice &&
         (props.quizDifficulty
             ? props.quizDifficulty === 'easy'
                 ? true
                 : props.quizDifficulty === 'hard'
                   ? false
-                  : easyMode
-            : easyMode)
+                  : isEasy
+            : isEasy)
 
     return (
         <Form onSubmit={handleSubmit} id="question-form">
@@ -113,7 +113,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
                     <h1 id="question">{props.question.question.replace(/^\[[^\]]+\]\s*/, '')}</h1>
                 </legend>
 
-                {shouldShowEasyMode && (
+                {showCorrectAnswersCount && (
                     <div>
                         Correct answers count is{' '}
                         <strong className="correct-answers-count">{correctAnswersCount}</strong>
@@ -161,10 +161,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
                 )}
                 {state.submitted && props.mode === 'learn' && (
                     <>
-                        <QuestionCorrectness
-                            score={feedback.score.score}
-                            errorCount={feedback.score.errorsCount}
-                        />
+                        <QuestionCorrectness score={feedback.score.score} errorCount={feedback.score.errorsCount} />
                         <QuestionScore score={feedback.score.score} />
                         <QuestionExplanation text={questionExplanation} />
                     </>

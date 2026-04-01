@@ -56,7 +56,7 @@ cd specs && pnpm test:e2e:vite     # Against :5173
 ## Domain Model
 
 **Three entities:**
-1. **Question** — `id`, `question`, `answers[]`, `correctAnswers[]`, `explanations[]`, `questionExplanation`, `isEasyMode`, `imageUrl`, `tolerance`, `workspaceGuid`
+1. **Question** — `id`, `question`, `answers[]`, `correctAnswers[]`, `explanations[]`, `questionExplanation`, `isEasy`, `imageUrl`, `tolerance`, `workspaceGuid`
    - Questions are edited by numeric `id`, scoped to a workspace
 2. **Workspace** — `guid` (UUID), `title`
 3. **Quiz** — `id`, `title`, `description`, `questionIds[]` (int array), `passScore`, `timeLimit`, `mode` (EXAM/LEARN), `difficulty` (EASY/HARD/KEEP_QUESTION), `randomQuestionCount`, `workspaceGuid`

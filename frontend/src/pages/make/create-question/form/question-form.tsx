@@ -113,12 +113,7 @@ export const QuestionEditForm = ({ question, onSubmit, onBack, onAiAssistantClic
                     />
                 </Field>
                 {state.isMultipleChoice && (
-                    <CheckField
-                        id="easy-mode"
-                        label="Easy mode"
-                        checked={state.easyMode}
-                        onToggle={state.setEasyMode}
-                    />
+                    <CheckField id="is-easy" label="Easy" checked={state.isEasy} onToggle={state.setIsEasy} />
                 )}
             </Row>
             <Field label="Image URL">

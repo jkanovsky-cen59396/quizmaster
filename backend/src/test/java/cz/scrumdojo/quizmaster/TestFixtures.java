@@ -42,7 +42,7 @@ public class TestFixtures {
             .answers(new String[]{"Naples", "Rome", "Florence", "Palermo"})
             .correctAnswers(new int[]{1})
             .explanations(new String[]{"No", "Correct!", "No", "No"})
-            .isEasyMode(false);
+            .isEasy(false);
     }
 
     public Question.QuestionBuilder questionIn(Workspace workspace) {
@@ -118,7 +118,7 @@ public class TestFixtures {
             .answers(new String[]{"Naples", "Rome", "Paris", "Berlin"})
             .correctAnswers(new int[]{0, 1})
             .explanations(new String[]{"Yes!", "Yes!", "No, France", "No, Germany"})
-            .isEasyMode(false);
+            .isEasy(false);
     }
 
     public Question save(Question.QuestionBuilder builder) {

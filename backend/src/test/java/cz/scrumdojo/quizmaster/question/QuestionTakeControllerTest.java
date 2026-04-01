@@ -34,7 +34,7 @@ public class QuestionTakeControllerTest {
                     "answers": ["Naples", "Rome", "Florence", "Palermo"],
                     "correctAnswers": [1],
                     "explanations": ["No", "Correct!", "No", "No"],
-                    "easyMode": false
+                    "isEasy": false
                 }
                 """));
     }

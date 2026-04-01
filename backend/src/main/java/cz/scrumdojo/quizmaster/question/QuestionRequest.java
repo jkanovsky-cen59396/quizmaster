@@ -8,7 +8,7 @@ public record QuestionRequest(
     int[] correctAnswers,
     String[] explanations,
     String questionExplanation,
-    boolean easyMode,
+    boolean isEasy,
     String imageUrl,
     Boolean aiGenerated,
     String questionType,
@@ -21,7 +21,7 @@ public record QuestionRequest(
             .correctAnswers(correctAnswers)
             .explanations(explanations)
             .questionExplanation(questionExplanation)
-            .isEasyMode(easyMode)
+            .isEasy(isEasy)
             .workspaceGuid(workspaceGuid)
             .imageUrl(imageUrl)
             .tolerance(tolerance)

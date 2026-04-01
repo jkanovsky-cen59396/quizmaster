@@ -120,19 +120,19 @@ Then('I see tolerance {string}', async function (value: string) {
     await this.questionEditPage.expectNumericalTolerance(value)
 })
 
-Then(/easy mode is (on|off)/, async function (value: string) {
+Then(/easy is (on|off)/, async function (value: string) {
     if (value === 'on') {
-        await this.questionEditPage.expectEasyModeChecked()
+        await this.questionEditPage.expectEasyChecked()
     } else {
-        await this.questionEditPage.expectEasyModeUnchecked()
+        await this.questionEditPage.expectEasyUnchecked()
     }
 })
 
-Then(/easy mode is (available|not available)/, async function (value: string) {
+Then(/easy is (available|not available)/, async function (value: string) {
     if (value === 'available') {
-        await this.questionEditPage.expectEasyModeVisible()
+        await this.questionEditPage.expectEasyVisible()
     } else {
-        await this.questionEditPage.expectEasyModeNotVisible()
+        await this.questionEditPage.expectEasyNotVisible()
     }
 })
 

@@ -55,7 +55,7 @@ public class QuestionMakeControllerTest {
                         "answers": ["Naples", "Rome", "Florence"],
                         "correctAnswers": [1],
                         "explanations": ["No", "Correct!", "No"],
-                        "easyMode": false,
+                        "isEasy": false,
                         "questionType": "single"
                     }
                     """))
@@ -76,7 +76,7 @@ public class QuestionMakeControllerTest {
                         "answers": ["A", "B"],
                         "correctAnswers": [0],
                         "explanations": ["Yes", "No"],
-                        "easyMode": false,
+                        "isEasy": false,
                         "questionType": "single"
                     }
                     """))
@@ -102,7 +102,7 @@ public class QuestionMakeControllerTest {
                         "answers": ["A", "B"],
                         "correctAnswers": [0],
                         "explanations": ["Yes", "No"],
-                        "easyMode": false,
+                        "isEasy": false,
                         "questionType": "single"
                     }
                     """))
@@ -143,7 +143,7 @@ public class QuestionMakeControllerTest {
                         "answers": ["A", "B"],
                         "correctAnswers": [0],
                         "explanations": ["Yes", "No"],
-                        "easyMode": false,
+                        "isEasy": false,
                         "questionType": "single"
                     }
                     """))
@@ -160,7 +160,7 @@ public class QuestionMakeControllerTest {
                         "answers": ["A", "B"],
                         "correctAnswers": [0],
                         "explanations": ["Yes", "No"],
-                        "easyMode": false,
+                        "isEasy": false,
                         "questionType": "single"
                     }
                     """))

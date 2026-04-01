@@ -86,14 +86,14 @@ Feature: Create question - single/multiple choice
       | Berlin     |  |
       | Bratislava |  |
 
-  Scenario: Easy Mode: Verify that Easy mode is visible only for Multiple Choice
+  Scenario: Easy: Verify that Easy is visible only for Multiple Choice
     # default case (Single choice)
     Then the question is single choice
-    And easy mode is not available
+    And easy is not available
 
     When I mark the question as multiple choice
-    Then easy mode is available
-    And easy mode is off
+    Then easy is available
+    And easy is off
 
   Scenario: Switch single choice to numerical
     * I enter question "How many regions does Czechia have?"
@@ -105,7 +105,7 @@ Feature: Create question - single/multiple choice
     And I see numerical answer field
     And I do not see answer fields
     And I do not see Add Answer button
-    And easy mode is not available
+    And easy is not available
 
     When I enter numerical correct answer "14"
     And I submit the question
@@ -124,7 +124,7 @@ Feature: Create question - single/multiple choice
     And I see numerical answer field
     And I do not see answer fields
     And I do not see Add Answer button
-    And easy mode is not available
+    And easy is not available
 
     When I enter numerical correct answer "14"
     And I submit the question

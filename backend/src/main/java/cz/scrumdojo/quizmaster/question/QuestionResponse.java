@@ -8,7 +8,7 @@ public record QuestionResponse(
     String questionExplanation,
     int[] correctAnswers,
     String workspaceGuid,
-    boolean easyMode,
+    boolean isEasy,
     String imageUrl,
     Double tolerance
 ) {
@@ -16,7 +16,7 @@ public record QuestionResponse(
         return new QuestionResponse(
             q.getId(), q.getQuestion(), q.getAnswers(), q.getExplanations(),
             q.getQuestionExplanation(), q.getCorrectAnswers(), q.getWorkspaceGuid(),
-            q.isEasyMode(), q.getImageUrl(), q.getTolerance()
+            q.isEasy(), q.getImageUrl(), q.getTolerance()
         );
     }
 }

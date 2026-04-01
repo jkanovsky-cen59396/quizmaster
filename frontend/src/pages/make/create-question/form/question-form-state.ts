@@ -24,7 +24,7 @@ export interface QuestionFormState {
     readonly tolerance: string
     readonly isNumerical: boolean
     readonly isMultipleChoice: boolean
-    readonly easyMode: boolean
+    readonly isEasy: boolean
     readonly questionExplanation: string
     readonly showExplanations: boolean
     readonly imageUrl: string
@@ -46,7 +46,7 @@ export const useQuestionFormState = (question?: Question) => {
     )
     const [numericalAnswer, setNumericalAnswer] = useState(isQuestionNumerical ? (question?.answers?.[0] ?? '') : '')
     const [tolerance, setTolerance] = useState(question?.tolerance != null ? String(question.tolerance) : '')
-    const [easyMode, setEasyMode] = useState(question?.easyMode || false)
+    const [isEasy, setIsEasy] = useState(question?.isEasy || false)
     const [showExplanations, setShowExplanations] = useState(
         question?.explanations?.some(explanation => !!explanation) ?? false,
     )
@@ -70,7 +70,7 @@ export const useQuestionFormState = (question?: Question) => {
             setCorrectAnswers([])
         }
         if (nextType !== 'multiple') {
-            setEasyMode(false)
+            setIsEasy(false)
         }
         setQuestionType(nextType)
     }
@@ -110,7 +110,7 @@ export const useQuestionFormState = (question?: Question) => {
         setShowExplanations(responseExplanations.some(explanation => explanation.trim() !== ''))
         setNumericalAnswer('')
         setTolerance('')
-        setEasyMode(false)
+        setIsEasy(false)
         setAnswerIds(response.answers.map(() => genId()))
     }
 
@@ -149,7 +149,7 @@ export const useQuestionFormState = (question?: Question) => {
         isNumerical,
         questionExplanation,
         isMultipleChoice,
-        easyMode,
+        isEasy,
         showExplanations,
         imageUrl,
         setQuestionText,
@@ -160,7 +160,7 @@ export const useQuestionFormState = (question?: Question) => {
         selectQuestionType,
         setNumericalAnswer,
         setTolerance,
-        setEasyMode,
+        setIsEasy,
         setShowExplanations,
         setImageUrl,
         applyAiResponse,
@@ -177,7 +177,7 @@ export const stateToQuestionApiData = (state: QuestionFormState): QuestionApiDat
             correctAnswers: [0],
             explanations: [''],
             questionExplanation: state.questionExplanation,
-            easyMode: false,
+            isEasy: false,
             tolerance: Number.isNaN(parsedTolerance) ? undefined : parsedTolerance,
         }
     }
@@ -188,7 +188,7 @@ export const stateToQuestionApiData = (state: QuestionFormState): QuestionApiDat
         correctAnswers: Array.from(state.correctAnswers),
         explanations: Array.from(state.explanations),
         questionExplanation: state.questionExplanation,
-        easyMode: state.easyMode,
+        isEasy: state.isEasy,
         imageUrl: state.imageUrl || undefined,
     }
 }

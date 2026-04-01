@@ -11,7 +11,7 @@ export interface Question {
     readonly questionExplanation: string
     readonly correctAnswers: AnswerIdxs
     workspaceGuid: string | null
-    easyMode: boolean
+    isEasy: boolean
 }
 
 export interface Answers {
