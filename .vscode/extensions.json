@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "EditorConfig.EditorConfig",
+        "oxc.oxc-vscode",
 
         "GitHub.copilot-chat",
 

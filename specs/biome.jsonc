@@ -7,17 +7,7 @@
         "enabled": false
     },
     "linter": {
-        "enabled": true,
-        "rules": {
-            "recommended": true,
-            "a11y": {
-                "noLabelWithoutControl": "off"
-            },
-            "correctness": {
-                "noChildrenProp": "off",
-                "useJsxKeyInIterable": "off"
-            }
-        }
+        "enabled": false
     },
     "formatter": {
         "useEditorconfig": true

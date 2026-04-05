@@ -120,9 +120,9 @@ export const useQuestionFormState = (question?: Question) => {
     }
 
     const removeAnswer = (idx: number) => {
-        setAnswers([...answers.filter((_, i) => i !== idx)])
-        setExplanations([...explanations.filter((_, i) => i !== idx)])
-        setAnswerIds([...answerIds.filter((_, i) => i !== idx)])
+        setAnswers(answers.filter((_, i) => i !== idx))
+        setExplanations(explanations.filter((_, i) => i !== idx))
+        setAnswerIds(answerIds.filter((_, i) => i !== idx))
 
         const sortedCorrectAnswers = [...correctAnswers]
             .sort((a, b) => a - b)
