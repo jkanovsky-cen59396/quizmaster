@@ -7,7 +7,6 @@ Feature: Show stats
     Given a quiz "Quiz" with 2 questions
     When I open quiz "Quiz" statistics
     Then I see summary stats table
-      | Summary |          |         |
       | Started | Finished | Timeout |
       |       0 |        0 |       0 |
     And I see empty attempt stats table
@@ -25,7 +24,6 @@ Feature: Show stats
       | Jaké nádobí má Ikea?  | Talíř   |
     And I open quiz "Stats Quiz" statistics
     Then I see attempt stats table
-      | Attempts   |          |                 |                   |       |          |
       | Duration   |          |                 |                   |       | Status   |
       | 10 seconds |          |                 |                   |       | Finished |
 
@@ -41,7 +39,6 @@ Feature: Show stats
       | Jaké nádobí má Ikea?  | Kolo    |
     And I open quiz "Stats Quiz" statistics
     Then I see attempt stats table
-      | Attempts   |          |                 |                   |       |          |
       | Duration   |          |                 |                   |       | Status   |
       | 10 seconds |          |                 |                   |       | Finished |
 
@@ -57,7 +54,6 @@ Feature: Show stats
       | Jaké nádobí má Ikea?  | Kolo    |
     And I open quiz "Stats Quiz" statistics
     Then I see attempt stats table
-      | Attempts   |          |                 |                   |       |          |
       | Duration   |          |                 |                   |       | Status   |
       | 10 seconds |          |                 |                   |       | Finished |
 
@@ -69,7 +65,6 @@ Feature: Show stats
     And I evaluate the quiz
     And I open quiz "Stats Quiz" statistics
     Then I see attempt stats table
-      | Attempts |          |                   |                     |         |          |
       |          | Points   | Correct Answers   | Incorrect Answers   | Score   | Status   |
       |          | <points> | <correct_answers> | <incorrect_answers> | <score> | Finished |
 
@@ -87,7 +82,6 @@ Feature: Show stats
     And I evaluate the quiz
     And I open quiz "Stats Quiz" statistics
     Then I see summary stats table
-      | Summary |          |         |
       | Started | Finished | Timeout |
       |       1 |        1 |       0 |
 
@@ -104,7 +98,6 @@ Feature: Show stats
       | 1 + 1 = ? | 2       |
     And I open quiz "Stats Quiz" statistics
     Then I see summary stats table
-      | Summary |          |         |
       | Started | Finished | Timeout |
       |       1 |        0 |       1 |
 
@@ -123,6 +116,5 @@ Feature: Show stats
       | Jaký nábytek má Ikea? | Stůl    |
     And I open quiz "Stats Quiz" statistics
     Then I see attempt stats table
-      | Attempts |       |                 |                   |     |          |
-      | Duration | Points| Correct Answers | Incorrect Answers | Score| Status   |
-      |          |       |                 |                   |     | Timeout  |
+      | Duration | Points | Correct Answers | Incorrect Answers | Score | Status  |
+      |          |        |                 |                   |       | Timeout |

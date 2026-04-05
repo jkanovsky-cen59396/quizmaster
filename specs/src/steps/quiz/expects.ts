@@ -88,25 +88,24 @@ export const expectStatsTable = async (quizStatsPage: QuizStatsPage, data: DataT
     }
 }
 
-const parseLabeledStatsData = (data: DataTable) => {
+const parseStatsData = (data: DataTable) => {
     const rawRows = data.raw()
-    const [captionRow = [], headerRow = [], ...bodyRows] = rawRows
-    const captionText = captionRow[0]?.trim() || undefined
+    const [headerRow = [], ...bodyRows] = rawRows
     const headerCells = headerRow.map(c => c.trim())
     const filteredBodyRows = bodyRows
         .filter(row => row.some(cell => cell.trim() !== ''))
         .map(row => row.map(cell => cell.trim()))
-    return { captionText, headerCells, bodyRows: filteredBodyRows }
+    return { headerCells, bodyRows: filteredBodyRows }
 }
 
 export const expectSummaryStatsTable = async (quizStatsPage: QuizStatsPage, data: DataTable) => {
-    const { captionText, headerCells, bodyRows } = parseLabeledStatsData(data)
-    await quizStatsPage.expectLabeledTable('summary', captionText, headerCells, bodyRows)
+    const { headerCells, bodyRows } = parseStatsData(data)
+    await quizStatsPage.expectLabeledTable('summary', 'Summary', headerCells, bodyRows)
 }
 
 export const expectAttemptStatsTable = async (quizStatsPage: QuizStatsPage, data: DataTable) => {
-    const { captionText, headerCells, bodyRows } = parseLabeledStatsData(data)
-    await quizStatsPage.expectLabeledTable('attempt', captionText, headerCells, bodyRows)
+    const { headerCells, bodyRows } = parseStatsData(data)
+    await quizStatsPage.expectLabeledTable('attempt', 'Attempts', headerCells, bodyRows)
 }
 
 export const expectCorrectAnswersCounts = (correctAnswersCounts: Record<string, string>, rows: string[][]) => {
