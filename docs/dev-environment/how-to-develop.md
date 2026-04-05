@@ -145,12 +145,17 @@ Note: on Windows set the feature flag with `$env:FEATURE_FLAG="true"` command.
 
 ## 🤖 AI Assistant
 
-Question generation uses [OpenRouter](https://openrouter.ai/) to call an LLM. Configure it with these environment variables:
+Question generation uses [OpenRouter](https://openrouter.ai/) to call an LLM.
 
-| Variable | Required | Description |
-|---|---|---|
-| `OPENROUTER_API_KEY` | Yes | Your OpenRouter API key |
-| `OPENROUTER_MODEL` | No | Model to use (default: `openai/gpt-4o-mini`) |
+**In Codespaces**, the API key is provided automatically — no setup needed.
+
+**In local/container environments**, add your key to `.env`:
+
+```
+OPENROUTER_API_KEY=sk-or-...
+```
+
+To use a different model, change `OPENROUTER_MODEL` in `.env` (default: `openai/gpt-4o-mini`).
 
 ### Recommended models
 
@@ -161,11 +166,3 @@ Question generation uses [OpenRouter](https://openrouter.ai/) to call an LLM. Co
 | `openai/gpt-4o` | Well-rounded, reliable structured output |
 | `google/gemini-2.5-flash` | Fast, good quality-to-cost ratio |
 | `deepseek/deepseek-v3-0324` | Capable and cost-effective |
-
-### Example
-
-```bash
-export OPENROUTER_API_KEY=sk-or-...
-export OPENROUTER_MODEL=anthropic/claude-sonnet-4
-pnpm start
-```

@@ -61,6 +61,12 @@ sourceSets {
 
 tasks.withType<BootRun> {
     environment("BE_PORT", env.fetch("BE_PORT", "8080"))
+
+    val apiKey = env.fetch("OPENROUTER_API_KEY", "")
+    if (apiKey.isNotEmpty()) environment("OPENROUTER_API_KEY", apiKey)
+
+    val model = env.fetch("OPENROUTER_MODEL", "")
+    if (model.isNotEmpty()) environment("OPENROUTER_MODEL", model)
 }
 
 tasks.withType<Test> {
