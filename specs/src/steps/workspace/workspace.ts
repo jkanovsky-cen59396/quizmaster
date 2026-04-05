@@ -76,7 +76,8 @@ Then('I take quiz {string}', async function (quiz: string) {
     await this.workspacePage.takeQuiz(quiz)
 })
 
-When('I open stats for quiz {string}', async function (quizName: string) {
+When('I open quiz {string} statistics', async function (quizName: string) {
     await this.workspacePage.goto(this.workspaceGuid)
     await this.workspacePage.statsQuiz(quizName)
+    await this.quizStatsPage.expectPageHeading(`Statistics for quiz: ${quizName}`)
 })

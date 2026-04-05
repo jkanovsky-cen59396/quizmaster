@@ -11,8 +11,7 @@ Feature: Show stats
       | Jaký nábytek má Ikea? | Stůl (*), Auto  |
       | Jaké nádobí má Ikea?  | Talíř (*), Kolo |
     And a quiz "Quiz" with all questions
-    When I open stats for quiz "Quiz"
-    And I see stats page for quiz "Quiz"
+    When I open quiz "Quiz" statistics
 
   # Duration (individual): full, half, zero
   Scenario: Duration for full correct attempt
@@ -25,9 +24,8 @@ Feature: Show stats
       | question              | answers |
       | Jaký nábytek má Ikea? | Stůl    |
       | Jaké nádobí má Ikea?  | Talíř   |
-    And I open stats for quiz "Stats Quiz"
-    Then I see stats page for quiz "Stats Quiz"
-    And I see attempt stats table
+    And I open quiz "Stats Quiz" statistics
+    Then I see attempt stats table
       | Attempts   |          |                 |                   |       |          |
       | Duration   |          |                 |                   |       | Status   |
       | 10 seconds |          |                 |                   |       | Finished |
@@ -42,9 +40,8 @@ Feature: Show stats
       | question              | answers |
       | Jaký nábytek má Ikea? | Stůl    |
       | Jaké nádobí má Ikea?  | Kolo    |
-    And I open stats for quiz "Stats Quiz"
-    Then I see stats page for quiz "Stats Quiz"
-    And I see attempt stats table
+    And I open quiz "Stats Quiz" statistics
+    Then I see attempt stats table
       | Attempts   |          |                 |                   |       |          |
       | Duration   |          |                 |                   |       | Status   |
       | 10 seconds |          |                 |                   |       | Finished |
@@ -59,9 +56,8 @@ Feature: Show stats
       | question              | answers |
       | Jaký nábytek má Ikea? | Auto    |
       | Jaké nádobí má Ikea?  | Kolo    |
-    And I open stats for quiz "Stats Quiz"
-    Then I see stats page for quiz "Stats Quiz"
-    And I see attempt stats table
+    And I open quiz "Stats Quiz" statistics
+    Then I see attempt stats table
       | Attempts   |          |                 |                   |       |          |
       | Duration   |          |                 |                   |       | Status   |
       | 10 seconds |          |                 |                   |       | Finished |
@@ -72,9 +68,8 @@ Feature: Show stats
     And I answer <correct> questions correctly
     And I answer <incorrect> questions incorrectly
     And I evaluate the quiz
-    And I open stats for quiz "Stats Quiz"
-    Then I see stats page for quiz "Stats Quiz"
-    And I see attempt stats table
+    And I open quiz "Stats Quiz" statistics
+    Then I see attempt stats table
       | Attempts |          |                   |                     |         |          |
       |          | Points   | Correct Answers   | Incorrect Answers   | Score   | Status   |
       |          | <points> | <correct_answers> | <incorrect_answers> | <score> | Finished |
@@ -91,7 +86,7 @@ Feature: Show stats
     When I start the quiz
     And I answer 2 questions correctly
     And I evaluate the quiz
-    And I open stats for quiz "Stats Quiz"
+    And I open quiz "Stats Quiz" statistics
     Then I see summary stats table
       | Summary |          |         |
       | Started | Finished | Timeout |
@@ -108,7 +103,7 @@ Feature: Show stats
     When I take quiz "Stats Quiz" which I do not complete in time limit
       | question  | answers |
       | 1 + 1 = ? | 2       |
-    And I open stats for quiz "Stats Quiz"
+    And I open quiz "Stats Quiz" statistics
     Then I see summary stats table
       | Summary |          |         |
       | Started | Finished | Timeout |
@@ -127,9 +122,8 @@ Feature: Show stats
     When I take quiz "Stats Quiz" which I do not complete in time limit
       | question              | answers |
       | Jaký nábytek má Ikea? | Stůl    |
-    And I open stats for quiz "Stats Quiz"
-    Then I see stats page for quiz "Stats Quiz"
-    And I see attempt stats table
+    And I open quiz "Stats Quiz" statistics
+    Then I see attempt stats table
       | Attempts |       |                 |                   |     |          |
       | Duration | Points| Correct Answers | Incorrect Answers | Score| Status   |
       |          |       |                 |                   |     | Timeout  |

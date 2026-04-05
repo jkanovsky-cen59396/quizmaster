@@ -15,10 +15,6 @@ When(
     },
 )
 
-Then('I see stats page for quiz {string}', async function (quizName: string) {
-    await this.quizStatsPage.expectPageHeading(`Statistics for quiz: ${quizName}`)
-})
-
 Then('I see summary stats table', async function (data: DataTable) {
     await expectSummaryStatsTable(this.quizStatsPage, data)
 })
