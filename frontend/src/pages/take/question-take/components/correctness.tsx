@@ -2,7 +2,6 @@ import './correctness.css'
 
 interface CorrectnessProps {
     readonly score: number
-    readonly errorCount: number
 }
 
 export const Correctness = (props: CorrectnessProps) => {

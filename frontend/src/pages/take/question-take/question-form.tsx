@@ -161,8 +161,8 @@ export const QuestionForm = (props: QuestionFormProps) => {
                 )}
                 {state.submitted && props.mode === 'learn' && (
                     <>
-                        <QuestionCorrectness score={feedback.score.score} errorCount={feedback.score.errorsCount} />
-                        <QuestionScore score={feedback.score.score} />
+                        <QuestionCorrectness score={feedback.score} />
+                        <QuestionScore score={feedback.score} />
                         <QuestionExplanation text={questionExplanation} />
                     </>
                 )}
