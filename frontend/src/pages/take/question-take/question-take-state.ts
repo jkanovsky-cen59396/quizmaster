@@ -50,7 +50,11 @@ export const useQuestionTakeState = (question: Question): QuestionTakeState => {
 
     const hasAnswer = isNumerical ? numericalAnswer.trim() !== '' : selectedAnswerIdxs.length > 0
     const showResultFeedback = submitted && showFeedbackOnSubmit
-    const showAnswerCount = shouldShowAnswerCount(isMultipleChoice, question.isEasy, quizContext?.difficulty)
+    const showAnswerCount = shouldShowAnswerCount(
+        isMultipleChoice,
+        question.isEasy,
+        quizContext?.difficulty ?? 'keep-question',
+    )
 
     const submit = React.useCallback(() => {
         setSubmitted(true)

@@ -7,7 +7,7 @@ export interface QuizCreateRequest {
     readonly description: string
     readonly questionIds: readonly number[]
     readonly mode: QuizMode
-    readonly difficulty?: Difficulty
+    readonly difficulty: Difficulty
     readonly passScore: number
     readonly timeLimit: number
     readonly workspaceGuid: string | null

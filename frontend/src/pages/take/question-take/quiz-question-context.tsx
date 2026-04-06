@@ -7,7 +7,7 @@ export interface QuizQuestionContextValue {
     readonly onSubmitted: (selectedAnswerIdxs: AnswerIdxs) => void
     readonly onAnswerSelected: (selectedAnswerIdxs: AnswerIdxs) => void
     readonly showFeedbackOnSubmit: boolean
-    readonly difficulty?: Difficulty
+    readonly difficulty: Difficulty
 }
 
 const QuizQuestionContext = createContext<QuizQuestionContextValue | undefined>(undefined)
