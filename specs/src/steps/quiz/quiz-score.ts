@@ -1,27 +1,22 @@
+import type { DataTable } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import { Then, When } from '#steps/fixture.ts'
 import { expectAllOptionsForQuestion, expectQuizResult } from '#steps/quiz/expects.ts'
 
-Then(
-    /^I see the result (\d+.?\d*) correct out of (\d+), (\d+)%, (passed|failed), required passScore (\d+)%/,
-    async function (
-        expectedCorrectAnswers: string,
-        expectedTotalQuestions: number,
-        expectedPercentage: number,
-        expectedTextResult: string,
-        expectedPassScore: number,
-    ) {
-        await expectQuizResult(
-            this.quizScorePage,
-            expectedCorrectAnswers,
-            expectedTotalQuestions,
-            expectedPercentage,
-            expectedTextResult,
-            expectedPassScore,
-        )
-    },
-)
+Then('I see the quiz result', async function (data: DataTable) {
+    const [row] = data.hashes()
+    const [correct, total] = row['Correct Answers'].split('/').map((s: string) => s.trim())
+    await this.quizScorePage.expectResultTableVisible()
+    await expectQuizResult(
+        this.quizScorePage,
+        correct,
+        Number(total),
+        Number(row.Score),
+        row.Result,
+        Number(row['Pass Score']),
+    )
+})
 
 Then('I see the question {string}', async function (question: string) {
     const questions: string[] = await this.quizScorePage.questions()

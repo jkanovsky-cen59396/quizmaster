@@ -26,35 +26,30 @@ Feature: Run timer
       | 120s       | 02:00 | 30 | 01:30   | 45 | 00:45   | 45        |
 
 
-  Scenario: Display score 0 when no answers were given
-    Given workspace "Timer" with questions
-      | bookmark  | question                                 | answers              |
-      | Planet    | Which planet is known as the Red Planet? | Mars (*), Venus      |
-      | Australia | What's the capital city of Australia?     | Sydney, Canberra (*) |
-    And a quiz "Quiz A" with questions "Planet, Australia"
+  Scenario: Timed out quiz with no answers scores zero
+    Given a quiz "Quiz" with 2 questions
       | pass score | 85   |
-      | time limit | 120s |
-    Given I start quiz "Quiz A"
-    When I will wait for "02:00"
+      | time limit | 60s  |
+    When I start the quiz
+    And I will wait for "01:00"
     And I should see the text "Game over time"
     Then I see the "Game over" dialog
     And I confirm the "Game over" dialog
-    Then I should see the results table
-    Then I see the result 0 correct out of 2, 0%, failed, required passScore 85%
+    Then I see the quiz result
+      | Correct Answers | Score | Result | Pass Score |
+      | 0 / 2           | 0     | failed | 85         |
 
-  Scenario: Display score 1/2 when answered one correctly and timed out
-    Given workspace "Timer" with questions
-      | bookmark  | question                                 | answers              |
-      | Planet    | Which planet is known as the Red Planet? | Mars (*), Venus      |
-      | Australia | What's the capital city of Australia?     | Sydney, Canberra (*) |
-    And a quiz "Quiz A" with questions "Planet, Australia"
+
+  Scenario: Partial answers are scored when quiz times out
+    Given a quiz "Quiz" with 2 questions
       | pass score | 85   |
-      | time limit | 120s |
-    Given I start quiz "Quiz A"
-    When I answer "Mars"
-    Then I will wait for "02:00"
+      | time limit | 60s  |
+    When I start the quiz
+    And I answer correctly
+    And I will wait for "01:00"
     And I should see the text "Game over time"
     Then I see the "Game over" dialog
     And I confirm the "Game over" dialog
-    Then I should see the results table
-    Then I see the result 1 correct out of 2, 50%, failed, required passScore 85%
+    Then I see the quiz result
+      | Correct Answers | Score | Result | Pass Score |
+      | 1 / 2           | 50    | failed | 85         |

@@ -80,10 +80,6 @@ Then('I will wait for {string}', async function (timer: string) {
     await this.page.clock.fastForward(timer)
 })
 
-Then('I should see the results table', async function () {
-    await this.quizScorePage.expectResultTableVisible()
-})
-
 Then('I see answer {string} checked', async function (answer: string) {
     await this.takeQuestionPage.expectAnswerChecked(answer)
 })

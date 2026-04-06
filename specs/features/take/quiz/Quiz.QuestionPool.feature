@@ -25,7 +25,9 @@ Feature: Quiz question pool size
     * I answer correctly
     * I answer correctly
     * I evaluate the quiz
-    Then I see the result 2 correct out of 2, 100%, passed, required passScore 100%
+    Then I see the quiz result
+      | Correct Answers | Score | Result | Pass Score |
+      | 2 / 2           | 100   | passed | 100        |
 
   Scenario: Empty mode
     - Quiz with question pool size displayed same value in question count at welcome page.
@@ -38,4 +40,6 @@ Feature: Quiz question pool size
     * I answer correctly
     * I answer correctly
     * I evaluate the quiz
-    Then I see the result 3 correct out of 3, 100%, passed, required passScore 100%
+    Then I see the quiz result
+      | Correct Answers | Score | Result | Pass Score |
+      | 3 / 3           | 100   | passed | 100        |

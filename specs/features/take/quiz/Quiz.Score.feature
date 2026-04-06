@@ -16,7 +16,9 @@ Feature: Evaluate quiz score
     * I answer <correct> questions correctly
     * I answer <incorrect> questions incorrectly
     * I evaluate the quiz
-    Then I see the result <correct> correct out of 4, <percentage>%, <result>, required passScore 75%
+    Then I see the quiz result
+      | Correct Answers | Score       | Result   | Pass Score |
+      | <correct> / 4   | <percentage> | <result> | 75         |
 
     Examples:
       | correct | incorrect | percentage | result |
@@ -45,8 +47,10 @@ Feature: Evaluate quiz score
     * I answer incorrectly
     * I answer correctly
     * I evaluate the quiz
-    Then I see the result 2 correct out of 2, 100%, passed, required passScore 100%
-    Then I see the original result 1, 50%, failed
+    Then I see the quiz result
+      | Correct Answers | Score | Result | Pass Score |
+      | 2 / 2           | 100   | passed | 100        |
+    And I see the original result 1, 50%, failed
 
   Scenario Outline: Quiz with multiple choice question with partial score
     Partial scoring applies to multiple choice questions within a quiz.
@@ -64,7 +68,9 @@ Feature: Evaluate quiz score
     And I answer "<answer>"
     And I answer "Blue"
     And I evaluate the quiz
-    Then I see the result <correct> correct out of 2, <percentage>%, <result>, required passScore 75%
+    Then I see the quiz result
+      | Correct Answers | Score        | Result   | Pass Score |
+      | <correct> / 2   | <percentage> | <result> | 75         |
 
     Examples:
       | answer                    | correct | percentage | result |
