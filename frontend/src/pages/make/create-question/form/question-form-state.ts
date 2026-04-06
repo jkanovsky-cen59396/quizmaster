@@ -44,7 +44,7 @@ export const useQuestionFormState = (question?: Question) => {
 
     const { tag: initialTag, title: initialTitle } = parseTag(question?.question || '')
 
-    const [aiPromptText, setAiPromptText] = useState<string>(question?.aiPrompt || '')
+    const [aiPromptText, setAiPromptText] = useState('')
     const [questionText, setQuestionText] = useState<string>(initialTitle)
     const [tagText, setTagText] = useState<string>(initialTag)
     const [questionType, setQuestionType] = useState<QuestionType>(

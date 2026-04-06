@@ -10,8 +10,6 @@ public record QuestionRequest(
     String questionExplanation,
     boolean isEasy,
     String imageUrl,
-    Boolean aiGenerated,
-    String questionType,
     Double tolerance
 ) {
     public Question toEntity(String workspaceGuid) {

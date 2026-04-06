@@ -2,7 +2,6 @@ export type AnswerIdxs = readonly number[]
 
 export interface Question {
     readonly id: number
-    readonly aiPrompt: string
     readonly question: string
     readonly imageUrl?: string
     readonly tolerance?: number

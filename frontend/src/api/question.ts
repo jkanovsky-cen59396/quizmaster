@@ -7,10 +7,7 @@ export const fetchQuestion = async (questionId: string) => await fetchJson<Quest
 export const fetchWorkspaceQuestion = async (workspaceGuid: string, questionId: string) =>
     await fetchJson<Question>(`/api/workspaces/${workspaceGuid}/questions/${questionId}`)
 
-export type QuestionApiData = Omit<Question, 'id' | 'aiPrompt' | 'workspaceGuid'> & {
-    readonly aiGenerated?: boolean
-    readonly questionType?: 'single' | 'multiple' | 'numerical'
-}
+export type QuestionApiData = Omit<Question, 'id' | 'workspaceGuid'>
 
 export interface QuestionWriteResponse {
     readonly id: number

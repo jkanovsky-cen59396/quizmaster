@@ -25,41 +25,28 @@ interface QuestionEditProps {
     readonly question?: Question
     readonly onSubmit: (questionData: QuestionApiData) => void
     readonly onBack?: () => void
-    readonly onAiAssistantClick?: (instructions: string) => void
 }
 
-export const QuestionEditForm = ({ question, onSubmit, onBack, onAiAssistantClick }: QuestionEditProps) => {
+export const QuestionEditForm = ({ question, onSubmit, onBack }: QuestionEditProps) => {
     const isEditing = question != null
     const state = useQuestionFormState(question)
     const [aiLoading, setAiLoading] = useState(false)
     const [aiError, setAiError] = useState('')
-    const [aiGenerated, setAiGenerated] = useState(false)
 
     const validator = createValidator(() => validateQuestionFormState(state), errorMessage)
     const hasImagePreview = state.imageUrl.trim() !== '' && isValidImageUrl(state.imageUrl)
     const hasInvalidImageUrl = state.imageUrl.trim() !== '' && !isValidImageUrl(state.imageUrl)
     const hasImageUrlTooLong = state.imageUrl.trim().length > 2048
 
-    const handleSubmit = () =>
-        onSubmit({
-            ...stateToQuestionApiData(state),
-            aiGenerated,
-            questionType: state.questionType,
-        })
+    const handleSubmit = () => onSubmit(stateToQuestionApiData(state))
 
     const handleAiAssistantClick = async () => {
         setAiError('')
         setAiLoading(true)
-        setAiGenerated(false)
 
         try {
-            if (onAiAssistantClick) {
-                onAiAssistantClick(state.aiPromptText)
-                return
-            }
             const response = await postAiAssistant(state.aiPromptText)
             state.applyAiResponse(response)
-            setAiGenerated(true)
         } catch (error) {
             const message = error instanceof Error ? error.message : 'AI assistant request failed.'
             setAiError(message || 'AI assistant request failed.')
