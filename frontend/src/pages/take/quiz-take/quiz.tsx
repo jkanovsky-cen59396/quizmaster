@@ -54,6 +54,10 @@ export const QuestionForm = (props: QuestionProps) => {
         props.onEvaluate(quizAnswers, false)
     }
 
+    const handleTimeOut = () => {
+        patchAttempt(getQuizRunId(), { timedOutAt: new Date().toISOString() })
+    }
+
     const evaluateTimedOut = () => {
         props.onEvaluate(quizAnswers, true)
     }
@@ -112,7 +116,7 @@ export const QuestionForm = (props: QuestionProps) => {
 
     return (
         <div>
-            <TimeLimit timeLimit={props.quiz.timeLimit} onConfirm={evaluateTimedOut} />
+            <TimeLimit timeLimit={props.quiz.timeLimit} onTimeOut={handleTimeOut} onConfirm={evaluateTimedOut} />
             <h2>Quiz</h2>
             <div className="feedback-mode-row">
                 <div id="feedback-mode">Feedback mode:</div>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,11 @@ public class QuizStatsService {
     }
 
     private AttemptStatsRecord toRecord(int totalQuestions, Attempt attempt) {
-        Integer durationSeconds = attempt.getFinishedAt() != null
-                ? (int) Duration.between(attempt.getStartedAt(), attempt.getFinishedAt()).getSeconds()
+        LocalDateTime endTime = attempt.getTimedOutAt() != null
+                ? attempt.getTimedOutAt()
+                : attempt.getFinishedAt();
+        Integer durationSeconds = endTime != null
+                ? (int) Duration.between(attempt.getStartedAt(), endTime).getSeconds()
                 : null;
 
         int correctAnswers = attempt.getCorrectAnswers();
@@ -57,6 +61,8 @@ public class QuizStatsService {
                 ? Math.round((float) correctAnswers / totalQuestions * 100)
                 : 0;
 
+        AttemptStatus status = deriveStatus(attempt);
+
         return new AttemptStatsRecord(
                 attempt.getId(),
                 durationSeconds,
@@ -64,8 +70,18 @@ public class QuizStatsService {
                 incorrectAnswers,
                 totalQuestions,
                 score,
-                attempt.getStatus()
+                status
         );
+    }
+
+    private AttemptStatus deriveStatus(Attempt attempt) {
+        boolean evaluated = attempt.getFinishedAt() != null;
+        boolean timedOut = attempt.getTimedOutAt() != null;
+
+        if (evaluated && !timedOut) return AttemptStatus.FINISHED;
+        if (evaluated && timedOut) return AttemptStatus.TIMEOUT;
+        if (!evaluated && timedOut) return AttemptStatus.ABANDONED;
+        return AttemptStatus.IN_PROGRESS;
     }
 
     private SummaryStats computeSummary(List<AttemptStatsRecord> records) {

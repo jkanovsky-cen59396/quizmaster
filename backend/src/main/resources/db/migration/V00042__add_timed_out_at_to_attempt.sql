@@ -1,0 +1,1 @@
+ALTER TABLE attempt ADD COLUMN timed_out_at TIMESTAMP;

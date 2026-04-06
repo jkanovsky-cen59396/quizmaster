@@ -35,22 +35,21 @@ Feature: Show stats
     * I evaluate the quiz
 
     # Attempt time outs, quiz taker takes their time to proceed to evaluation
-    # TODO: duration should be capped at time limit (30s), not actual elapsed (35s)
-    # When I start the quiz
-    # * I answer 2 questions incorrectly
-    # * 35 seconds pass
-    # * I evaluate the quiz
+    When I start the quiz
+    * I answer 2 questions incorrectly
+    * 35 seconds pass
+    * I evaluate the quiz
 
     When I open quiz "Stats Quiz" statistics
     Then I see attempt stats table
       | Duration   | Points | Correct Answers | Incorrect Answers | Score | Status   |
-    # | 30 seconds | 0/2    | 0 (0%)          | 2 (100%)          | 0     | Timeout  |
+      | 30 seconds | 0/2    | 0 (0%)          | 2 (100%)          | 0     | Timeout  |
       | 30 seconds | 1/2    | 1 (50%)         | 1 (50%)           | 50    | Timeout  |
       | 20 seconds | 1/2    | 1 (50%)         | 1 (50%)           | 50    | Finished |
       | 10 seconds | 2/2    | 2 (100%)        | 0 (0%)            | 100   | Finished |
     And I see summary stats table
       | Started | Finished | Unfinished | Timeout |
-      |       3 |        2 |          0 |       1 |
+      |       4 |        2 |          0 |       2 |
 
 
   Scenario: In-progress attempt shows in statistics
@@ -69,7 +68,6 @@ Feature: Show stats
       |       1 |        0 |          1 |       0 |
 
 
-  @skip
   Scenario: Abandoned attempt shows in statistics when time limit expires
     Given a quiz "Stats Quiz" with 2 questions
       | time limit | 5s |

@@ -51,4 +51,7 @@ public class Attempt {
 
     @Column(name = "incorrect_answers", nullable = false)
     private Integer incorrectAnswers;
+
+    @Column(name = "timed_out_at")
+    private LocalDateTime timedOutAt;
 }

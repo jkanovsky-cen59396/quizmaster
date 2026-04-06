@@ -30,6 +30,7 @@ export interface AttemptRequest {
 export interface AttemptPatchRequest {
     readonly correctAnswers?: number
     readonly incorrectAnswers?: number
+    readonly timedOutAt?: string
 }
 
 export interface AttemptStatsRecord {

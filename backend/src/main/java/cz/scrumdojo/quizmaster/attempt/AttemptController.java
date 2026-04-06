@@ -45,6 +45,7 @@ public class AttemptController {
                 .map(attempt -> {
                     if (request.correctAnswers() != null) attempt.setCorrectAnswers(request.correctAnswers());
                     if (request.incorrectAnswers() != null) attempt.setIncorrectAnswers(request.incorrectAnswers());
+                    if (request.timedOutAt() != null) attempt.setTimedOutAt(request.timedOutAt());
                     return ResponseEntity.ok(AttemptResponse.from(attemptRepository.save(attempt)));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -58,6 +59,7 @@ public class AttemptController {
                     attempt.setId(id);
                     attempt.setCorrectAnswers(existing.getCorrectAnswers());
                     attempt.setIncorrectAnswers(existing.getIncorrectAnswers());
+                    attempt.setTimedOutAt(existing.getTimedOutAt());
                     return ResponseEntity.ok(AttemptResponse.from(attemptRepository.save(attempt)));
                 })
                 .orElse(ResponseEntity.notFound().build());
