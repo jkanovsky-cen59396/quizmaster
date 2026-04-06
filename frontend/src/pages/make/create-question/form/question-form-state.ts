@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import type { AiAssistantResponse } from '#api/ai-assistant.ts'
 import type { QuestionApiData } from '#api/question.ts'
 import { updated } from '#fe/helpers.ts'
-import type { Question } from '#model/question.ts'
+import type { Question, QuestionType } from '#model/question.ts'
 import { parseTag } from '#model/tag.ts'
 
 export interface AnswerState {
@@ -33,23 +33,17 @@ export interface QuestionFormState {
     readonly imageUrl: string
 }
 
-export type QuestionType = 'single' | 'multiple' | 'numerical'
+export type { QuestionType }
 
 export const useQuestionFormState = (question?: Question) => {
-    const isQuestionNumerical =
-        (question?.answers?.length || 0) === 1 &&
-        (question?.correctAnswers?.length || 0) === 1 &&
-        question?.correctAnswers?.[0] === 0 &&
-        /^-?\d+(\.\d+)?$/.test(question?.answers?.[0] || '')
+    const isQuestionNumerical = question?.questionType === 'numerical'
 
     const { tag: initialTag, title: initialTitle } = parseTag(question?.question || '')
 
     const [aiPromptText, setAiPromptText] = useState('')
     const [questionText, setQuestionText] = useState<string>(initialTitle)
     const [tagText, setTagText] = useState<string>(initialTag)
-    const [questionType, setQuestionType] = useState<QuestionType>(
-        isQuestionNumerical ? 'numerical' : (question?.correctAnswers?.length || 0) > 1 ? 'multiple' : 'single',
-    )
+    const [questionType, setQuestionType] = useState<QuestionType>(question?.questionType ?? 'single')
     const [numericalAnswer, setNumericalAnswer] = useState(isQuestionNumerical ? (question?.answers?.[0] ?? '') : '')
     const [tolerance, setTolerance] = useState(question?.tolerance != null ? String(question.tolerance) : '')
     const [isEasy, setIsEasy] = useState(question?.isEasy || false)
@@ -190,6 +184,7 @@ export const stateToQuestionApiData = (state: QuestionFormState): QuestionApiDat
             correctAnswers: [0],
             explanations: [''],
             questionExplanation: state.questionExplanation,
+            questionType: state.questionType,
             isEasy: false,
             tolerance: Number.isNaN(parsedTolerance) ? undefined : parsedTolerance,
         }
@@ -201,6 +196,7 @@ export const stateToQuestionApiData = (state: QuestionFormState): QuestionApiDat
         correctAnswers: Array.from(state.correctAnswers),
         explanations: Array.from(state.explanations),
         questionExplanation: state.questionExplanation,
+        questionType: state.questionType,
         isEasy: state.isEasy,
         imageUrl: state.imageUrl || undefined,
     }

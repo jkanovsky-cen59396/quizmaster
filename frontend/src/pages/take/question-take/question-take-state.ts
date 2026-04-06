@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { isNumericalQuestion, type AnswerIdxs, type Question, compareAnswers, calculateScore } from '#model/question.ts'
+import { type AnswerIdxs, type Question, compareAnswers, calculateScore } from '#model/question.ts'
 
 import { shouldShowAnswerCount } from './question-display.ts'
 import { useQuizQuestionContext } from './quiz-question-context.tsx'
@@ -31,7 +31,7 @@ export const useQuestionTakeState = (question: Question): QuestionTakeState => {
     const showFeedbackOnSubmit = quizContext?.showFeedbackOnSubmit ?? true
     const initialAnswerIdxs = quizContext?.selectedAnswerIdxs ?? []
 
-    const isNumerical = isNumericalQuestion(question)
+    const isNumerical = question.questionType === 'numerical'
     const isMultipleChoice = question.correctAnswers.length > 1
     const correctNumericalAnswer = question.answers[0] ?? ''
 

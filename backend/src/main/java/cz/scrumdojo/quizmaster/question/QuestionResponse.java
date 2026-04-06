@@ -10,13 +10,14 @@ public record QuestionResponse(
     String workspaceGuid,
     boolean isEasy,
     String imageUrl,
-    Double tolerance
+    Double tolerance,
+    String questionType
 ) {
     public static QuestionResponse from(Question q) {
         return new QuestionResponse(
             q.getId(), q.getQuestion(), q.getAnswers(), q.getExplanations(),
             q.getQuestionExplanation(), q.getCorrectAnswers(), q.getWorkspaceGuid(),
-            q.isEasy(), q.getImageUrl(), q.getTolerance()
+            q.isEasy(), q.getImageUrl(), q.getTolerance(), q.getQuestionType()
         );
     }
 }

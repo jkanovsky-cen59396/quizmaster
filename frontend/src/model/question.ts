@@ -1,5 +1,7 @@
 export type AnswerIdxs = readonly number[]
 
+export type QuestionType = 'single' | 'multiple' | 'numerical'
+
 export interface Question {
     readonly id: number
     readonly question: string
@@ -9,6 +11,7 @@ export interface Question {
     readonly explanations: string[]
     readonly questionExplanation: string
     readonly correctAnswers: AnswerIdxs
+    readonly questionType: QuestionType
     workspaceGuid: string | null
     isEasy: boolean
 }
@@ -17,18 +20,6 @@ export interface Answers {
     readonly correctAnswers: AnswerIdxs
     readonly explanations: readonly string[]
     readonly questionExplanation: string
-}
-
-export const isNumericalQuestion = (question: Question) => {
-    const hasSingleCorrectAtZero = question.correctAnswers.length === 1 && question.correctAnswers[0] === 0
-    if (!hasSingleCorrectAtZero) return false
-
-    const normalizedAnswers = question.answers.map(answer => answer.trim())
-    const firstAnswer = normalizedAnswers[0] ?? ''
-    const hasNumericPrimaryAnswer = /^-?\d+(\.\d+)?$/.test(firstAnswer)
-    const hasOnlyEmptySecondaryAnswers = normalizedAnswers.slice(1).every(answer => answer === '')
-
-    return hasNumericPrimaryAnswer && hasOnlyEmptySecondaryAnswers
 }
 
 export interface AnswerComparison {

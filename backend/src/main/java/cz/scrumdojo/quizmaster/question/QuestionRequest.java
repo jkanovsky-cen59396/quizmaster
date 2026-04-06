@@ -10,6 +10,7 @@ public record QuestionRequest(
     String questionExplanation,
     boolean isEasy,
     String imageUrl,
+    String questionType,
     Double tolerance
 ) {
     public Question toEntity(String workspaceGuid) {
@@ -23,6 +24,15 @@ public record QuestionRequest(
             .workspaceGuid(workspaceGuid)
             .imageUrl(imageUrl)
             .tolerance(tolerance)
+            .questionType(resolveQuestionType())
             .build();
+    }
+
+    private String resolveQuestionType() {
+        if (questionType != null) return questionType;
+        if (correctAnswers != null && correctAnswers.length >= 2) return "multiple";
+        if (answers != null && answers.length == 1 && correctAnswers != null && correctAnswers.length == 1)
+            return "numerical";
+        return "single";
     }
 }
