@@ -53,7 +53,6 @@ Feature: Show stats
       |       3 |        2 |          0 |       1 |
 
 
-  @skip
   Scenario: In-progress attempt shows in statistics
     Given a quiz "Stats Quiz" with 2 questions
       | time limit | 60s |

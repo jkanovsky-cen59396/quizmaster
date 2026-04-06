@@ -37,9 +37,14 @@ const formatDuration = (durationSeconds: number): string => {
     return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`
 }
 
-const formatStatus = (status: string): string => {
-    return status.charAt(0) + status.slice(1).toLowerCase().replace('_', ' ')
+const statusLabels: Record<string, string> = {
+    FINISHED: 'Finished',
+    IN_PROGRESS: 'In Progress',
+    TIMEOUT: 'Timeout',
+    ABANDONED: 'Abandoned',
 }
+
+const formatStatus = (status: string): string => statusLabels[status] ?? status
 
 const formatWithPercentage = (value: number, total: number): string => {
     const percentage = total > 0 ? Math.round((value / total) * 100) : 0

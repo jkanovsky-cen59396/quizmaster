@@ -49,7 +49,9 @@ public class QuizStatsService {
                 : null;
 
         int correctAnswers = attempt.getCorrectAnswers();
-        int incorrectAnswers = totalQuestions - correctAnswers;
+        int incorrectAnswers = attempt.getFinishedAt() != null
+                ? totalQuestions - correctAnswers
+                : attempt.getIncorrectAnswers();
 
         int score = totalQuestions > 0
                 ? Math.round((float) correctAnswers / totalQuestions * 100)
