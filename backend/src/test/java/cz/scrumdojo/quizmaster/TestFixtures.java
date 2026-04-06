@@ -177,6 +177,8 @@ public class TestFixtures {
             .score(new BigDecimal("83.33"))
             .status(AttemptStatus.FINISHED)
             .maxScore(3)
+            .correctAnswers(0)
+            .incorrectAnswers(0)
             .startedAt(LocalDateTime.now().minusMinutes(2))
             .finishedAt(LocalDateTime.now());
     }
@@ -189,6 +191,8 @@ public class TestFixtures {
             .score(BigDecimal.ZERO)
             .status(AttemptStatus.IN_PROGRESS)
             .maxScore(0)
+            .correctAnswers(0)
+            .incorrectAnswers(0)
             .startedAt(LocalDateTime.now())
             .finishedAt(null);
     }
@@ -201,6 +205,8 @@ public class TestFixtures {
             .score(new BigDecimal("33.33"))
             .status(AttemptStatus.TIMEOUT)
             .maxScore(3)
+            .correctAnswers(0)
+            .incorrectAnswers(0)
             .startedAt(LocalDateTime.now().minusMinutes(5))
             .finishedAt(LocalDateTime.now());
     }
@@ -214,7 +220,9 @@ public class TestFixtures {
             AttemptStatus.FINISHED,
             3,
             LocalDateTime.now().minusMinutes(2),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            null,
+            null
         );
     }
 

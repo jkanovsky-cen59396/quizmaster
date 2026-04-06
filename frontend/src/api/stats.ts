@@ -1,4 +1,4 @@
-import type { Stats, StatsRecord, AttemptRequest, AttemptPatchRequest } from '#model/stats.ts'
+import type { Stats, StatsRecord, AttemptRequest, AttemptPatchRequest, QuizStatsResponse } from '#model/stats.ts'
 
 import { fetchJson, patchJson, postJson, putJson } from './helpers.ts'
 
@@ -16,4 +16,8 @@ export const updateAttempt = async (id: number, request: AttemptRequest): Promis
 
 export const patchAttempt = async (id: number, patch: AttemptPatchRequest): Promise<StatsRecord> => {
     return await patchJson<AttemptPatchRequest, StatsRecord>(`/api/attempt/${id}`, patch)
+}
+
+export const fetchQuizStats = async (workspaceGuid: string, quizId: string): Promise<QuizStatsResponse> => {
+    return await fetchJson<QuizStatsResponse>(`/api/workspaces/${workspaceGuid}/quizzes/${quizId}/stats`)
 }

@@ -4,6 +4,8 @@ import cz.scrumdojo.quizmaster.question.Question;
 import cz.scrumdojo.quizmaster.question.QuestionRepository;
 import cz.scrumdojo.quizmaster.quiz.Quiz;
 import cz.scrumdojo.quizmaster.quiz.QuizRepository;
+import cz.scrumdojo.quizmaster.quiz.stats.QuizStatsResponse;
+import cz.scrumdojo.quizmaster.quiz.stats.QuizStatsService;
 import cz.scrumdojo.quizmaster.common.ResponseHelper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +22,17 @@ public class WorkspaceController {
     private final WorkspaceRepository workspaceRepository;
     private final QuestionRepository questionRepository;
     private final QuizRepository quizRepository;
+    private final QuizStatsService quizStatsService;
 
     public WorkspaceController(
         WorkspaceRepository workspaceRepository,
         QuestionRepository questionRepository,
-        QuizRepository quizRepository) {
+        QuizRepository quizRepository,
+        QuizStatsService quizStatsService) {
         this.workspaceRepository = workspaceRepository;
         this.questionRepository = questionRepository;
         this.quizRepository = quizRepository;
+        this.quizStatsService = quizStatsService;
     }
 
     @GetMapping("/{guid}")
@@ -71,5 +76,10 @@ public class WorkspaceController {
             .toList();
 
         return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/{guid}/quizzes/{id}/stats")
+    public ResponseEntity<QuizStatsResponse> getQuizStats(@PathVariable String guid, @PathVariable Integer id) {
+        return ResponseHelper.okOrNotFound(quizStatsService.getStats(guid, id));
     }
 }

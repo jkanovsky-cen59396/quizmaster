@@ -1,0 +1,76 @@
+package cz.scrumdojo.quizmaster.quiz.stats;
+
+import cz.scrumdojo.quizmaster.attempt.Attempt;
+import cz.scrumdojo.quizmaster.attempt.AttemptRepository;
+import cz.scrumdojo.quizmaster.attempt.AttemptStatus;
+import cz.scrumdojo.quizmaster.quiz.Quiz;
+import cz.scrumdojo.quizmaster.quiz.QuizRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class QuizStatsService {
+
+    private final QuizRepository quizRepository;
+    private final AttemptRepository attemptRepository;
+
+    public QuizStatsService(QuizRepository quizRepository, AttemptRepository attemptRepository) {
+        this.quizRepository = quizRepository;
+        this.attemptRepository = attemptRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<QuizStatsResponse> getStats(String workspaceGuid, Integer quizId) {
+        return quizRepository.findByIdAndWorkspaceGuid(quizId, workspaceGuid).map(quiz -> {
+            int totalQuestions = getTotalQuestions(quiz);
+            List<Attempt> attempts = attemptRepository.findByQuizIdOrderByStartedAtDesc(quizId);
+            List<AttemptStatsRecord> records = attempts.stream()
+                    .map(attempt -> toRecord(totalQuestions, attempt))
+                    .toList();
+            SummaryStats summary = computeSummary(records);
+            return new QuizStatsResponse(summary, records);
+        });
+    }
+
+    private int getTotalQuestions(Quiz quiz) {
+        if (quiz.getRandomQuestionCount() != null && quiz.getRandomQuestionCount() > 0) {
+            return quiz.getRandomQuestionCount();
+        }
+        return quiz.getQuestionIds() != null ? quiz.getQuestionIds().length : 0;
+    }
+
+    private AttemptStatsRecord toRecord(int totalQuestions, Attempt attempt) {
+        Integer durationSeconds = attempt.getFinishedAt() != null
+                ? (int) Duration.between(attempt.getStartedAt(), attempt.getFinishedAt()).getSeconds()
+                : null;
+
+        int correctAnswers = attempt.getCorrectAnswers();
+        int incorrectAnswers = totalQuestions - correctAnswers;
+
+        int score = totalQuestions > 0
+                ? Math.round((float) correctAnswers / totalQuestions * 100)
+                : 0;
+
+        return new AttemptStatsRecord(
+                attempt.getId(),
+                durationSeconds,
+                correctAnswers,
+                incorrectAnswers,
+                totalQuestions,
+                score,
+                attempt.getStatus()
+        );
+    }
+
+    private SummaryStats computeSummary(List<AttemptStatsRecord> records) {
+        int started = records.size();
+        int finished = (int) records.stream().filter(r -> r.status() == AttemptStatus.FINISHED).count();
+        int timeout = (int) records.stream().filter(r -> r.status() == AttemptStatus.TIMEOUT).count();
+        int unfinished = started - finished - timeout;
+        return new SummaryStats(started, finished, unfinished, timeout);
+    }
+}

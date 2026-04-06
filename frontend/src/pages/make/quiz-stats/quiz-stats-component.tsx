@@ -1,16 +1,10 @@
 import type { Quiz } from '#model/quiz.ts'
-import type { Stats } from '#model/stats.ts'
+import type { AttemptStatsRecord, QuizStatsResponse } from '#model/stats.ts'
 import './quiz-stats-component.scss'
 
 export interface QuizStatsProps {
     readonly quiz: Quiz
-    readonly stats: Stats
-}
-
-interface SummaryStats {
-    readonly started: number
-    readonly finished: number
-    readonly timedOut: number
+    readonly stats: QuizStatsResponse
 }
 
 const formatDuration = (durationSeconds: number): string => {
@@ -43,14 +37,17 @@ const formatDuration = (durationSeconds: number): string => {
     return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`
 }
 
-export const QuizStats = ({ quiz, stats }: QuizStatsProps) => {
-    const timedOutCount = stats.filter(stat => stat.status === 'TIMEOUT').length
+const formatStatus = (status: string): string => {
+    return status.charAt(0) + status.slice(1).toLowerCase().replace('_', ' ')
+}
 
-    const summary: SummaryStats = {
-        started: stats.length,
-        finished: stats.filter(stat => stat.status === 'FINISHED').length,
-        timedOut: timedOutCount,
-    }
+const formatWithPercentage = (value: number, total: number): string => {
+    const percentage = total > 0 ? Math.round((value / total) * 100) : 0
+    return `${value} (${percentage}%)`
+}
+
+export const QuizStats = ({ quiz, stats }: QuizStatsProps) => {
+    const { summary, attempts } = stats
 
     return (
         <div className="quiz-stats">
@@ -69,8 +66,8 @@ export const QuizStats = ({ quiz, stats }: QuizStatsProps) => {
                     <tr>
                         <td>{summary.started}</td>
                         <td>{summary.finished}</td>
-                        <td>0</td>
-                        <td>{summary.timedOut}</td>
+                        <td>{summary.unfinished}</td>
+                        <td>{summary.timeout}</td>
                     </tr>
                 </tbody>
             </table>
@@ -87,36 +84,14 @@ export const QuizStats = ({ quiz, stats }: QuizStatsProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {stats.map(stat => (
-                        <tr key={stat.id}>
-                            {(() => {
-                                const points = stat.points
-                                const incorrectPoints = Math.max(stat.maxScore - points, 0)
-                                const formatPoints = (value: number): string => {
-                                    // Round to 1 decimal place and check if it's a whole number
-                                    const rounded = Math.round(value * 10) / 10
-                                    return rounded % 1 === 0 ? rounded.toString() : rounded.toFixed(1)
-                                }
-                                const formatPointsWithPercentage = (value: number, total: number): string => {
-                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0
-                                    return `${formatPoints(value)} (${percentage}%)`
-                                }
-                                const formatStatus = (status: string): string => {
-                                    // Capitalize first letter and make rest lowercase
-                                    return status.charAt(0) + status.slice(1).toLowerCase().replace('_', ' ')
-                                }
-
-                                return (
-                                    <>
-                                        <td>{formatDuration(stat.durationSeconds)}</td>
-                                        <td>{`${formatPoints(points)}/${stat.maxScore}`}</td>
-                                        <td>{formatPointsWithPercentage(points, stat.maxScore)}</td>
-                                        <td>{formatPointsWithPercentage(incorrectPoints, stat.maxScore)}</td>
-                                        <td>{stat.score}</td>
-                                        <td>{formatStatus(stat.status)}</td>
-                                    </>
-                                )
-                            })()}
+                    {attempts.map((attempt: AttemptStatsRecord) => (
+                        <tr key={attempt.id}>
+                            <td>{attempt.durationSeconds != null ? formatDuration(attempt.durationSeconds) : ''}</td>
+                            <td>{`${attempt.correctAnswers}/${attempt.totalQuestions}`}</td>
+                            <td>{formatWithPercentage(attempt.correctAnswers, attempt.totalQuestions)}</td>
+                            <td>{formatWithPercentage(attempt.incorrectAnswers, attempt.totalQuestions)}</td>
+                            <td>{attempt.score}</td>
+                            <td>{formatStatus(attempt.status)}</td>
                         </tr>
                     ))}
                 </tbody>
