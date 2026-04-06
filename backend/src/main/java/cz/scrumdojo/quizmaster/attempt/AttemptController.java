@@ -2,10 +2,7 @@ package cz.scrumdojo.quizmaster.attempt;
 
 import cz.scrumdojo.quizmaster.common.ResponseHelper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/attempt")
@@ -15,15 +12,6 @@ public class AttemptController {
 
     public AttemptController(AttemptRepository attemptRepository) {
         this.attemptRepository = attemptRepository;
-    }
-
-    @GetMapping("/quiz/{quizId}")
-    public ResponseEntity<List<AttemptResponse>> getAttemptsByQuiz(@PathVariable Integer quizId) {
-        List<AttemptResponse> attempts = attemptRepository.findByQuizIdOrderByStartedAtDesc(quizId)
-                .stream()
-                .map(AttemptResponse::from)
-                .toList();
-        return ResponseEntity.ok(attempts);
     }
 
     @GetMapping("/{id}")
@@ -52,28 +40,4 @@ public class AttemptController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AttemptResponse> updateAttempt(@PathVariable Integer id, @RequestBody AttemptRequest request) {
-        return attemptRepository.findById(id)
-                .map(existing -> {
-                    Attempt attempt = request.toEntity();
-                    attempt.setId(id);
-                    attempt.setCorrectAnswers(existing.getCorrectAnswers());
-                    attempt.setIncorrectAnswers(existing.getIncorrectAnswers());
-                    attempt.setTimedOutAt(existing.getTimedOutAt());
-                    return ResponseEntity.ok(AttemptResponse.from(attemptRepository.save(attempt)));
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @Transactional
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAttempt(@PathVariable Integer id) {
-        if (!attemptRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        attemptRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
 }
-
