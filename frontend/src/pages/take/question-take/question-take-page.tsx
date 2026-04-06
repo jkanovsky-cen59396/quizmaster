@@ -14,5 +14,5 @@ export const QuestionTakePage = () => {
 
     useApi(params.id, fetchQuestion, setQuestion)
 
-    return question ? <QuestionForm question={question} showAnswerCount={question.isEasy} /> : null
+    return question ? <QuestionForm question={question} /> : null
 }

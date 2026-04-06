@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { updated } from '#fe/helpers.ts'
 import type { AnswerIdxs } from '#model/question.ts'
 import type { Quiz } from '#model/quiz.ts'
-import { QuestionForm as StandaloneQuestionForm, shouldShowAnswerCount } from '#pages/take/question-take/index.ts'
+import { QuestionForm as StandaloneQuestionForm, QuizQuestionProvider } from '#pages/take/question-take/index.ts'
 
 import { BookmarkList } from './components/bookmark-list.tsx'
 import { EvaluateButton, NextButton, BackButton, BookmarkButton } from './components/buttons.tsx'
@@ -106,21 +106,19 @@ export const QuestionForm = (props: QuestionProps) => {
 
             <ProgressBar current={nav.currentQuestionIdx + 1} total={props.quiz.questions.length} />
 
-            <StandaloneQuestionForm
-                key={currentQuestion.id}
-                question={currentQuestion}
-                selectedAnswerIdxs={quizAnswers.finalAnswers[nav.currentQuestionIdx]}
-                onAnswerSelected={answers => {
-                    setSelectedAnswers(answers)
+            <QuizQuestionProvider
+                value={{
+                    selectedAnswerIdxs: quizAnswers.finalAnswers[nav.currentQuestionIdx] ?? [],
+                    onSubmitted: handleAnswerSubmitted,
+                    onAnswerSelected: answers => {
+                        setSelectedAnswers(answers)
+                    },
+                    showFeedbackOnSubmit: props.quiz.mode === 'learn',
+                    difficulty: props.quiz.difficulty,
                 }}
-                onSubmitted={handleAnswerSubmitted}
-                showFeedbackOnSubmit={props.quiz.mode === 'learn'}
-                showAnswerCount={shouldShowAnswerCount(
-                    currentQuestion.correctAnswers.length > 1,
-                    currentQuestion.isEasy,
-                    props.quiz.difficulty,
-                )}
-            />
+            >
+                <StandaloneQuestionForm key={currentQuestion.id} question={currentQuestion} />
+            </QuizQuestionProvider>
             <div className="quiz-button-bar">
                 {nav.canBack && <BackButton onClick={nav.back} />}
                 {nav.canNext && <NextButton onClick={handleNextButton} />}

@@ -1,8 +1,7 @@
 import './question-form.scss'
 
-import type { AnswerIdxs, Question } from '#model/question.ts'
+import type { Question } from '#model/question.ts'
 import { Form } from '#pages/components'
-import { useQuestionTakeState } from './question-take-state.ts'
 
 import { AnswerCountHint } from './components/answer-count-hint.tsx'
 import { ChoiceAnswerList } from './components/choice-answer-list.tsx'
@@ -11,22 +10,17 @@ import { QuestionFeedback } from './components/question-feedback.tsx'
 import { QuestionHeader } from './components/question-header.tsx'
 import { QuestionImage } from './components/question-image.tsx'
 import { SubmitButton } from './components/submit-button.tsx'
+import { useQuestionTakeState } from './question-take-state.ts'
 import { useQuestionKeyboardShortcuts } from './use-keyboard-shortcuts.ts'
 
-export interface QuestionFormProps {
+interface QuestionFormProps {
     readonly question: Question
-    readonly selectedAnswerIdxs?: AnswerIdxs
-    readonly onSubmitted?: (selectedAnswerIdxs: AnswerIdxs) => void
-    readonly onAnswerSelected?: (selectedAnswerIdxs: AnswerIdxs) => void
-    readonly showFeedbackOnSubmit?: boolean
-    readonly showAnswerCount?: boolean
 }
 
-export const QuestionForm = (props: QuestionFormProps) => {
-    const { correctAnswers, answers, questionExplanation } = props.question
-    const { showAnswerCount = false } = props
+export const QuestionForm = ({ question }: QuestionFormProps) => {
+    const { correctAnswers, answers, questionExplanation } = question
 
-    const state = useQuestionTakeState(props)
+    const state = useQuestionTakeState(question)
 
     useQuestionKeyboardShortcuts({
         enabled: !state.isNumerical,
@@ -39,21 +33,19 @@ export const QuestionForm = (props: QuestionFormProps) => {
         onEnterPressed: state.attemptSubmit,
     })
 
-    const showCorrectAnswersCount = showAnswerCount && state.isMultipleChoice
-
     return (
         <Form onSubmit={state.attemptSubmit} id="question-form">
             <div className="question-fieldset">
-                <QuestionHeader text={props.question.question} />
+                <QuestionHeader text={question.question} />
 
-                {showCorrectAnswersCount && <AnswerCountHint count={correctAnswers.length} />}
-                {props.question.imageUrl && <QuestionImage url={props.question.imageUrl} />}
+                {state.showAnswerCount && <AnswerCountHint count={correctAnswers.length} />}
+                {question.imageUrl && <QuestionImage url={question.imageUrl} />}
 
                 {state.isNumerical ? (
                     <NumericalAnswerInput value={state.numericalAnswer} onChange={state.onNumericalAnswerChange} />
                 ) : (
                     <ChoiceAnswerList
-                        question={props.question}
+                        question={question}
                         showFeedback={state.showFeedback}
                         onSelectedAnswerChange={state.onSelectedAnswerChange}
                         isAnswerChecked={state.isAnswerChecked}

@@ -1,12 +1,14 @@
 import React from 'react'
 
-import { isNumericalQuestion, type AnswerIdxs, compareAnswers, calculateScore } from '#model/question.ts'
+import { isNumericalQuestion, type AnswerIdxs, type Question, compareAnswers, calculateScore } from '#model/question.ts'
 
-import type { QuestionFormProps } from './question-form.tsx'
+import { shouldShowAnswerCount } from './question-display.ts'
+import { useQuizQuestionContext } from './quiz-question-context.tsx'
 
 export interface QuestionTakeState {
     readonly isMultipleChoice: boolean
     readonly isNumerical: boolean
+    readonly showAnswerCount: boolean
     readonly numericalAnswer: string
     readonly selectedAnswerIdxs: AnswerIdxs
     readonly submitted: boolean
@@ -22,13 +24,18 @@ export interface QuestionTakeState {
     readonly attemptSubmit: () => void
 }
 
-export const useQuestionTakeState = (props: QuestionFormProps): QuestionTakeState => {
-    const { question, onSubmitted, onAnswerSelected, showFeedbackOnSubmit = true } = props
+export const useQuestionTakeState = (question: Question): QuestionTakeState => {
+    const quizContext = useQuizQuestionContext()
+    const onSubmitted = quizContext?.onSubmitted
+    const onAnswerSelected = quizContext?.onAnswerSelected
+    const showFeedbackOnSubmit = quizContext?.showFeedbackOnSubmit ?? true
+    const initialAnswerIdxs = quizContext?.selectedAnswerIdxs ?? []
+
     const isNumerical = isNumericalQuestion(question)
     const isMultipleChoice = question.correctAnswers.length > 1
     const correctNumericalAnswer = question.answers[0] ?? ''
 
-    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = React.useState<AnswerIdxs>(props.selectedAnswerIdxs ?? [])
+    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = React.useState<AnswerIdxs>(initialAnswerIdxs)
     const [numericalAnswer, setNumericalAnswer] = React.useState('')
     const [submitted, setSubmitted] = React.useState(false)
 
@@ -43,6 +50,7 @@ export const useQuestionTakeState = (props: QuestionFormProps): QuestionTakeStat
 
     const hasAnswer = isNumerical ? numericalAnswer.trim() !== '' : selectedAnswerIdxs.length > 0
     const showResultFeedback = submitted && showFeedbackOnSubmit
+    const showAnswerCount = shouldShowAnswerCount(isMultipleChoice, question.isEasy, quizContext?.difficulty)
 
     const submit = React.useCallback(() => {
         setSubmitted(true)
@@ -94,6 +102,7 @@ export const useQuestionTakeState = (props: QuestionFormProps): QuestionTakeStat
     return {
         isMultipleChoice,
         isNumerical,
+        showAnswerCount,
         numericalAnswer,
         selectedAnswerIdxs,
         submitted,
