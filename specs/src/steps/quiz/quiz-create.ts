@@ -2,8 +2,8 @@ import type { DataTable } from '@cucumber/cucumber'
 
 import { Given, Then } from '#steps/fixture.ts'
 import { createQuizViaUI } from '#steps/quiz/ops.ts'
-import { parseKey } from '#steps/world'
 import { createTrivialQuestions, ensureWorkspace, navigateToWorkspace } from '#steps/workspace/ops.ts'
+import { parseKey } from '#steps/world'
 
 Given('a quiz {string} with {int} questions', async function (quizName: string, n: number, properties?: DataTable) {
     await ensureWorkspace(this)
