@@ -1,6 +1,4 @@
 import type { Background, Feature } from '@cucumber/messages'
-// @ts-ignore
-import React from 'react'
 
 import { Description } from './html-desc.tsx'
 import { ScenarioDoc } from './html-scenario.tsx'

@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from 'react'
 import Markdown from 'react-markdown'
 
 type DescriptionProps = { readonly description?: string }

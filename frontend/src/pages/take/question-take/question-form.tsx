@@ -12,7 +12,7 @@ import {
     QuestionExplanation,
 } from '#pages/take/question-take'
 
-import { QuestionScore } from './components/question-score'
+import { QuestionScore } from './components/question-score.tsx'
 
 export interface QuestionFormProps {
     readonly question: Question

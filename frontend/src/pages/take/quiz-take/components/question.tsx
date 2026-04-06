@@ -1,5 +1,5 @@
 import './question.scss'
-import type { AnswerIdxs, Question } from '#model/question'
+import type { AnswerIdxs, Question } from '#model/question.ts'
 import { Answer } from '#pages/take/question-take'
 import { QuestionExplanation } from '#pages/take/question-take'
 

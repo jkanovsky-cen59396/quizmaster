@@ -1,4 +1,4 @@
-import { type AnswerIdxs, isAnsweredCorrectly, type Answers } from '#model/question'
+import { type AnswerIdxs, isAnsweredCorrectly, type Answers } from '#model/question.ts'
 import type { QuestionTakeState } from '#pages/take/question-take'
 
 export interface QuestionFeedbackState {

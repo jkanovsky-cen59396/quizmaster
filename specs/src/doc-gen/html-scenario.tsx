@@ -1,6 +1,4 @@
 import type { Examples, Scenario, TableCell, TableRow } from '@cucumber/messages'
-// @ts-ignore
-import React from 'react'
 
 import { Description } from './html-desc.tsx'
 import { StepsDoc } from './html-steps.tsx'

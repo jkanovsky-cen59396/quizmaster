@@ -1,16 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 
 import { ROUTES } from '#fe/urls.ts'
-import { CreateQuestionPage } from '#pages/make/create-question/create-question-page'
-import { EditQuestionPage } from '#pages/make/create-question/edit-question-page'
-import { WorkspaceCreatePage } from '#pages/make/create-workspace/workspace-create-page'
-import { HomePage } from '#pages/make/home'
-import { QuizStatsPage } from '#pages/make/quiz-stats/quiz-stats-page'
-import { QuizEditPage } from '#pages/make/quiz/quiz-edit-page'
-import { WorkspacePage } from '#pages/make/workspace/workspace'
+import { CreateQuestionPage } from '#pages/make/create-question/create-question-page.tsx'
+import { EditQuestionPage } from '#pages/make/create-question/edit-question-page.tsx'
+import { WorkspaceCreatePage } from '#pages/make/create-workspace/workspace-create-page.tsx'
+import { HomePage } from '#pages/make/home.tsx'
+import { QuizStatsPage } from '#pages/make/quiz-stats/quiz-stats-page.tsx'
+import { QuizEditPage } from '#pages/make/quiz/quiz-edit-page.tsx'
+import { WorkspacePage } from '#pages/make/workspace/workspace.tsx'
 import { QuestionTakePage } from '#pages/take/question-take'
 import { QuizTakePage } from '#pages/take/quiz-take/quiz-take-page.tsx'
-import { QuizWelcomePage } from '#pages/take/quiz-take/quiz-welcome/quiz-welcome-page'
+import { QuizWelcomePage } from '#pages/take/quiz-take/quiz-welcome/quiz-welcome-page.tsx'
 
 export const App = () => (
     <BrowserRouter>

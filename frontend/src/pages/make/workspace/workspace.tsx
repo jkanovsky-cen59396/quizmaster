@@ -1,18 +1,18 @@
 import './workspace.scss'
 import { useState } from 'react'
 
-import { useApi } from '#api/hooks'
-import { deleteQuestion } from '#api/question'
-import { deleteQuiz } from '#api/quiz'
-import { fetchWorkspace, fetchWorkspaceQuestions, fetchWorkspaceQuizzes } from '#api/workspace'
+import { useApi } from '#api/hooks.ts'
+import { deleteQuestion } from '#api/question.ts'
+import { deleteQuiz } from '#api/quiz.ts'
+import { fetchWorkspace, fetchWorkspaceQuestions, fetchWorkspaceQuizzes } from '#api/workspace.ts'
 import { urls, useWorkspaceId } from '#fe/urls.ts'
-import type { QuestionListItem } from '#model/question-list-item'
-import type { QuizListItem } from '#model/quiz-list-item'
-import type { Workspace } from '#model/workspace'
+import type { QuestionListItem } from '#model/question-list-item.ts'
+import type { QuizListItem } from '#model/quiz-list-item.ts'
+import type { Workspace } from '#model/workspace.ts'
 import { ItemList, LinkButton } from '#pages/components'
 
-import { QuestionItem } from './question-item'
-import { QuizItem } from './quiz-item'
+import { QuestionItem } from './question-item.tsx'
+import { QuizItem } from './quiz-item.tsx'
 
 export function WorkspacePage() {
     const workspaceId = useWorkspaceId()

@@ -1,8 +1,8 @@
 import './quiz.scss'
 import { useState } from 'react'
 
-import { updated } from '#fe/helpers'
-import type { AnswerIdxs } from '#model/question'
+import { updated } from '#fe/helpers.ts'
+import type { AnswerIdxs } from '#model/question.ts'
 import type { Quiz } from '#model/quiz.ts'
 
 import { QuestionForm as StandaloneQuestionForm } from '../question-take/index.ts'

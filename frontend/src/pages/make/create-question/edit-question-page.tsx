@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
-import { useApi } from '#api/hooks'
+import { useApi } from '#api/hooks.ts'
 import { fetchWorkspaceQuestion, type QuestionApiData, updateQuestion } from '#api/question.ts'
 import { urls, useWorkspaceId } from '#fe/urls.ts'
 import type { Question } from '#model/question.ts'

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { isNumericalQuestion, type AnswerIdxs } from '#model/question'
+import { isNumericalQuestion, type AnswerIdxs } from '#model/question.ts'
 
 import type { QuestionFormProps } from './question-form'
 

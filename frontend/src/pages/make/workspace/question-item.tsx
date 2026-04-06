@@ -1,5 +1,5 @@
 import { urls, useWorkspaceId } from '#fe/urls.ts'
-import type { QuestionListItem } from '#model/question-list-item'
+import type { QuestionListItem } from '#model/question-list-item.ts'
 import { parseTag, tagToColor } from '#model/tag.ts'
 import { Button, LinkButton } from '#pages/components'
 

@@ -18,7 +18,7 @@ import {
 import { ErrorMessage, createValidator } from '#pages/components/forms/validations.tsx'
 import { AnswersEdit, stateToQuestionApiData } from '#pages/make/create-question/form'
 
-import { useQuestionFormState } from './question-form-state'
+import { useQuestionFormState } from './question-form-state.ts'
 import { validateQuestionFormState, errorMessage, isValidImageUrl } from './validators.ts'
 
 interface QuestionEditProps {

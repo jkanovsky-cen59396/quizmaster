@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useParams } from 'react-router'
 
-import { useApi } from '#api/hooks'
-import { fetchQuiz } from '#api/quiz'
+import { useApi } from '#api/hooks.ts'
+import { fetchQuiz } from '#api/quiz.ts'
 import type { Quiz } from '#model/quiz.ts'
 
 export const useQuizApi = () => {

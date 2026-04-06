@@ -1,5 +1,5 @@
 import { urls, useWorkspaceId } from '#fe/urls.ts'
-import type { QuizListItem } from '#model/quiz-list-item'
+import type { QuizListItem } from '#model/quiz-list-item.ts'
 import { LinkButton } from '#pages/components'
 
 interface Props {

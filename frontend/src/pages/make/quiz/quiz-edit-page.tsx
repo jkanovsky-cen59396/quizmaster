@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
-import { useApi } from '#api/hooks'
-import { postQuiz, fetchQuiz, putQuiz } from '#api/quiz'
-import { fetchWorkspaceQuestions } from '#api/workspace'
-import { tryCatch } from '#fe/helpers'
+import { useApi } from '#api/hooks.ts'
+import { postQuiz, fetchQuiz, putQuiz } from '#api/quiz.ts'
+import { fetchWorkspaceQuestions } from '#api/workspace.ts'
+import { tryCatch } from '#fe/helpers.ts'
 import { urls, useWorkspaceId } from '#fe/urls.ts'
 import type { QuestionListItem } from '#model/question-list-item.ts'
 import type { Quiz } from '#model/quiz.ts'
 import { Alert, Page } from '#pages/components'
 
-import { QuizEditForm } from './quiz-edit-form'
-import type { QuizEditFormData } from './quiz-form-state'
+import { QuizEditForm } from './quiz-edit-form.tsx'
+import type { QuizEditFormData } from './quiz-form-state.ts'
 
 export const QuizEditPage = () => {
     const workspaceId = useWorkspaceId()

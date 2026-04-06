@@ -1,8 +1,8 @@
 import { isAnsweredCorrectly } from '#model/question.ts'
 import type { Quiz } from '#model/quiz.ts'
-import { Button } from '#pages/components/button'
+import { Button } from '#pages/components/button.tsx'
 
-import { QuestionFeedback } from './components/question'
+import { QuestionFeedback } from './components/question.tsx'
 import type { QuizAnswers } from './quiz-answers-state.ts'
 import { evaluate } from './quiz-score.ts'
 
