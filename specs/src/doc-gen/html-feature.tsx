@@ -1,9 +1,10 @@
+import type { Background, Feature } from '@cucumber/messages'
 // @ts-ignore
 import React from 'react'
-import type { Background, Feature } from '@cucumber/messages'
+
 import { Description } from './html-desc.tsx'
-import { StepsDoc } from './html-steps.tsx'
 import { ScenarioDoc } from './html-scenario.tsx'
+import { StepsDoc } from './html-steps.tsx'
 
 type BackgroundDocProps = { readonly background: Background }
 

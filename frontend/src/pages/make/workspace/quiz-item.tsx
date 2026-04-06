@@ -1,5 +1,5 @@
-import { LinkButton } from '#fe/pages/components'
 import type { QuizListItem } from '#fe/model/quiz-list-item'
+import { LinkButton } from '#fe/pages/components'
 import { urls, useWorkspaceId } from '#fe/urls.ts'
 
 interface Props {

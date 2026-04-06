@@ -1,6 +1,9 @@
 import './question-form.scss'
-import { isNumericalQuestion, type AnswerIdxs, type Question } from '#fe/model/question.ts'
 import React from 'react'
+
+import { isNumericalQuestion, type AnswerIdxs, type Question } from '#fe/model/question.ts'
+import type { QuizMode, Difficulty } from '#fe/model/quiz.ts'
+import { Form } from '#fe/pages/components'
 import {
     Answer,
     useQuestionFeedbackState,
@@ -8,9 +11,8 @@ import {
     QuestionCorrectness,
     QuestionExplanation,
 } from '#fe/pages/take/question-take'
+
 import { QuestionScore } from './components/question-score'
-import type { QuizMode, Difficulty } from '#fe/model/quiz.ts'
-import { Form } from '#fe/pages/components'
 
 export interface QuestionFormProps {
     readonly question: Question

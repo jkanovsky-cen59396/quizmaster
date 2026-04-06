@@ -1,9 +1,10 @@
+import type { Examples, Scenario, TableCell, TableRow } from '@cucumber/messages'
 // @ts-ignore
 import React from 'react'
-import type { Examples, Scenario, TableCell, TableRow } from '@cucumber/messages'
-import { TableHead, TableBody, type TableCells } from './html-table.tsx'
-import { StepsDoc } from './html-steps.tsx'
+
 import { Description } from './html-desc.tsx'
+import { StepsDoc } from './html-steps.tsx'
+import { TableHead, TableBody, type TableCells } from './html-table.tsx'
 
 type ExamplesDocProps = {
     readonly examples: Examples

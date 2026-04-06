@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
-import type { Quiz } from '#fe/model/quiz.ts'
 import { useApi } from '#fe/api/hooks.ts'
 import { fetchQuiz } from '#fe/api/quiz.ts'
-import { QuizDetails } from './quiz-details.tsx'
 import { createAttempt } from '#fe/api/stats.ts'
 import { setQuizRunId } from '#fe/helpers.ts'
+import type { Quiz } from '#fe/model/quiz.ts'
 import { AttemptStatus } from '#fe/model/stats.ts'
+
+import { QuizDetails } from './quiz-details.tsx'
 
 export const QuizWelcomePage = () => {
     const navigate = useNavigate()

@@ -1,15 +1,15 @@
 import { useState, useEffect, useMemo } from 'react'
-
-import { useQuizApi } from './hooks.ts'
-
-import { QuizScorePage } from './quiz-score-page.tsx'
-import { QuestionForm } from './quiz.tsx'
-import type { QuizAnswers } from './quiz-answers-state.ts'
 import { useNavigate } from 'react-router'
+
 import { updateAttempt } from '#fe/api/stats.ts'
 import { getQuizRunId } from '#fe/helpers.ts'
-import { evaluate } from './quiz-score.ts'
 import { AttemptStatus } from '#fe/model/stats.ts'
+
+import { useQuizApi } from './hooks.ts'
+import type { QuizAnswers } from './quiz-answers-state.ts'
+import { QuizScorePage } from './quiz-score-page.tsx'
+import { evaluate } from './quiz-score.ts'
+import { QuestionForm } from './quiz.tsx'
 
 export const QuizTakePage = () => {
     const quiz = useQuizApi()

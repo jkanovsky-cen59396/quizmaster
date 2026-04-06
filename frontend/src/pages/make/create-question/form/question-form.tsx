@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 import { postAiAssistant } from '#fe/api/ai-assistant.ts'
+import type { QuestionApiData } from '#fe/api/question.ts'
+import type { Question } from '#fe/model/question.ts'
 import {
     SubmitButton,
     Form,
@@ -13,12 +15,11 @@ import {
     Alert,
     RadioSet,
 } from '#fe/pages/components'
+import { ErrorMessage, createValidator } from '#fe/pages/components/forms/validations.tsx'
 import { AnswersEdit, stateToQuestionApiData } from '#fe/pages/make/create-question/form'
+
 import { useQuestionFormState } from './question-form-state'
 import { validateQuestionFormState, errorMessage, isValidImageUrl } from './validators.ts'
-import type { QuestionApiData } from '#fe/api/question.ts'
-import type { Question } from '#fe/model/question.ts'
-import { ErrorMessage, createValidator } from '#fe/pages/components/forms/validations.tsx'
 
 interface QuestionEditProps {
     readonly question?: Question

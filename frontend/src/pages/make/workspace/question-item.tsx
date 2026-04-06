@@ -1,6 +1,6 @@
-import { Button, LinkButton } from '#fe/pages/components'
 import type { QuestionListItem } from '#fe/model/question-list-item'
 import { parseTag, tagToColor } from '#fe/model/tag.ts'
+import { Button, LinkButton } from '#fe/pages/components'
 import { urls, useWorkspaceId } from '#fe/urls.ts'
 
 interface Props {

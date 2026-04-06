@@ -1,4 +1,5 @@
 import type { Stats, StatsRecord, AttemptRequest } from '#fe/model/stats.ts'
+
 import { fetchJson, postJson, putJson } from './helpers.ts'
 
 export const fetchStats = async (quizId: string): Promise<Stats> => {

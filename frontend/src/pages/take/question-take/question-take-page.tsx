@@ -1,11 +1,10 @@
 import './question-take-page.scss'
-
 import { useState } from 'react'
 import { useParams } from 'react-router'
 
-import type { Question } from '#fe/model/question.ts'
 import { useApi } from '#fe/api/hooks'
 import { fetchQuestion } from '#fe/api/question.ts'
+import type { Question } from '#fe/model/question.ts'
 import { QuestionForm } from '#fe/pages/take/question-take'
 
 export const QuestionTakePage = () => {

@@ -1,6 +1,6 @@
+import type { DataTable, TableCell, TableRow } from '@cucumber/messages'
 // @ts-ignore
 import React from 'react'
-import type { DataTable, TableCell, TableRow } from '@cucumber/messages'
 
 export type TableCells = readonly TableCell[]
 

@@ -1,5 +1,5 @@
-import { Button } from './button.tsx'
 import trashIcon from '../../assets/icons/trash-delete-bin.svg'
+import { Button } from './button.tsx'
 import './trash-button.scss'
 
 type TrashButtonProps = {

@@ -1,6 +1,7 @@
+import type { Step } from '@cucumber/messages'
 // @ts-ignore
 import type React from 'react'
-import type { Step } from '@cucumber/messages'
+
 import { DataTableDoc } from './html-table'
 
 let lastKeyword = ''

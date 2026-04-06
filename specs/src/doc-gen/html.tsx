@@ -1,7 +1,8 @@
+import type { GherkinDocument } from '@cucumber/messages'
 // @ts-ignore
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import type { GherkinDocument } from '@cucumber/messages'
+
 import { FeatureDoc } from './html-feature.tsx'
 
 type GherkinHtmlProps = { readonly document: GherkinDocument }

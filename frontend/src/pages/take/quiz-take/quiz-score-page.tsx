@@ -1,6 +1,7 @@
-import type { Quiz } from '#fe/model/quiz.ts'
 import { isAnsweredCorrectly } from '#fe/model/question.ts'
+import type { Quiz } from '#fe/model/quiz.ts'
 import { Button } from '#fe/pages/components/button'
+
 import { QuestionFeedback } from './components/question'
 import type { QuizAnswers } from './quiz-answers-state.ts'
 import { evaluate } from './quiz-score.ts'

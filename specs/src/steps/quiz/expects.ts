@@ -1,6 +1,5 @@
-import { expect } from '@playwright/test'
-
 import type { DataTable } from '@cucumber/cucumber'
+import { expect } from '@playwright/test'
 
 import type {
     QuestionPage,

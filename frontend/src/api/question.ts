@@ -1,4 +1,5 @@
 import type { Question } from '#fe/model/question.ts'
+
 import { fetchJson, postJson, patchJson, callDelete } from './helpers.ts'
 
 export const fetchQuestion = async (questionId: string) => await fetchJson<Question>(`/api/question/${questionId}`)

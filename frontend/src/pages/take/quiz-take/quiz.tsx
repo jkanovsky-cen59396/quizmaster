@@ -1,17 +1,18 @@
 import './quiz.scss'
-import type { AnswerIdxs } from '#fe/model/question'
-import type { Quiz } from '#fe/model/quiz.ts'
-import { QuestionForm as StandaloneQuestionForm } from '../question-take/index.ts'
-import { ProgressBar } from './components/progress-bar.tsx'
-import { EvaluateButton, NextButton, BackButton, BookmarkButton } from './components/buttons.tsx'
 import { useState } from 'react'
 
-import { BookmarkList } from './components/bookmark-list.tsx'
-import { TimeLimit } from './time-limit/with-time-limit.tsx'
-import { useQuizAnswersState, type QuizAnswers } from './quiz-answers-state.ts'
 import { updated } from '#fe/helpers'
-import { useQuizNavigationState } from './quiz-navigation-state.ts'
+import type { AnswerIdxs } from '#fe/model/question'
+import type { Quiz } from '#fe/model/quiz.ts'
+
+import { QuestionForm as StandaloneQuestionForm } from '../question-take/index.ts'
+import { BookmarkList } from './components/bookmark-list.tsx'
+import { EvaluateButton, NextButton, BackButton, BookmarkButton } from './components/buttons.tsx'
+import { ProgressBar } from './components/progress-bar.tsx'
+import { useQuizAnswersState, type QuizAnswers } from './quiz-answers-state.ts'
 import { useQuizBookmarkState } from './quiz-bookmark-state.ts'
+import { useQuizNavigationState } from './quiz-navigation-state.ts'
+import { TimeLimit } from './time-limit/with-time-limit.tsx'
 
 interface QuestionProps {
     readonly quiz: Quiz

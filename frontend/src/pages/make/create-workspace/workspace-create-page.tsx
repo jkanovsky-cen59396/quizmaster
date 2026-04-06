@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { tryCatch } from '#fe/helpers.ts'
 import { postWorkspace } from '#fe/api/workspace.ts'
+import { tryCatch } from '#fe/helpers.ts'
+import { Alert, Page } from '#fe/pages/components'
 import { urls } from '#fe/urls.ts'
 
-import { Alert, Page } from '#fe/pages/components'
 import { WorkspaceCreateForm, type WorkspaceFormData } from './workspace-create-form.tsx'
 
 export function WorkspaceCreatePage() {

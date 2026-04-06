@@ -1,8 +1,9 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { test as base, createBdd } from 'playwright-bdd'
-import { QuizmasterWorld } from '#specs/steps/world/world.ts'
+
 import { mcr } from '#specs/coverage/mcr.config.ts'
+import { QuizmasterWorld } from '#specs/steps/world/world.ts'
 
 export const test = base.extend<{ world: QuizmasterWorld }>({
     world: async ({ page }, use, testInfo) => {

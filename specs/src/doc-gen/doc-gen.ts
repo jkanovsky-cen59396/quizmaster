@@ -1,6 +1,7 @@
-import fs from 'node:fs'
 import { AstBuilder, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
 import { type GherkinDocument, IdGenerator } from '@cucumber/messages'
+import fs from 'node:fs'
+
 import { indexHtml, toHtml, type HtmlFile } from './html.tsx'
 
 const createParser = () => {

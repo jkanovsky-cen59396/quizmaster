@@ -1,5 +1,4 @@
 import './question.scss'
-
 import type { AnswerIdxs, Question } from '#fe/model/question'
 import { Answer } from '#fe/pages/take/question-take'
 import { QuestionExplanation } from '#fe/pages/take/question-take'
