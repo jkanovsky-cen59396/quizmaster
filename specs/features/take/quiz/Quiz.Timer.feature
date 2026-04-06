@@ -18,7 +18,7 @@ Feature: Run timer
     Then I see the countdown timer "<after y>"
 
     When <remaining> seconds pass
-    Then I should see the text "Game over time"
+    Then I see the timeout message
 
     Examples:
       | time limit | start | x  | after x | y  | after y | remaining |
@@ -32,9 +32,8 @@ Feature: Run timer
       | time limit | 60s  |
     When I start the quiz
     And 60 seconds pass
-    And I should see the text "Game over time"
-    Then I see the "Game over" dialog
-    And I confirm the "Game over" dialog
+    Then I see the timeout message
+    When I evaluate the quiz
     Then I see the quiz result
       | Correct Answers | Score | Result | Pass Score |
       | 0 / 2           | 0     | failed | 85         |
@@ -47,9 +46,8 @@ Feature: Run timer
     When I start the quiz
     And I answer correctly
     And 60 seconds pass
-    And I should see the text "Game over time"
-    Then I see the "Game over" dialog
-    And I confirm the "Game over" dialog
+    Then I see the timeout message
+    When I evaluate the quiz
     Then I see the quiz result
       | Correct Answers | Score | Result | Pass Score |
       | 1 / 2           | 50    | failed | 85         |

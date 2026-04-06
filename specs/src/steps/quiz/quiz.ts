@@ -1,5 +1,3 @@
-import { expect } from '@playwright/test'
-
 import { expectTextToBe } from '#steps/common.ts'
 import { Given, When, Then } from '#steps/fixture.ts'
 import { expectQuestion } from '#steps/question/expects.ts'
@@ -44,12 +42,8 @@ When('I evaluate the quiz', async function () {
     await this.questionPage.evaluate()
 })
 
-Then('I see the "Game over" dialog', async function () {
-    await expect(this.questionPage.evaluateModalButtonLocator()).toBeVisible()
-})
-
-When('I confirm the "Game over" dialog', async function () {
-    await this.questionPage.evaluateModalButtonLocator().click()
+Then('I see the timeout message', async function () {
+    await expectTextToBe(this.questionPage.dialogTextLocator(), 'Game over time')
 })
 
 Then('I see buttons {string}', async function (buttonList: string) {
@@ -61,10 +55,6 @@ Then('I see buttons {string}', async function (buttonList: string) {
 
 Then('progress shows {int} of {int}', async function (current: number, max: number) {
     await this.questionPage.expectProgress(current, max)
-})
-
-Then('I should see the text "Game over time"', async function () {
-    await expectTextToBe(this.questionPage.dialogTextLocator(), 'Game over time')
 })
 
 When('{int} seconds pass', async function (seconds: number) {

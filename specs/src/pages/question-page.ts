@@ -26,7 +26,7 @@ export class QuestionPage {
     bookmark = () => this.bookmarkQuestionButtonLocator().click()
     unBookmark = (title: string) => this.unBookmarkQuestionButtonLocator(title).click()
     next = () => this.nextButtonLocator().click()
-    evaluate = () => this.evaluateButtonLocator().click()
+    evaluate = () => this.page.locator('#evaluate').click()
     submit = () => this.submitButtonLocator().click()
 
     bookmarkListLocator = (title: string) =>
