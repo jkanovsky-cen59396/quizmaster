@@ -9,11 +9,6 @@
 
         "build:dev": "vite build --sourcemap",
         "build:prod": "vite build",
-
-        "code:tsc": "tsc -b && rm -f *.tsbuildinfo",
-        "code:format": "biome format --write",
-        "code:ci": "tsc -b && biome ci",
-        "code": "pnpm code:tsc && pnpm code:format",
     },
     "dependencies": {
         "react": "19.2.4",
@@ -26,9 +21,6 @@
         "@types/react": "19.2.14",
         "@types/react-dom": "19.2.3",
         "typescript": "6.0.2",
-
-        // Linting + formatting
-        "@biomejs/biome": "1.9.4",
 
         // Bundler
         "vite": "8.0.3",

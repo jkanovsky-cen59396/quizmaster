@@ -7,11 +7,6 @@
     "scripts": {
         "install:playwright": "pnpm playwright install chromium",
 
-        "code:tsc": "tsc -b && rm -f *.tsbuildinfo",
-        "code:format": "biome format --write",
-        "code:ci": "tsc -b && biome ci",
-        "code": "pnpm code:tsc && pnpm code:format",
-
         "playwright:test": ". ../scripts/load-env.sh; bddgen && wait-on tcp:${E2E_BASE_PORT:-$BE_PORT} && playwright test",
         "playwright:watch": "chokidar 'features/**/*.feature' 'src/**/*.ts' -c bddgen",
         "playwright:ui": "concurrently 'pnpm playwright:watch' 'pnpm playwright:test --ui-host=0.0.0.0 --ui-port=3333'",
@@ -32,9 +27,6 @@
         "@types/react": "19.2.14",
         "@types/react-dom": "19.2.3",
         "typescript": "6.0.2",
-
-        // Linting + formatting
-        "@biomejs/biome": "1.9.4",
 
         // Bundler
         "esbuild-register": "3.6.0",

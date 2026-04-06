@@ -27,11 +27,17 @@
         "start": "concurrently 'pnpm start:be' 'pnpm start:fe'",
 
         // Code quality
-        "code:fe": "cd frontend && pnpm code",
-        "code:specs": "cd specs && pnpm code",
-        "code:lint": "oxlint --fix frontend/src/ specs/src/",
-        "code:format": "oxfmt frontend/src/ specs/src/",
-        "code": "pnpm code:fe && pnpm code:specs && pnpm code:lint && pnpm code:format",
+        "code:fe:tsc": "cd frontend && pnpm tsc -b && rm -f *.tsbuildinfo",
+        "code:fe:lint": "oxlint --fix frontend/src/",
+        "code:fe:format": "oxfmt frontend/src/",
+        "code:fe": "pnpm code:fe:tsc && pnpm code:fe:lint && pnpm code:fe:format",
+
+        "code:specs:tsc": "cd specs && pnpm tsc -b && rm -f *.tsbuildinfo",
+        "code:specs:lint": "oxlint --fix specs/src/",
+        "code:specs:format": "oxfmt specs/src/",
+        "code:specs": "pnpm code:specs:tsc && pnpm code:specs:lint && pnpm code:specs:format",
+
+        "code": "pnpm code:fe && pnpm code:specs",
 
         // Unit tests
         "test:be:local": "cd backend && ./gradlew testLocal",
@@ -54,11 +60,10 @@
         "build:ci:be": "FEATURE_FLAG=true pnpm build:be",
         "build:ci": "pnpm build:ci:fe && pnpm build:ci:be",
 
-        "code:ci:fe": "cd frontend && pnpm code:ci",
-        "code:ci:specs": "cd specs && pnpm code:ci",
+        "code:ci:tsc": "pnpm code:fe:tsc && pnpm code:specs:tsc",
         "code:ci:lint": "oxlint --deny-warnings frontend/src/ specs/src/",
         "code:ci:format": "oxfmt --check frontend/src/ specs/src/",
-        "code:ci": "pnpm code:ci:fe && pnpm code:ci:specs && pnpm code:ci:lint && pnpm code:ci:format",
+        "code:ci": "pnpm code:ci:tsc && pnpm code:ci:lint && pnpm code:ci:format",
 
         "test:e2e:ci": "FEATURE_FLAG=true ./scripts/test-e2e.sh",
     },
