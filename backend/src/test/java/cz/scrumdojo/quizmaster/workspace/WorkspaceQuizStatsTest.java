@@ -58,6 +58,59 @@ public class WorkspaceQuizStatsTest {
     }
 
     @Test
+    public void finishedAttemptHasStatusFinished() throws Exception {
+        Workspace workspace = fixtures.save(fixtures.workspace());
+        Question q1 = fixtures.save(fixtures.questionIn(workspace));
+        Quiz quiz = fixtures.save(fixtures.quiz(q1).workspaceGuid(workspace.getGuid()).randomQuestionCount(null).build());
+        fixtures.save(fixtures.attempt(quiz).correctAnswers(1));
+
+        mockMvc.perform(get("/api/workspaces/{guid}/quizzes/{id}/stats", workspace.getGuid(), quiz.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attempts[0].status").value("FINISHED"))
+                .andExpect(jsonPath("$.attempts[0].durationSeconds").isNumber());
+    }
+
+    @Test
+    public void timedOutAttemptHasStatusTimeout() throws Exception {
+        Workspace workspace = fixtures.save(fixtures.workspace());
+        Question q1 = fixtures.save(fixtures.questionIn(workspace));
+        Quiz quiz = fixtures.save(fixtures.quiz(q1).workspaceGuid(workspace.getGuid()).randomQuestionCount(null).build());
+        fixtures.save(fixtures.attemptTimedOut(quiz));
+
+        mockMvc.perform(get("/api/workspaces/{guid}/quizzes/{id}/stats", workspace.getGuid(), quiz.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attempts[0].status").value("TIMEOUT"))
+                .andExpect(jsonPath("$.summary.timeout").value(1));
+    }
+
+    @Test
+    public void inProgressAttemptHasStatusInProgress() throws Exception {
+        Workspace workspace = fixtures.save(fixtures.workspace());
+        Question q1 = fixtures.save(fixtures.questionIn(workspace));
+        Quiz quiz = fixtures.save(fixtures.quiz(q1).workspaceGuid(workspace.getGuid()).randomQuestionCount(null).build());
+        fixtures.save(fixtures.attemptInProgress(quiz));
+
+        mockMvc.perform(get("/api/workspaces/{guid}/quizzes/{id}/stats", workspace.getGuid(), quiz.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attempts[0].status").value("IN_PROGRESS"))
+                .andExpect(jsonPath("$.attempts[0].durationSeconds").isEmpty())
+                .andExpect(jsonPath("$.summary.unfinished").value(1));
+    }
+
+    @Test
+    public void abandonedAttemptHasStatusAbandoned() throws Exception {
+        Workspace workspace = fixtures.save(fixtures.workspace());
+        Question q1 = fixtures.save(fixtures.questionIn(workspace));
+        Quiz quiz = fixtures.save(fixtures.quiz(q1).workspaceGuid(workspace.getGuid()).randomQuestionCount(null).build());
+        fixtures.save(fixtures.attemptAbandoned(quiz));
+
+        mockMvc.perform(get("/api/workspaces/{guid}/quizzes/{id}/stats", workspace.getGuid(), quiz.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attempts[0].status").value("ABANDONED"))
+                .andExpect(jsonPath("$.summary.unfinished").value(1));
+    }
+
+    @Test
     public void nonExistentQuizReturns404() throws Exception {
         Workspace workspace = fixtures.save(fixtures.workspace());
 

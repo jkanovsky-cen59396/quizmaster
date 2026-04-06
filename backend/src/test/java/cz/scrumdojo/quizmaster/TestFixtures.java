@@ -194,6 +194,15 @@ public class TestFixtures {
             .timedOutAt(LocalDateTime.now().minusMinutes(5).plusSeconds(300));
     }
 
+    public Attempt.AttemptBuilder attemptAbandoned(Quiz quiz) {
+        return Attempt.builder()
+            .quizId(quiz.getId())
+            .correctAnswers(0)
+            .incorrectAnswers(0)
+            .startedAt(LocalDateTime.now().minusMinutes(5))
+            .timedOutAt(LocalDateTime.now().minusMinutes(5).plusSeconds(300));
+    }
+
     public AttemptRequest attemptRequest(Quiz quiz) {
         return new AttemptRequest(
             quiz.getId(),
