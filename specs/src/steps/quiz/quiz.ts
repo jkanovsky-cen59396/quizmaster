@@ -67,7 +67,11 @@ Then('I should see the text "Game over time"', async function () {
     await expectTextToBe(this.questionPage.dialogTextLocator(), 'Game over time')
 })
 
-Then('I should see the countdown timer {string}', async function (timer: string) {
+When('{int} seconds pass', async function (seconds: number) {
+    await this.page.clock.runFor(seconds * 1000)
+})
+
+Then('I see the countdown timer {string}', async function (timer: string) {
     await expectTextToBe(this.questionPage.timerLocator(), timer)
 })
 
