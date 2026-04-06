@@ -4,11 +4,12 @@ import React from 'react'
 import { isNumericalQuestion, type AnswerIdxs, type Question, compareAnswers, calculateScore } from '#model/question.ts'
 import type { QuizMode, Difficulty } from '#model/quiz.ts'
 import { Form } from '#pages/components'
-import { Answer, useQuestionTakeState, QuestionCorrectness, QuestionExplanation } from '#pages/take/question-take'
+import { useQuestionTakeState, QuestionCorrectness, QuestionExplanation } from '#pages/take/question-take'
 
+import { ChoiceAnswerList } from './components/choice-answer-list.tsx'
+import { NumericalAnswerInput } from './components/numerical-answer-input.tsx'
 import { QuestionScore } from './components/question-score.tsx'
 import { shouldShowAnswerCount, stripTag } from './question-display.ts'
-import { useQuestionKeyboardShortcuts } from './use-keyboard-shortcuts.ts'
 
 export interface QuestionFormProps {
     readonly question: Question
@@ -40,21 +41,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
         onAnswerSelected?.(state.selectedAnswerIdxs)
     }, [state.selectedAnswerIdxs, onAnswerSelected])
 
-    useQuestionKeyboardShortcuts({
-        enabled: !isNumerical,
-        onDigitPressed: idx => {
-            if (idx >= 0 && idx < answers.length) {
-                state.onSelectedAnswerChange(idx, true)
-                if (!state.isMultipleChoice) submitAndNotify([idx])
-            }
-        },
-        onEnterPressed: () => {
-            if (state.hasAnswer) submitAndNotify()
-        },
-    })
-
-    const numericalInputRef = React.useCallback((input: HTMLInputElement | null) => input?.focus(), [])
-
     const handleSubmit = () => {
         if (state.hasAnswer) submitAndNotify()
     }
@@ -82,35 +68,20 @@ export const QuestionForm = (props: QuestionFormProps) => {
                 )}
 
                 {isNumerical ? (
-                    <div className="answers">
-                        <input
-                            type="number"
-                            id="numerical-answer"
-                            step="any"
-                            ref={numericalInputRef}
-                            value={state.numericalAnswer}
-                            onChange={e => state.onNumericalAnswerChange(e.target.value)}
-                        />
-                    </div>
+                    <NumericalAnswerInput value={state.numericalAnswer} onChange={state.onNumericalAnswerChange} />
                 ) : (
-                    <ul className="answers">
-                        {answers.map((answer, idx) => (
-                            <Answer
-                                key={answer}
-                                isMultipleChoice={state.isMultipleChoice}
-                                idx={idx}
-                                questionId={props.question.id}
-                                answer={answer}
-                                isCorrect={correctAnswers.includes(idx)}
-                                explanation={
-                                    props.question.explanations ? props.question.explanations[idx] : 'not defined'
-                                }
-                                showFeedback={state.submitted && showFeedback(idx) && props.mode === 'learn'}
-                                onAnswerChange={state.onSelectedAnswerChange}
-                                isAnswerChecked={state.isAnswerChecked}
-                            />
-                        ))}
-                    </ul>
+                    <ChoiceAnswerList
+                        questionId={props.question.id}
+                        answers={answers}
+                        explanations={props.question.explanations}
+                        correctAnswers={correctAnswers}
+                        isMultipleChoice={state.isMultipleChoice}
+                        showFeedback={idx => state.submitted && showFeedback(idx) && props.mode === 'learn'}
+                        onSelectedAnswerChange={state.onSelectedAnswerChange}
+                        isAnswerChecked={state.isAnswerChecked}
+                        submitAndNotify={submitAndNotify}
+                        hasAnswer={state.hasAnswer}
+                    />
                 )}
 
                 {!state.submitted && (
