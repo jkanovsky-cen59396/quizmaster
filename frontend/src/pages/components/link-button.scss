@@ -9,7 +9,9 @@
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
 
     &:hover {
         background-color: rgb(38, 112, 119);

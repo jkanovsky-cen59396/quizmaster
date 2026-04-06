@@ -89,7 +89,10 @@
     border-radius: 8px;
     cursor: pointer;
     box-shadow: 0 6px 18px rgba(13, 71, 161, 0.18);
-    transition: transform 0.08s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.12s ease,
+        opacity 0.12s ease;
 }
 
 .quiz-details-footer #start:hover {

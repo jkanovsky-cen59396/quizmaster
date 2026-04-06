@@ -1,5 +1,7 @@
 form#create-quiz {
-    .row > * { flex: 1; }
+    .row > * {
+        flex: 1;
+    }
 
     .question-count-info {
         padding-left: 25px;
