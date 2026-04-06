@@ -5,5 +5,6 @@ import java.time.LocalDateTime;
 public record AttemptPatchRequest(
         Integer correctAnswers,
         Integer incorrectAnswers,
-        LocalDateTime timedOutAt
+        LocalDateTime timedOutAt,
+        LocalDateTime finishedAt
 ) {}

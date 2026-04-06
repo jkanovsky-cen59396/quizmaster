@@ -46,6 +46,7 @@ public class AttemptController {
                     if (request.correctAnswers() != null) attempt.setCorrectAnswers(request.correctAnswers());
                     if (request.incorrectAnswers() != null) attempt.setIncorrectAnswers(request.incorrectAnswers());
                     if (request.timedOutAt() != null) attempt.setTimedOutAt(request.timedOutAt());
+                    if (request.finishedAt() != null) attempt.setFinishedAt(request.finishedAt());
                     return ResponseEntity.ok(AttemptResponse.from(attemptRepository.save(attempt)));
                 })
                 .orElse(ResponseEntity.notFound().build());

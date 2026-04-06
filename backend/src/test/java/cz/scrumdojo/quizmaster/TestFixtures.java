@@ -214,15 +214,7 @@ public class TestFixtures {
     public AttemptRequest attemptRequest(Quiz quiz) {
         return new AttemptRequest(
             quiz.getId(),
-            120,
-            new BigDecimal("2.5"),
-            new BigDecimal("83.33"),
-            AttemptStatus.FINISHED,
-            3,
-            LocalDateTime.now().minusMinutes(2),
-            LocalDateTime.now(),
-            null,
-            null
+            LocalDateTime.now().minusMinutes(2)
         );
     }
 

@@ -1,14 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 
-import { updateAttempt } from '#api/stats.ts'
+import { patchAttempt } from '#api/stats.ts'
 import { getQuizRunId } from '#fe/helpers.ts'
-import { AttemptStatus } from '#model/stats.ts'
 
 import { useQuizApi } from './hooks.ts'
 import type { QuizAnswers } from './quiz-answers-state.ts'
 import { QuizScorePage } from './quiz-score-page.tsx'
-import { evaluate } from './quiz-score.ts'
 import { QuestionForm } from './quiz.tsx'
 
 export const QuizTakePage = () => {
@@ -44,7 +42,7 @@ export const QuizTakePage = () => {
         navigate(`/quiz/${quiz?.id}/questions`)
     }
 
-    async function handleEvaluate(answers: QuizAnswers | null, timedOut = false) {
+    async function handleEvaluate(answers: QuizAnswers | null) {
         navigate(`/quiz/${quiz?.id}/questions`)
         updateSessionStorage(answers)
         setQuizAnswers(answers)
@@ -53,31 +51,9 @@ export const QuizTakePage = () => {
 
         if (!quiz || !answers) return
 
-        const evaluation = evaluate(quiz, answers)
-        const score = Math.round((evaluation.score / evaluation.total) * 100)
-        const points = evaluation.score
-        const maxScore = evaluation.total
-        const attemptId = getQuizRunId()
-
-        const startTimeMs = sessionStorage.getItem('quizStartTime')
-        const endTime = new Date()
-
-        if (startTimeMs) {
-            const durationSeconds = Math.round((endTime.getTime() - Number.parseInt(startTimeMs)) / 1000)
-
-            await updateAttempt(attemptId, {
-                quizId: quiz.id,
-                durationSeconds,
-                points,
-                score,
-                status: timedOut ? AttemptStatus.TIMEOUT : AttemptStatus.FINISHED,
-                maxScore,
-                startedAt: new Date(Number.parseInt(startTimeMs)).toISOString(),
-                finishedAt: endTime.toISOString(),
-            })
-
-            sessionStorage.removeItem('quizStartTime')
-        }
+        await patchAttempt(getQuizRunId(), {
+            finishedAt: new Date().toISOString(),
+        })
     }
 
     const activeQuiz = useMemo(() => {

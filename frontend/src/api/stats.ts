@@ -1,21 +1,13 @@
-import type { Stats, StatsRecord, AttemptRequest, AttemptPatchRequest, QuizStatsResponse } from '#model/stats.ts'
+import type { AttemptRequest, AttemptPatchRequest, AttemptResponse, QuizStatsResponse } from '#model/stats.ts'
 
-import { fetchJson, patchJson, postJson, putJson } from './helpers.ts'
+import { fetchJson, patchJson, postJson } from './helpers.ts'
 
-export const fetchStats = async (quizId: string): Promise<Stats> => {
-    return await fetchJson<Stats>(`/api/attempt/quiz/${quizId}`)
+export const createAttempt = async (request: AttemptRequest): Promise<AttemptResponse> => {
+    return await postJson<AttemptRequest, AttemptResponse>('/api/attempt', request)
 }
 
-export const createAttempt = async (request: AttemptRequest): Promise<StatsRecord> => {
-    return await postJson<AttemptRequest, StatsRecord>('/api/attempt', request)
-}
-
-export const updateAttempt = async (id: number, request: AttemptRequest): Promise<StatsRecord> => {
-    return await putJson<AttemptRequest, StatsRecord>(`/api/attempt/${id}`, request)
-}
-
-export const patchAttempt = async (id: number, patch: AttemptPatchRequest): Promise<StatsRecord> => {
-    return await patchJson<AttemptPatchRequest, StatsRecord>(`/api/attempt/${id}`, patch)
+export const patchAttempt = async (id: number, patch: AttemptPatchRequest): Promise<AttemptResponse> => {
+    return await patchJson<AttemptPatchRequest, AttemptResponse>(`/api/attempt/${id}`, patch)
 }
 
 export const fetchQuizStats = async (workspaceGuid: string, quizId: string): Promise<QuizStatsResponse> => {
