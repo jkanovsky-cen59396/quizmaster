@@ -109,12 +109,12 @@
 
 6. **Delete `Question.Create.Image.feature`** — Its two scenarios are already covered by `Question.Create.Image.Validation.feature`. *Plan: Delete the file, verify scenarios still pass.*
 
-7. **Merge tag-hiding scenarios** — Consolidate `Question.Take.SeeTag.feature` into `Question.Create.Tag.feature` (which already has the "Taker does not see tag" scenario). *Plan: Delete `Question.Take.SeeTag.feature`, verify the Tag feature covers both cases.*
+7. ~~**Merge tag-hiding scenarios**~~ — Reviewed: `Question.Take.SeeTag.feature` and `Question.Create.Tag.feature` are complementary, not duplicative. SeeTag tests tag hiding from the taker perspective; Create.Tag tests the creation form and badge display. No action needed.
 
 8. **Clean up `Question.Take.Numerical.feature`** — Delete the `@skip` duplicate scenario and fix the "sdss" typo in the first scenario name. *Plan: Remove the skipped scenario, rename "Numerical question with decimal answer sdss" to "Numerical question with decimal answer".*
 
 9. **Rename UI-language scenario names** — Replace "Test backButton" with domain-oriented names like "Navigate back to workspace from question creation form". Replace "Submit button is visible as active/inactive" with "Answer can be submitted only when selection is made". *Plan: Rename scenario titles across the 3 back-button locations and the 2 submit-button scenarios in Quiz.Navigation.*
 
-10. **Rewrite Timer scenarios to reduce duplication** — The three timeout scenarios share the same flow (start quiz → optional answer → wait → confirm dialog → see results). Combine into a Scenario Outline parameterized by whether an answer was given and the expected score. *Plan: Create one Scenario Outline with columns for pre-timeout-action and expected-score.*
+10. ~~**Rewrite Timer scenarios to reduce duplication**~~ — Done. Timer scenarios now use a Scenario Outline parameterized by time limit.
 
-11. **Fix time-limit-related specs fragility** — `Quiz.Timer.feature` uses real-time waits (`I will wait for "02:00"`) which makes tests slow and flaky. The 2 `@skip` scenarios in `Quiz.Stats.feature` (lines 54-87) are disabled because there's no way to simulate timeout. The duration consolidation (item 4) introduced `I finish the quiz in N seconds` with implicit clock installation — this pattern should be extended to Timer scenarios to replace real-time waits with clock manipulation, and to enable the skipped stats timeout scenarios.
+11. ~~**Fix time-limit-related specs fragility**~~ — Done. Clock manipulation (`I finish the quiz in N seconds`, `N seconds pass`) replaced real-time waits. No `@skip` scenarios remain in Quiz.Stats.feature.
