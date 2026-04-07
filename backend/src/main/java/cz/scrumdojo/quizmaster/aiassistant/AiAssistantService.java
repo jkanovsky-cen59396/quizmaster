@@ -29,16 +29,19 @@ public class AiAssistantService {
     private final HttpClient httpClient;
     private final String apiToken;
     private final String model;
+    private final int maxTokens;
     private final String systemPrompt;
 
     public AiAssistantService(
         ObjectMapper objectMapper,
         @Value("${ai.token:}") String apiToken,
-        @Value("${ai.model}") String model
+        @Value("${ai.model}") String model,
+        @Value("${ai.max-tokens}") int maxTokens
     ) throws IOException {
         this.objectMapper = objectMapper;
         this.apiToken = apiToken.strip();
         this.model = model;
+        this.maxTokens = maxTokens;
         this.httpClient = HttpClient.newBuilder().connectTimeout(TIMEOUT).build();
         this.systemPrompt = new ClassPathResource("prompts/question-generation.md")
             .getContentAsString(StandardCharsets.UTF_8);
@@ -56,7 +59,8 @@ public class AiAssistantService {
             String body = objectMapper.writeValueAsString(new ChatRequest(
                 model,
                 new Message[]{new Message("system", systemPrompt), new Message("user", prompt)},
-                new ResponseFormat("json_object")
+                new ResponseFormat("json_object"),
+                maxTokens
             ));
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -124,7 +128,7 @@ public class AiAssistantService {
             .toArray(String[]::new);
     }
 
-    private record ChatRequest(String model, Message[] messages, @JsonProperty("response_format") ResponseFormat responseFormat) {}
+    private record ChatRequest(String model, Message[] messages, @JsonProperty("response_format") ResponseFormat responseFormat, @JsonProperty("max_tokens") int maxTokens) {}
 
     private record ResponseFormat(String type) {}
 

@@ -68,6 +68,9 @@ tasks.withType<BootRun> {
 
     val model = env.fetch("OPENROUTER_MODEL", "")
     if (model.isNotEmpty()) environment("OPENROUTER_MODEL", model)
+
+    val maxTokens = env.fetch("OPENROUTER_MAX_TOKENS", "")
+    if (maxTokens.isNotEmpty()) environment("OPENROUTER_MAX_TOKENS", maxTokens)
 }
 
 tasks.withType<Test> {
@@ -78,6 +81,9 @@ tasks.withType<Test> {
 
     val model = env.fetch("OPENROUTER_MODEL", "")
     if (model.isNotEmpty()) environment("OPENROUTER_MODEL", model)
+
+    val maxTokens = env.fetch("OPENROUTER_MAX_TOKENS", "")
+    if (maxTokens.isNotEmpty()) environment("OPENROUTER_MAX_TOKENS", maxTokens)
 
     jvmArgs("-XX:+EnableDynamicAgentLoading")
     testLogging {

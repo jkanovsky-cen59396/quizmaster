@@ -157,6 +157,13 @@ OPENROUTER_API_KEY=sk-or-...
 
 To use a different model, change `OPENROUTER_MODEL` in `.env` (default: `openai/gpt-4o-mini`).
 
+To cap how many tokens each AI request may generate, set `OPENROUTER_MAX_TOKENS`
+in `.env` (default: `8192`). The cap exists because some models default to a
+much larger budget (65k+) which can exceed your OpenRouter credit balance and
+fail every request with HTTP 402. Question generation responses are typically
+under 1000 tokens, so 8192 has comfortable headroom; lower it if your balance
+is tight, raise it if you start generating richer content.
+
 ### Recommended models
 
 | Model | Notes |
