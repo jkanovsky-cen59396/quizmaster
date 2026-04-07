@@ -1,5 +1,6 @@
 import java.io.BufferedReader
 
+import org.gradle.process.ProcessForkOptions
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.springframework.boot.gradle.tasks.run.BootRun
 
@@ -59,31 +60,29 @@ sourceSets {
     }
 }
 
+// Forward optional .env vars to forked Java processes (BootRun, Test).
+// Empty values are skipped so a missing key stays missing instead being set to ""
+fun ProcessForkOptions.forwardSharedEnv() {
+    val optionalForwardedEnvVars = listOf(
+        "OPENROUTER_API_KEY",
+        "OPENROUTER_MODEL",
+        "OPENROUTER_MAX_TOKENS"
+    )
+
+    environment("DB_SCHEMA", env.fetch("DB_SCHEMA", "public"))
+    optionalForwardedEnvVars.forEach { name ->
+        val value = env.fetch(name, "")
+        if (value.isNotEmpty()) environment(name, value)
+    }
+}
+
 tasks.withType<BootRun> {
     environment("BE_PORT", env.fetch("BE_PORT", "8080"))
-    environment("DB_SCHEMA", env.fetch("DB_SCHEMA", "public"))
-
-    val apiKey = env.fetch("OPENROUTER_API_KEY", "")
-    if (apiKey.isNotEmpty()) environment("OPENROUTER_API_KEY", apiKey)
-
-    val model = env.fetch("OPENROUTER_MODEL", "")
-    if (model.isNotEmpty()) environment("OPENROUTER_MODEL", model)
-
-    val maxTokens = env.fetch("OPENROUTER_MAX_TOKENS", "")
-    if (maxTokens.isNotEmpty()) environment("OPENROUTER_MAX_TOKENS", maxTokens)
+    forwardSharedEnv()
 }
 
 tasks.withType<Test> {
-    environment("DB_SCHEMA", env.fetch("DB_SCHEMA", "public"))
-
-    val apiKey = env.fetch("OPENROUTER_API_KEY", "")
-    if (apiKey.isNotEmpty()) environment("OPENROUTER_API_KEY", apiKey)
-
-    val model = env.fetch("OPENROUTER_MODEL", "")
-    if (model.isNotEmpty()) environment("OPENROUTER_MODEL", model)
-
-    val maxTokens = env.fetch("OPENROUTER_MAX_TOKENS", "")
-    if (maxTokens.isNotEmpty()) environment("OPENROUTER_MAX_TOKENS", maxTokens)
+    forwardSharedEnv()
 
     jvmArgs("-XX:+EnableDynamicAgentLoading")
     testLogging {
