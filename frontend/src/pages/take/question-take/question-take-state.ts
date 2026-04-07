@@ -102,6 +102,7 @@ export const useQuestionTakeState = (question: Question): QuestionTakeState => {
     }, [selectedAnswerIdxs, onAnswerSelected])
 
     const onNumericalAnswerChange = (value: string) => {
+        setSubmitted(false)
         setNumericalInput(value)
     }
 

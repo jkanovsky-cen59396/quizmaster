@@ -39,6 +39,7 @@ export class TakeQuestionPage {
 
     numericalInputLocator = () => this.page.locator('input[type="number"]')
     submitAnswerButtonLocator = () => this.page.locator('#submit-answer')
+    fillNumericalInput = (answer: string) => this.numericalInputLocator().fill(answer)
     fillNumericalAnswer = async (answer: string) => {
         await this.numericalInputLocator().fill(answer)
         const legacySubmitVisible = await this.submitAnswerButtonLocator().isVisible()
@@ -64,5 +65,6 @@ export class TakeQuestionPage {
     expectCorrectAnswersCountNotAttached = () => expect(this.correctAnswersCountLocator()).not.toBeAttached()
     expectQuestionImage = () => expect(this.questionImageLocator_()).toBeVisible()
     expectNoQuestionImage = () => expect(this.questionImageLocator_()).not.toBeVisible()
+    expectNoQuestionFeedback = () => expect(this.questionFeedbackLocator()).not.toBeVisible()
     expectQuestionTextNotContaining = (text: string) => expect(this.questionLocator()).not.toContainText(text)
 }
