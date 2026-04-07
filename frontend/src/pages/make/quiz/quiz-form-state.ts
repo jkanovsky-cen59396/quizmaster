@@ -22,7 +22,10 @@ export const useQuizFormState = (questions: readonly QuestionListItem[], quiz?: 
 
     const filteredQuestions = useMemo(() => {
         if (filter === '') return questions
-        return questions.filter(q => q.question.toLowerCase().includes(filter.toLowerCase()))
+        const needle = filter.toLowerCase()
+        return questions.filter(
+            q => q.question.toLowerCase().includes(needle) || q.tags.some(t => t.toLowerCase().includes(needle)),
+        )
     }, [filter, questions])
 
     return {

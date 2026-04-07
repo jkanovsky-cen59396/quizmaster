@@ -72,6 +72,16 @@ Feature: Create Quiz from Workspace
       | Ikea    | Jaký nábytek má Ikea? | Jaké nádobí má Ikea?           |       2 + 2 = ? |             3 * 3 = ? |
       | nábytek | Jaký nábytek má Ikea? | Jaký venkovní Nábytek má Ikea? |       2 + 2 = ? |             4 / 2 = ? |
 
+  Scenario: Filter questions in quiz creation by tag
+    Given workspace "Tags" with questions
+      | question           | tag   | answers                              |
+      | What is a Sprint?  | scrum | Time-boxed iteration (*), A ceremony |
+      | What is a Backlog? |       | Ordered list (*), Random list        |
+    When I start creating a new quiz
+    And I filter questions by "scrum"
+    Then I see quiz question "What is a Sprint?"
+    And I don't see quiz questions "What is a Backlog?"
+
 @skip
 Scenario: Test backButton
   Given workspace "Testworkspace"
