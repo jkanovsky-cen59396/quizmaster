@@ -60,21 +60,6 @@ export const createQuestionInWorkspace = async (
     await world.questionEditPage.submit()
 }
 
-export const createQuestionInAutoWorkspace = async (
-    world: QuizmasterWorld,
-    bookmark: string,
-    question: string,
-    answerRawTable: TableOf<AnswerRaw>,
-    isEasy?: boolean,
-    explanation?: string,
-    imageUrl?: string,
-    tag?: string,
-) => {
-    await ensureWorkspace(world)
-    await navigateToWorkspace(world)
-    await createQuestionInWorkspace(world, bookmark, question, answerRawTable, isEasy, explanation, imageUrl, tag)
-}
-
 export const createTrivialQuestions = async (world: QuizmasterWorld, n: number) => {
     for (let i = 1; i <= n; i++) {
         const answerRawTable: TableOf<AnswerRaw> = {

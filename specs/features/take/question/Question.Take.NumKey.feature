@@ -4,10 +4,32 @@ Feature: Answer question using numeric keys
   Impossible to answer 10th option.
 
 Background:
-    Given questions
-      | bookmark  | question                              | answers                           |
-      | Single    | Which country is in Europe?           | Italy (*), Mexico, Morocco, USA, Canada, Iran, China, Japan, Israel, Kuwait |
-      | Multiple  | Which countries are in Europe?        | Italy (*), Mexico, Germany (*), USA, Canada, Iran, China, Japan, Israel, Kuwait |
+    Given question "Which country is in Europe?"
+      * with answers:
+        | Italy   | * |
+        | Mexico  |   |
+        | Morocco |   |
+        | USA     |   |
+        | Canada  |   |
+        | Iran    |   |
+        | China   |   |
+        | Japan   |   |
+        | Israel  |   |
+        | Kuwait  |   |
+      * saved and bookmarked as "Single"
+    And question "Which countries are in Europe?"
+      * with answers:
+        | Italy   | * |
+        | Mexico  |   |
+        | Germany | * |
+        | USA     |   |
+        | Canada  |   |
+        | Iran    |   |
+        | China   |   |
+        | Japan   |   |
+        | Israel  |   |
+        | Kuwait  |   |
+      * saved and bookmarked as "Multiple"
     And question "How many regions does Czechia have?"
       * with numerical answer "14"
       * saved and bookmarked as "Numerical"
