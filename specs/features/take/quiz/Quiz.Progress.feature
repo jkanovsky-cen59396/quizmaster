@@ -12,7 +12,7 @@ Feature: Quiz progress bar
       | 1 + 1 = ? | 2 (*), 3 |
       | 2 + 2 = ? | 4 (*), 5 |
       | 3 + 3 = ? | 6 (*), 7 |
-    And a quiz "Exam" with all questions
+    And quiz "Exam" with all questions
       | pass score | 85 |
 
     When I start the quiz
@@ -34,7 +34,7 @@ Feature: Quiz progress bar
       | 1 + 1 = ? | 2 (*), 3 |
       | 2 + 2 = ? | 4 (*), 5 |
       | 3 + 3 = ? | 6 (*), 7 |
-    And a quiz "Learn" with all questions
+    And quiz "Learn" with all questions
       | mode       | learn |
       | pass score | 85    |
 

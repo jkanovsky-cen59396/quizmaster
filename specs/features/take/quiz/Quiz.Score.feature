@@ -10,7 +10,7 @@ Feature: Evaluate quiz score
       | Capital  | What is the capital of Italy?       | Rome (*), Naples, Florence                   |
       | Planets  | Which are planets in solar system?  | Mars (*), Pluto, Venus (*), Titan, Earth (*) |
       | Boiling  | What is the boiling point of water? | 100 ±5                                       |
-    And a quiz "Mixed Quiz" with all questions
+    And quiz "Mixed Quiz" with all questions
       | pass score | 66 |
     When I start the quiz
     * I answer "<capital>"
@@ -41,7 +41,7 @@ Feature: Evaluate quiz score
       | bookmark | question  | answers  |
       | Q1       | 1 + 1 = ? | 2 (*), 3 |
       | Q2       | 2 + 2 = ? | 4 (*), 5 |
-    And a quiz "Learn Quiz" with all questions
+    And quiz "Learn Quiz" with all questions
       | mode       | learn |
       | pass score | 100   |
     When I start the quiz

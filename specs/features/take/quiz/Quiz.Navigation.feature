@@ -11,7 +11,7 @@ Feature: Quiz navigation buttons
       | question                    | answers                                            |
       | Which animal has long nose? | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?  | Marseille, Lyon, Paris (*), Toulouse               |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
 
   Scenario: Back button is not visible on the first question
     When I start quiz "Quiz"
@@ -61,7 +61,7 @@ Feature: Quiz navigation buttons
     Then I see the submit button as inactive
 
   Scenario: Browser navigation during quiz
-    Given a quiz "Learn Quiz" with all questions
+    Given quiz "Learn Quiz" with all questions
       | mode | learn |
     When I start quiz "Learn Quiz"
     And I see question "Which animal has long nose?"

@@ -9,7 +9,7 @@ Feature: Edit Quiz in Workspace
       | 2 + 2 = ? | 4 (*), 5 |
       | 3 * 3 = ? | 9 (*), 6 |
       | 4 / 2 = ? | 2 (*), 3 |
-    And a quiz "Math Quiz" with all questions
+    And quiz "Math Quiz" with all questions
 
   Scenario: Edit quiz title and description
     When I navigate to edit quiz "Math Quiz"

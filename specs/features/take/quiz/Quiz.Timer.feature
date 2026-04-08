@@ -5,7 +5,7 @@ Feature: Run timer
 
 
   Scenario Outline: Countdown timer counts down and shows timeout message
-    Given a quiz "Quiz" with 2 questions
+    Given quiz "Quiz" with 2 questions
       | time limit | <time limit> |
 
     When I start the quiz
@@ -27,7 +27,7 @@ Feature: Run timer
 
 
   Scenario: Timed out quiz with no answers scores zero
-    Given a quiz "Quiz" with 2 questions
+    Given quiz "Quiz" with 2 questions
       | pass score | 85   |
       | time limit | 60s  |
     When I start the quiz
@@ -40,7 +40,7 @@ Feature: Run timer
 
 
   Scenario: Partial answers are scored when quiz times out
-    Given a quiz "Quiz" with 2 questions
+    Given quiz "Quiz" with 2 questions
       | pass score | 85   |
       | time limit | 60s  |
     When I start the quiz

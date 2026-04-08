@@ -9,10 +9,10 @@ Feature: Quiz question pool size
       | Planet    | Which planet is known as the Red Planet?              | Mars (*), Venus           |
       | Australia | What's the capital city of Australia?                 | Canberra (*), Sydney      |
       | Fruit     | Which fruit is known for having seeds on the outside? | Strawberry (*), Blueberry |
-    And a quiz "Normal" with all questions
+    And quiz "Normal" with all questions
       | pass score | 100 |
       | size       | 2   |
-    And a quiz "Full" with all questions
+    And quiz "Full" with all questions
       | pass score | 100 |
 
   Scenario: Normal mode

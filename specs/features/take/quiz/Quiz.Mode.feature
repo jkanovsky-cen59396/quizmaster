@@ -9,9 +9,9 @@ Feature: Quiz exam and learn mode
       | question              | answers         |
       | Jaký nábytek má Ikea? | Stůl (*), Auto  |
       | Jaké nádobí má Ikea?  | Talíř (*), Kolo |
-    And a quiz "Exam Quiz" with all questions
+    And quiz "Exam Quiz" with all questions
       | mode | exam |
-    And a quiz "Learn Quiz" with all questions
+    And quiz "Learn Quiz" with all questions
       | mode | learn |
 
   Scenario: Exam mode

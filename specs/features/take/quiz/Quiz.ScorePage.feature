@@ -7,7 +7,7 @@ Feature: Quiz score page display
       | bookmark | question                            | answers                              | explanation |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          | Rayleigh    |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |             |
-    And a quiz "Display Quiz" with all questions
+    And quiz "Display Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Display Quiz"
     When I answer "Blue"
@@ -25,7 +25,7 @@ Feature: Quiz score page display
       | bookmark | question                            | answers                              | explanation |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          | Rayleigh    |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |             |
-    And a quiz "Options Quiz" with all questions
+    And quiz "Options Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Options Quiz"
     When I answer "Blue"
@@ -38,7 +38,7 @@ Feature: Quiz score page display
       | bookmark | question                            | answers                              | explanation |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          | Rayleigh    |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |             |
-    And a quiz "Explanation Quiz" with all questions
+    And quiz "Explanation Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Explanation Quiz"
     When I answer "Blue"
@@ -51,7 +51,7 @@ Feature: Quiz score page display
       | bookmark | question                            | answers                              | explanation |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          | Rayleigh    |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |             |
-    And a quiz "Select Quiz" with all questions
+    And quiz "Select Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Select Quiz"
     When I answer "Blue"

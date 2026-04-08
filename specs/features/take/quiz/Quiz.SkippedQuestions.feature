@@ -8,7 +8,7 @@ Feature: Quiz skipped questions
       | question                    | answers                                            |
       | Which animal has long nose? | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?  | Marseille, Lyon, Paris (*), Toulouse               |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
 
   Scenario: Skip first question and see bookmark
     When I start quiz "Quiz"

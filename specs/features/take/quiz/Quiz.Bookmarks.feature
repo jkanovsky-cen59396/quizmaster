@@ -8,7 +8,7 @@ Feature: Bookmark questions during a quiz
       | bookmark  | question                                 | answers              |
       | Planet    | Which planet is known as the Red Planet? | Mars (*), Venus      |
       | Australia | What's the capital city of Australia?     | Sydney, Canberra (*) |
-    And a quiz "Quiz" with questions "Planet, Australia"
+    And quiz "Quiz" with questions "Planet, Australia"
       | pass score | 85 |
 
   Scenario: Mark bookmark and return to bookmark

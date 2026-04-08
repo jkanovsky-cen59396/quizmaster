@@ -7,7 +7,7 @@ Feature: Delete Quiz
       | question  | answers  |
       | 2 + 2 = ? | 4 (*), 5 |
       | 3 * 3 = ? | 9 (*), 6 |
-    And a quiz "Math Quiz" with all questions
+    And quiz "Math Quiz" with all questions
 
   Scenario: Delete quiz removes it from the workspace
     When I delete quiz "Math Quiz" from the workspace
@@ -32,7 +32,7 @@ Feature: Delete Quiz
     Then I do not see question "2 + 2 = ?" in the list
 
   Scenario: Question in another quiz stays non-deletable
-    And a quiz "Another Quiz" with all questions
+    And quiz "Another Quiz" with all questions
     When I delete quiz "Math Quiz" from the workspace
     And I confirm the deletion
     Then I cannot delete question "2 + 2 = ?"

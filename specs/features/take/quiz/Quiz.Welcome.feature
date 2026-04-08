@@ -10,12 +10,12 @@ Feature: Quiz Welcome page
       | Q2       | 2 + 2 = ? | 4 (*), 5  |
       | Q3       | 3 + 3 = ? | 6 (*), 7  |
       | Q4       | 4 + 4 = ? | 8 (*), 9  |
-    And a quiz "Quiz A" with questions "Q1, Q2, Q3"
+    And quiz "Quiz A" with questions "Q1, Q2, Q3"
       | description | Description A |
       | mode        | exam          |
       | pass score  | 66            |
       | time limit  | 120s           |
-    And a quiz "Quiz B" with questions "Q1, Q2, Q3, Q4"
+    And quiz "Quiz B" with questions "Q1, Q2, Q3, Q4"
       | description | Description B |
       | mode        | learn         |
       | pass score  | 75            |

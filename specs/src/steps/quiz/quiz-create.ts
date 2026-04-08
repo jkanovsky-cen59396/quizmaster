@@ -5,7 +5,7 @@ import { createQuizViaUI } from '#steps/quiz/ops.ts'
 import { createTrivialQuestions, ensureWorkspace, navigateToWorkspace } from '#steps/workspace/ops.ts'
 import { parseKey } from '#steps/world'
 
-Given('a quiz {string} with {int} questions', async function (quizName: string, n: number, properties?: DataTable) {
+Given('quiz {string} with {int} questions', async function (quizName: string, n: number, properties?: DataTable) {
     await ensureWorkspace(this)
     await navigateToWorkspace(this)
     await createTrivialQuestions(this, n)
@@ -13,13 +13,13 @@ Given('a quiz {string} with {int} questions', async function (quizName: string, 
     await createQuizViaUI(this, quizName, allBookmarks, properties)
 })
 
-Given('a quiz {string} with all questions', async function (quizName: string, properties?: DataTable) {
+Given('quiz {string} with all questions', async function (quizName: string, properties?: DataTable) {
     const allBookmarks = Object.keys(this.questionBookmarks)
     await createQuizViaUI(this, quizName, allBookmarks, properties)
 })
 
 Given(
-    'a quiz {string} with questions {string}',
+    'quiz {string} with questions {string}',
     async function (quizName: string, bookmarkList: string, properties?: DataTable) {
         const bookmarks = parseKey(bookmarkList)
         await createQuizViaUI(this, quizName, bookmarks, properties)

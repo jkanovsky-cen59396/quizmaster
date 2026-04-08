@@ -5,7 +5,7 @@ Feature: Show stats
 
 
   Scenario: Show empty stats page for quiz
-    Given a quiz "Quiz" with 2 questions
+    Given quiz "Quiz" with 2 questions
     When I open quiz "Quiz" statistics
     Then I see summary stats table
       | Started | Finished | Unfinished | Timeout |
@@ -14,7 +14,7 @@ Feature: Show stats
 
 
   Scenario: Attempt and summary statistics for evaluated attempts
-    Given a quiz "Stats Quiz" with 2 questions
+    Given quiz "Stats Quiz" with 2 questions
       | time limit | 30s |
 
     # Attempt finishes on time
@@ -54,7 +54,7 @@ Feature: Show stats
 
 
   Scenario: In-progress attempt shows in statistics
-    Given a quiz "Stats Quiz" with 2 questions
+    Given quiz "Stats Quiz" with 2 questions
       | time limit | 60s |
 
     When I start the quiz
@@ -70,7 +70,7 @@ Feature: Show stats
 
 
   Scenario: Abandoned attempt shows in statistics when time limit expires
-    Given a quiz "Stats Quiz" with 2 questions
+    Given quiz "Stats Quiz" with 2 questions
       | time limit | 5s |
 
     When I start the quiz

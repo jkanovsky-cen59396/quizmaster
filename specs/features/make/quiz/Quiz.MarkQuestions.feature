@@ -7,7 +7,7 @@ Feature: Edit CR_Quiz from Workspace and mark questions belonging to the quiz
       | Question2 |  answer1 (*), answer2, answer3 |
       | Question3 |  answer1, answer2 (*), answer3 |
       | Question4 | answer1 , answer2 (*), answer3 |
-    And a quiz "CR_Quiz" with questions "Question1, Question2"
+    And quiz "CR_Quiz" with questions "Question1, Question2"
 
 Scenario Outline: Mark the questions belonging to the quiz
     When I navigate to edit quiz "CR_Quiz"

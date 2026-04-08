@@ -18,7 +18,7 @@ Feature: Quiz Difficulty
       | Single   |       | Capital of France? | Paris (*), Nice                 |
       | Easy     | true  | Food?              | Pork (*), Fish (*), Shoe        |
       | Hard     | false | Animal?            | Dog (*), Cat (*), Bird (*), Car |
-    And a quiz "Quiz" with questions "Single, Easy, Hard"
+    And quiz "Quiz" with questions "Single, Easy, Hard"
       | difficulty | <difficulty> |
     When I start quiz "Quiz"
     And I progress through the questions

@@ -11,7 +11,7 @@ Feature: Quiz answer state
       | bookmark | question                            | answers                              |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Quiz"
     Then I see question "Sky"
@@ -22,7 +22,7 @@ Feature: Quiz answer state
       | bookmark | question                            | answers                              |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Quiz"
     When I answer "Green"
@@ -34,7 +34,7 @@ Feature: Quiz answer state
       | bookmark | question                            | answers                              |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Quiz"
     When I answer "Green"
@@ -45,7 +45,7 @@ Feature: Quiz answer state
       | bookmark | question                            | answers                              |
       | Sky      | What is the standard colour of sky? | Red, Blue (*), Green, Black          |
       | France   | What is capital of France?          | Marseille, Lyon, Paris (*), Toulouse |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
       | pass score | 85 |
     Given I start quiz "Quiz"
     When I answer "Green"
@@ -60,7 +60,7 @@ Feature: Quiz answer state
       | question                    | answers                                            |
       | Which animal has long nose? | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?  | Marseille, Lyon, Paris (*), Toulouse               |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
     When I start quiz "Quiz"
     And I answer "Elephant"
     * I check answer "Lyon,Paris"
@@ -73,7 +73,7 @@ Feature: Quiz answer state
       | question                    | answers                                            |
       | Which animal has long nose? | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?  | Marseille, Lyon, Paris (*), Toulouse               |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
     When I start quiz "Quiz"
     And I answer "Elephant"
     Then I see question "What is capital of France?"
@@ -85,7 +85,7 @@ Feature: Quiz answer state
       | question                    | answers                                            |
       | Which animal has long nose? | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?  | Marseille, Lyon, Paris (*), Toulouse               |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
     When I start quiz "Quiz"
     Then I see question "Which animal has long nose?"
     When I answer "Elephant, Anteater"
@@ -99,7 +99,7 @@ Feature: Quiz answer state
       | question                    | answers                                            |
       | Which animal has long nose? | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?  | Marseille, Lyon, Paris (*), Toulouse               |
-    And a quiz "Quiz" with all questions
+    And quiz "Quiz" with all questions
     When I start quiz "Quiz"
     Then I see question "Which animal has long nose?"
     When I check answer "Elephant"
@@ -115,7 +115,7 @@ Feature: Quiz answer state
       | Which animal has long nose?    | Elephant (*), Anteater (*), Swordfish (*), Bulldog |
       | What is capital of France?     | Marseille, Lyon, Paris (*), Toulouse               |
       | What is capital of Madagascar? | Antananarivo (*), Nairobi, Cairo, Dakar            |
-    And a quiz "Three Questions" with all questions
+    And quiz "Three Questions" with all questions
     When I start quiz "Three Questions"
     Then I see question "Which animal has long nose?"
     And I skip the question
