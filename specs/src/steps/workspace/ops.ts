@@ -71,30 +71,3 @@ export const createTrivialQuestions = async (world: QuizmasterWorld, n: number) 
         await createQuestionInWorkspace(world, `Q${i}`, `Question ${i}?`, answerRawTable)
     }
 }
-
-// Used by the bulk `Given workspace "..." with questions` path; will be folded
-// into createQuestion when Step 4 refactors that path.
-export const createNumericalQuestionInWorkspace = async (
-    world: QuizmasterWorld,
-    bookmark: string,
-    question: string,
-    correctAnswer: string,
-    explanation?: string,
-    tolerance?: string,
-) => {
-    await world.workspacePage.createNewQuestion()
-    world.questionWip = emptyQuestion()
-    await enterQuestion(world, question)
-    await world.questionEditPage.setNumericalChoice()
-    await world.questionEditPage.enterNumericalCorrectAnswer(correctAnswer)
-    if (tolerance != null) {
-        await world.questionEditPage.enterNumericalTolerance(tolerance)
-    }
-    if (explanation) {
-        await world.questionEditPage.enterQuestionExplanation(explanation)
-        world.questionWip.explanation = explanation
-    }
-    world.questionWip.isNumerical = true
-    world.questionBookmarks[bookmark] = world.questionWip
-    await world.questionEditPage.submit()
-}
