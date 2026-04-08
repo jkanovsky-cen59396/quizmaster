@@ -49,6 +49,5 @@ export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec)
     world.bookmarkQuestion(spec.bookmark ?? spec.text, world.questionWip)
 
     await world.questionEditPage.submit()
-    await world.page.waitForURL(`**/workspace/${world.workspaceGuid}`)
-    await world.workspacePage.editQuestion(world.questionWip.question)
+    await world.workspacePage.waitForUrl(world.workspaceGuid)
 }

@@ -6,6 +6,7 @@ export class WorkspacePage {
     // ── Navigation ───────────────────────────────────
 
     goto = (guid: string) => this.page.goto(`/workspace/${guid}`, { waitUntil: 'networkidle' })
+    waitForUrl = (guid: string) => this.page.waitForURL(`**/workspace/${guid}`)
 
     // ── Workspace name ───────────────────────────────
 

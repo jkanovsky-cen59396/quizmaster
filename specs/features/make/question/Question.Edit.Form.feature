@@ -13,6 +13,7 @@ Feature: Edit question form
         | Berlin |   | Germany |
       * with explanation "Czechia is a country in Europe. Czechs love beer."
       * saved and bookmarked as "Czechia"
+    When I start editing question "Czechia"
     Then I see question text "What is the capital of Czech Republic?"
       * I see tag "geography"
       * the question is single choice
@@ -30,7 +31,8 @@ Feature: Edit question form
         | Berlin |   | Germany |
       * with explanation "Czechia is a country in Europe. Czechs love beer."
       * saved and bookmarked as "Czechia"
-    When I enter question "What is the capital of Slovakia?"
+    When I start editing question "Czechia"
+      * I enter question "What is the capital of Slovakia?"
       * I enter answer 1 text "It's Brno", incorrect, with explanation "No, it's not Brno"
       * I enter answer 2 text "It's Prague"
       * I enter answer 2 explanation "No, it's not Prague"
@@ -57,9 +59,10 @@ Feature: Edit question form
         | Berlin |   | Germany |
       * with explanation "Czechia is a country in Europe. Czechs love beer."
       * saved and bookmarked as "Czechia"
+    When I start editing question "Czechia"
       * I mark the question as multiple choice
       * I mark answer 1 as correct
-    When I submit the question
+      * I submit the question
       * I start editing question "Czechia"
     Then I see answer 1 as correct
       * I see answer 2 as correct
@@ -73,6 +76,7 @@ Feature: Edit question form
       | Berlin |   | Germany |
       * with explanation "Czechia is a country in Europe. Czechs love beer."
       * saved and bookmarked as "Czechia"
+    When I start editing question "Czechia"
     Then I see question text "What is the capital of Czech Republic?"
       * I can delete 3 answers
       * I delete answer 3

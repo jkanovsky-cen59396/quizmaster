@@ -13,10 +13,11 @@ Feature: Edit question - validations
       | Berlin |   | Germany |
     * with explanation "Czechia is a country in Europe. Czechs love beer."
     * saved and bookmarked as "Czechia"
-    Given I enter question ""
+    When I start editing question "Czechia"
+    * I enter question ""
     * I enter answer 1 text "", incorrect, with explanation ""
     * I enter question explanation ""
-    When I attempt to submit the question
+    * I attempt to submit the question
     Then I see error messages
       | empty-question           |
       | empty-answer             |
@@ -30,11 +31,12 @@ Feature: Edit question - validations
       | Prague   | * | Yes     |
       | Berlin   |   | Germany |
     * saved and bookmarked as "Czechia"
-    Given I enter question ""
+    When I start editing question "Czechia"
+    * I enter question ""
     * I enter answer 1 text "", incorrect, with explanation ""
     * I enter answer 3 text "", incorrect, with explanation ""
     * I enter question explanation ""
-    When I attempt to submit the question
+    * I attempt to submit the question
     Then I see error messages
       | empty-question           |
       | empty-answer             |
