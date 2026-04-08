@@ -19,10 +19,6 @@ Given('home page', async function () {
     await this.homePage.goto()
 })
 
-Given('workspace {string}', async function (name: string) {
-    await createWorkspace(this, name)
-})
-
 Given('workspace {string} with questions', async function (name: string, data: DataTable) {
     await createWorkspace(this, name)
 
