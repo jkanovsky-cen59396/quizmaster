@@ -87,6 +87,8 @@ export const createTrivialQuestions = async (world: QuizmasterWorld, n: number) 
     }
 }
 
+// Used by the bulk `Given workspace "..." with questions` path; will be folded
+// into createQuestion when Step 4 refactors that path.
 export const createNumericalQuestionInWorkspace = async (
     world: QuizmasterWorld,
     bookmark: string,
@@ -110,17 +112,4 @@ export const createNumericalQuestionInWorkspace = async (
     world.questionWip.isNumerical = true
     world.questionBookmarks[bookmark] = world.questionWip
     await world.questionEditPage.submit()
-}
-
-export const createNumericalQuestionInAutoWorkspace = async (
-    world: QuizmasterWorld,
-    bookmark: string,
-    question: string,
-    correctAnswer: string,
-    explanation?: string,
-    tolerance?: string,
-) => {
-    await ensureWorkspace(world)
-    await navigateToWorkspace(world)
-    await createNumericalQuestionInWorkspace(world, bookmark, question, correctAnswer, explanation, tolerance)
 }
