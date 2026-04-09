@@ -18,6 +18,8 @@ export interface QuestionSpec {
     bookmark?: string
 }
 
+export type QuestionAnswersSpec = Pick<QuestionSpec, 'answers' | 'numericalAnswer' | 'tolerance'>
+
 export const isNumericalSpec = (spec: QuestionSpec): boolean => spec.numericalAnswer !== undefined
 
 export const isMultipleChoiceSpec = (answers: AnswerSpecs): boolean => answers.filter(a => a.correct).length > 1

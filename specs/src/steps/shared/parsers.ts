@@ -1,41 +1,36 @@
-import type { AnswerSpec, QuestionSpec } from '#steps/shared/specs.ts'
+import type { AnswerSpec, QuestionAnswersSpec, QuestionSpec } from '#steps/shared/specs.ts'
 
+const CHOICE_PATTERN = /^(.+?)(\s*\(\*\))?$/
 const NUMERICAL_PATTERN = /^(-?\d+(?:\.\d+)?)\s*±\s*(\d+(?:\.\d+)?)$/
 
-export const parseAnswers = (answersStr: string): AnswerSpec[] =>
-    answersStr.split(',').map(raw => {
-        const trimmed = raw.trim()
-        const correct = trimmed.endsWith('(*)')
-        return {
-            text: correct ? trimmed.slice(0, -3).trimEnd() : trimmed,
-            correct,
-        }
-    })
+const parseChoiceAnswers = (answersStr: string): AnswerSpec[] =>
+    answersStr
+        .split(',')
+        .map(raw => raw.trim())
+        .map(anwersStr => {
+            const [, text, correctMarker] = anwersStr.match(CHOICE_PATTERN) ?? []
+            const correct = !!correctMarker
+            return {
+                text,
+                correct,
+            }
+        })
+
+const parseAnswers = (answersStr: string): QuestionAnswersSpec => {
+    const [, numericalAnswer, tolerance] = answersStr.match(NUMERICAL_PATTERN) ?? []
+    return numericalAnswer ? { answers: [], numericalAnswer, tolerance } : { answers: parseChoiceAnswers(answersStr) }
+}
 
 export const parseQuestionRow = (row: Record<string, string | undefined>): QuestionSpec => {
     const text = row.question ?? ''
-    const bookmark = row.bookmark || text
-    const numericalMatch = row.answers?.match(NUMERICAL_PATTERN)
-
-    if (numericalMatch) {
-        const [, numericalAnswer, tolerance] = numericalMatch
-        return {
-            text,
-            bookmark,
-            answers: [],
-            numericalAnswer,
-            tolerance,
-            explanation: row.explanation,
-        }
-    }
 
     return {
         text,
-        bookmark,
-        answers: parseAnswers(row.answers ?? ''),
+        ...parseAnswers(row.answers ?? ''),
         easy: row.easy === 'true',
         explanation: row.explanation,
         image: row.image,
         tag: row.tag,
+        bookmark: row.bookmark || text,
     }
 }
