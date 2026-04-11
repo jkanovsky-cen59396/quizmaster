@@ -6,7 +6,7 @@
         "quizmaster",
         "postgres"
     ],
-    "workspaceFolder": "/workspaces/quizmaster",
+    "workspaceFolder": "/home/dev/workspace/quizmaster",
     "remoteUser": "dev",
     "shutdownAction": "stopCompose",
     "forwardPorts": [
