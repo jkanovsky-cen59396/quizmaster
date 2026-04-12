@@ -1,6 +1,7 @@
 import type { Page, TestInfo } from '@playwright/test'
 
 import {
+    PageNavigation,
     WorkspaceCreatePage,
     HomePage,
     QuestionEditPage,
@@ -19,6 +20,7 @@ export class QuizmasterWorld {
         public page: Page,
         public testInfo: TestInfo,
     ) {
+        this.pageNavigation = new PageNavigation(this.page)
         this.questionEditPage = new QuestionEditPage(this.page)
         this.workspaceCreatePage = new WorkspaceCreatePage(this.page)
         this.takeQuestionPage = new TakeQuestionPage(this.page)
@@ -31,6 +33,7 @@ export class QuizmasterWorld {
         this.homePage = new HomePage(this.page)
     }
 
+    readonly pageNavigation: PageNavigation
     readonly questionEditPage: QuestionEditPage
     readonly workspaceCreatePage: WorkspaceCreatePage
     readonly takeQuestionPage: TakeQuestionPage

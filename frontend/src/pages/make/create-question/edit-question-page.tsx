@@ -25,9 +25,13 @@ export function EditQuestionPage() {
         })
     }
 
+    const handleBack = () => {
+        navigate(urls.workspace(workspaceId))
+    }
+
     return (
         <Page title="Edit Question" id="edit-question-page">
-            {question && <QuestionEditForm question={question} onSubmit={handleSubmit} />}
+            {question && <QuestionEditForm question={question} onSubmit={handleSubmit} onBack={handleBack} />}
         </Page>
     )
 }

@@ -32,10 +32,6 @@ Given('I start creating a new question', async function () {
     this.questionWip = { text: '', answers: [] }
 })
 
-Given('page {string}', async () => {
-    // marker step used in some scenarios for readability
-})
-
 Given('I start editing question {string}', async function (bookmark: string) {
     this.questionWip = this.questionBookmarks[bookmark]
     await this.workspacePage.goto(this.workspaceGuid)
@@ -59,10 +55,6 @@ Then('I see question edit page', async function () {
 
 Then('I see the question creation page', async function () {
     await this.questionEditPage.expectCreatePageVisible()
-})
-
-When('I go back to the workspace {string}', async function () {
-    await this.questionEditPage.back()
 })
 
 // Field assertions

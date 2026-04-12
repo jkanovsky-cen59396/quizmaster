@@ -82,18 +82,8 @@ Feature: Create Quiz from Workspace
     Then I see quiz question "What is a Sprint?"
     And I don't see quiz questions "What is a Backlog?"
 
-@skip
-Scenario: Test backButton
-  Given workspace "Testworkspace"
-  And page "Quiz Creation"
-  When I start creating a new quiz
-  And I see the quiz creation page
-  And I go back to the workspace "Testworkspace"
-  Then I see the workspace "Testworkspace"
-
 Scenario: Quiz time limit formatting
   Given workspace "Testworkspace"
-  And page "Quiz Creation"
   When I start creating a new quiz
   And I see the quiz creation page
   Then form reacts correctly to all given inputs
