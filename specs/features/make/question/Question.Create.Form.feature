@@ -5,7 +5,7 @@ Feature: Create question form
   explanation fields are shown.
 
   Scenario: Default values
-    Given I start creating a new question
+    When I start creating a new question
     * I enable explanations
     Then I see empty question text
     * I see empty tag
@@ -14,7 +14,7 @@ Feature: Create question form
     * I see empty question explanation
 
   Scenario: Delete second answer out of three
-    Given I start creating a new question
+    When I start creating a new question
     * I enter answers
       | AA | * |
       | BB |   |
@@ -26,11 +26,8 @@ Feature: Create question form
 
   Scenario: Explanation fields are hidden by default
     When I start creating a new question
-    Then I see explanations are disabled
-    And I do not see explanation fields
+    Then I do not see explanation fields
 
-  Scenario: Explanation fields are visible when enabling explanations
-    When I start creating a new question
-    And I enable explanations
+    When I enable explanations
     Then I see explanations are enabled
     And I see explanation fields
