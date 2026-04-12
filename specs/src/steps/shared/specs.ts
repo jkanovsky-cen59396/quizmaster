@@ -26,6 +26,9 @@ export const isMultipleChoiceSpec = (answers: AnswerSpecs): boolean => answers.f
 
 export const hasExplanations = (answers: AnswerSpecs): boolean => answers.some(a => a.explanation !== undefined)
 
+export type QuizMode = 'learn' | 'exam'
+export type Difficulty = 'easy' | 'hard' | 'keep-question'
+
 export interface QuizSpec {
     name: string
     questions: string[]

@@ -4,12 +4,12 @@ import { expectQuestion } from '#steps/question/expects.ts'
 import { expectNavigationButtons } from '#steps/quiz/expects.ts'
 import { openQuiz, startQuiz } from '#steps/quiz/ops.ts'
 
-Given('I open quiz {string}', async function (quizId: string) {
-    await openQuiz(this, quizId)
+Given('I open quiz {string}', async function (quizBookmark: string) {
+    await openQuiz(this, quizBookmark)
 })
 
-Given('I start quiz {string}', async function (quizId: string) {
-    await startQuiz(this, quizId)
+Given('I start quiz {string}', async function (quizBookmark: string) {
+    await startQuiz(this, quizBookmark)
 })
 
 Given('I start the quiz', async function () {

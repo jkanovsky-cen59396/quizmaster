@@ -1,7 +1,7 @@
 import type { QuizmasterWorld } from '#steps/world'
 
-export const openQuiz = async (world: QuizmasterWorld, quizId: string) => {
-    const quizUrl = world.quizBookmarks[quizId]?.url || `/quiz/${quizId}`
+export const openQuiz = async (world: QuizmasterWorld, quizBookmark: string) => {
+    const quizUrl = world.quizBookmarks[quizBookmark]
     await world.page.goto(quizUrl)
 }
 
@@ -12,11 +12,11 @@ export const ensureFakeClockInstalled = async (world: QuizmasterWorld) => {
     }
 }
 
-export const startQuiz = async (world: QuizmasterWorld, quizId: string) => {
+export const startQuiz = async (world: QuizmasterWorld, quizBookmark: string) => {
     await ensureFakeClockInstalled(world)
-    await openQuiz(world, quizId)
+    await openQuiz(world, quizBookmark)
     await world.quizWelcomePage.start()
-    world.activeQuizBookmark = quizId
+    world.activeQuizBookmark = quizBookmark
 }
 
 export const answerNth = async (world: QuizmasterWorld, n: number) => {

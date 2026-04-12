@@ -15,7 +15,6 @@ import {
 import type { QuestionSpec } from '#steps/shared/specs.ts'
 
 import { emptyQuestion, type Question } from './question.ts'
-import { emptyQuiz, type Quiz, type QuizBookmark } from './quiz.ts'
 
 export class QuizmasterWorld {
     constructor(
@@ -46,12 +45,9 @@ export class QuizmasterWorld {
     readonly homePage: HomePage
 
     workspaceGuid = ''
-    quizId = ''
 
     questionWip: Question = emptyQuestion()
     questionSpecWip: QuestionSpec | undefined = undefined
-    quizWip: Quiz = emptyQuiz()
-    nextAnswerIdx = 0
     questionBookmarks: Record<string, Question> = {}
     activeQuestionBookmark = ''
     get activeQuestion() {
@@ -66,10 +62,10 @@ export class QuizmasterWorld {
         this.activeQuestionBookmark = key
     }
 
-    quizBookmarks: Record<string, QuizBookmark> = {}
+    quizBookmarks: Record<string, string> = {}
     activeQuizBookmark = ''
 
-    bookmarkQuiz(key: string, bookmark: QuizBookmark) {
+    bookmarkQuiz(key: string, bookmark: string) {
         if (this.quizBookmarks[key] !== undefined) {
             throw new Error(`Duplicate quiz bookmark: "${key}"`)
         }

@@ -3,7 +3,7 @@ import { expect } from '@playwright/test'
 
 import { Then, When } from '#steps/fixture.ts'
 import { expectQuizFormErrors } from '#steps/quiz/expects.ts'
-import type { QuizMode } from '#steps/world/quiz.ts'
+import type { QuizMode } from '#steps/shared/specs.ts'
 
 When('I start creating a new quiz', async function () {
     await this.workspacePage.createNewQuiz()

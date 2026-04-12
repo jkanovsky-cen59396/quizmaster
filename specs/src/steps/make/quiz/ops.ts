@@ -1,6 +1,6 @@
 import { ensureWorkspace, navigateToWorkspace } from '#steps/make/workspace/ops.ts'
-import type { QuizSpec } from '#steps/shared/specs.ts'
-import { type Difficulty, type QuizMode, emptyQuizBookmark, type QuizmasterWorld } from '#steps/world'
+import type { Difficulty, QuizMode, QuizSpec } from '#steps/shared/specs.ts'
+import { type QuizmasterWorld } from '#steps/world'
 
 const toDifficulty = (difficulty: string): Difficulty => {
     const mapping: Record<string, Difficulty> = {
@@ -37,14 +37,11 @@ export const createQuiz = async (world: QuizmasterWorld, spec: QuizSpec) => {
         await quizPage.enterQuizFinalCount(spec.size)
     }
 
-    const timeLimitValue = await quizPage.timeLimitInput().inputValue()
     await quizPage.submit()
 
     // Navigate to quiz to capture its URL, then back to workspace
     await world.workspacePage.takeQuiz(spec.name)
     const quizUrl = new URL(world.page.url()).pathname
-    const bookmark = { ...emptyQuizBookmark(), url: quizUrl, title: spec.name }
-    bookmark.timeLimit = Number.parseInt(timeLimitValue)
-    world.bookmarkQuiz(spec.bookmark ?? spec.name, bookmark)
+    world.bookmarkQuiz(spec.bookmark ?? spec.name, quizUrl)
     await world.workspacePage.goto(world.workspaceGuid)
 }
