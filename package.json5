@@ -20,6 +20,7 @@
         "build:fe:dev": "cd frontend && pnpm build:dev",
         "build:fe:prod": "cd frontend && pnpm build:prod",
         "build:be": "cd backend && ./gradlew build",
+        "build:be:prod": "cd backend && ./gradlew bootJar",
 
         // Start Quizmaster in dev mode
         "start:be": "pnpm build:fe:dev && cd backend && ./gradlew bootRun",
