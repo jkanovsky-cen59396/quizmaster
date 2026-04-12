@@ -1,16 +1,16 @@
 import { expect } from '@playwright/test'
 
 import type { QuestionEditPage, TakeQuestionPage } from '#pages/index.ts'
-import type { Question } from '#steps/world'
+import type { QuestionSpec } from '#steps/shared/specs.ts'
 
-export const expectQuestion = async (takeQuestionPage: TakeQuestionPage, question: Question) => {
-    await takeQuestionPage.expectQuestionText(question.question)
+export const expectQuestion = async (takeQuestionPage: TakeQuestionPage, question: QuestionSpec) => {
+    await takeQuestionPage.expectQuestionText(question.text)
     const answers = question.answers
 
     await takeQuestionPage.expectAnswerCount(answers.length)
 
-    for (const [index, { answer }] of answers.entries()) {
-        await takeQuestionPage.expectAnswerText(index, answer)
+    for (const [index, { text }] of answers.entries()) {
+        await takeQuestionPage.expectAnswerText(index, text)
     }
 }
 

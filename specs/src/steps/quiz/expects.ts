@@ -2,7 +2,7 @@ import type { DataTable } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import type { QuestionPage, QuizCreatePage, QuizScorePage, QuizStatsPage, TakeQuestionPage } from '#pages/index.ts'
-import type { Answer } from '#steps/world'
+import type { AnswerSpec } from '#steps/shared/specs.ts'
 
 export const expectQuizResult = async (
     page: QuizScorePage,
@@ -34,11 +34,15 @@ export const expectOriginalResultNotVisible = async (page: QuizScorePage) => {
     await page.expectFirstResultNotVisible()
 }
 
-export const expectAllOptionsForQuestion = async (page: QuizScorePage, question: string, expectedAnswers: Answer[]) => {
+export const expectAllOptionsForQuestion = async (
+    page: QuizScorePage,
+    question: string,
+    expectedAnswers: AnswerSpec[],
+) => {
     const answers = await page.answers(question)
     expect(answers.length).toBe(expectedAnswers.length)
     for (const answer of expectedAnswers) {
-        expect(answers).toContain(answer.answer)
+        expect(answers).toContain(answer.text)
     }
 }
 

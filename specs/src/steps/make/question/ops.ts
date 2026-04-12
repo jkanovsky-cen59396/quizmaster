@@ -6,47 +6,53 @@ import {
     type AnswerSpec,
     type QuestionSpec,
 } from '#steps/shared/specs.ts'
-import { emptyQuestion, type Answer, emptyAnswer, type QuizmasterWorld } from '#steps/world'
+import type { QuizmasterWorld } from '#steps/world'
 
 // Mirrors the default count of empty answer rows shown by the question form.
 // If you change this, also change in frontend/src/pages/create-question/create-question.tsx
 const NUM_DEFAULT_ANSWERS = 2
 
 // ── Form helpers ────────────────────────────────────────
+// These drive the UI and optionally track changes in questionWip when it is
+// set (builder chain, GUI edit). The createQuestion pipeline does NOT set
+// questionWip — it bookmarks the spec directly.
 
 export const enterQuestion = async (world: QuizmasterWorld, question: string) => {
     await world.questionEditPage.enterQuestion(question)
-    world.questionWip.question = question
+    if (world.questionWip) world.questionWip.text = question
 }
 
 export const enterTag = async (world: QuizmasterWorld, tag: string) => {
     await world.questionEditPage.enterTag(tag)
-    world.questionWip.tags = [tag]
+    if (world.questionWip) world.questionWip.tag = tag
 }
 
 export const enterAIPrompt = async (world: QuizmasterWorld, prompt: string) => {
     await world.questionEditPage.enterAIPrompt(prompt)
 }
 
-const enterPartialAnswer = async (world: QuizmasterWorld, index: number, answer: Partial<Answer>) => {
-    const questionWip = world.questionWip
-    const origAnswer = questionWip.answers[index] || emptyAnswer()
-    questionWip.answers[index] = { ...origAnswer, ...answer }
-}
-
 export const enterAnswerText = async (world: QuizmasterWorld, index: number, answer: string) => {
     await world.questionEditPage.enterAnswerText(index, answer)
-    enterPartialAnswer(world, index, { answer })
+    if (world.questionWip) {
+        const wip = world.questionWip
+        wip.answers[index] = { ...wip.answers[index], text: answer }
+    }
 }
 
 export const markAnswerCorrectness = async (world: QuizmasterWorld, index: number, isCorrect: boolean) => {
     await world.questionEditPage.setAnswerCorrectness(index, isCorrect)
-    enterPartialAnswer(world, index, { isCorrect })
+    if (world.questionWip) {
+        const wip = world.questionWip
+        wip.answers[index] = { ...wip.answers[index], correct: isCorrect }
+    }
 }
 
 export const enterAnswerExplanation = async (world: QuizmasterWorld, index: number, explanation: string) => {
     await world.questionEditPage.enterAnswerExplanation(index, explanation)
-    enterPartialAnswer(world, index, { explanation })
+    if (world.questionWip) {
+        const wip = world.questionWip
+        wip.answers[index] = { ...wip.answers[index], explanation }
+    }
 }
 
 export const enterAnswer = async (
@@ -57,17 +63,19 @@ export const enterAnswer = async (
     explanation: string | undefined,
 ) => {
     await world.questionEditPage.enterAnswer(index, answer, isCorrect, explanation)
-    world.questionWip.answers[index] = { answer, isCorrect, explanation }
+    if (world.questionWip) {
+        world.questionWip.answers[index] = { text: answer, correct: isCorrect, explanation }
+    }
 }
 
 export const enterQuestionExplanation = async (world: QuizmasterWorld, explanation: string) => {
     await world.questionEditPage.enterQuestionExplanation(explanation)
-    world.questionWip.explanation = explanation
+    if (world.questionWip) world.questionWip.explanation = explanation
 }
 
 export const enterImageUrl = async (world: QuizmasterWorld, imageUrl: string) => {
     await world.questionEditPage.enterImageUrl(imageUrl)
-    world.questionWip.imageUrl = imageUrl
+    if (world.questionWip) world.questionWip.image = imageUrl
 }
 
 export async function submitQuestion(this: QuizmasterWorld) {
@@ -95,10 +103,12 @@ export const addAnswers = async (world: QuizmasterWorld, answers: AnswerSpec[]) 
 // ── createQuestion pipeline ─────────────────────────────
 
 export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec) => {
+    const savedWip = world.questionWip
+    world.questionWip = undefined
+
     await ensureWorkspace(world)
     await navigateToWorkspace(world)
     await world.workspacePage.createNewQuestion()
-    world.questionWip = emptyQuestion()
 
     await enterQuestion(world, spec.text)
 
@@ -106,7 +116,6 @@ export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec)
         await world.questionEditPage.setNumericalChoice()
         await world.questionEditPage.enterNumericalCorrectAnswer(spec.numericalAnswer as string)
         if (spec.tolerance) await world.questionEditPage.enterNumericalTolerance(spec.tolerance)
-        world.questionWip.isNumerical = true
     } else {
         if (spec.tag) await enterTag(world, spec.tag)
         await addAnswers(world, spec.answers)
@@ -116,8 +125,10 @@ export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec)
     if (spec.explanation) await enterQuestionExplanation(world, spec.explanation)
     if (spec.image) await enterImageUrl(world, spec.image)
 
-    world.bookmarkQuestion(spec.bookmark ?? spec.text, world.questionWip)
+    world.bookmarkQuestion(spec.bookmark ?? spec.text, spec)
 
     await world.questionEditPage.submit()
     await world.workspacePage.waitForUrl(world.workspaceGuid)
+
+    world.questionWip = savedWip
 }

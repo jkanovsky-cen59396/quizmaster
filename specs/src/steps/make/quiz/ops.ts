@@ -24,7 +24,7 @@ export const createQuiz = async (world: QuizmasterWorld, spec: QuizSpec) => {
     for (const bookmark of spec.questions) {
         const question = world.questionBookmarks[bookmark]
         if (!question) throw new Error(`Question bookmark "${bookmark}" not found`)
-        await quizPage.selectQuestion(question.question)
+        await quizPage.selectQuestion(question.text)
     }
 
     if (spec.description) await quizPage.enterDescription(spec.description)

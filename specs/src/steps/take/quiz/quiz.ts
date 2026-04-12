@@ -23,7 +23,7 @@ Then('I see question {string}', async function (bookmark: string) {
 
 Then('I do not see question {string}', async function (bookmark: string) {
     const question = this.questionBookmarks[bookmark]
-    await this.takeQuestionPage.expectQuestionTextNotToBe(question.question)
+    await this.takeQuestionPage.expectQuestionTextNotToBe(question.text)
 })
 
 When('I proceed to the next question', async function () {

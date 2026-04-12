@@ -6,14 +6,14 @@ import type { AnswerSpec, QuestionSpec } from '#steps/shared/specs.ts'
 import type { QuizmasterWorld } from '#steps/world'
 
 const requireSpec = (world: QuizmasterWorld): QuestionSpec => {
-    if (!world.questionSpecWip) {
+    if (!world.questionWip) {
         throw new Error('No question spec in progress — start with `Given a question "..."`')
     }
-    return world.questionSpecWip
+    return world.questionWip
 }
 
 Given('question {string}', function (question: string) {
-    this.questionSpecWip = {
+    this.questionWip = {
         text: question,
         answers: [],
     }
@@ -57,5 +57,5 @@ Given('saved and bookmarked as {string}', async function (bookmark: string) {
     const spec = requireSpec(this)
     spec.bookmark = bookmark
     await createQuestion(this, spec)
-    this.questionSpecWip = undefined
+    this.questionWip = undefined
 })

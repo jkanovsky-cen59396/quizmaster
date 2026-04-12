@@ -8,7 +8,7 @@ import { answerQuestion } from '#steps/take/question/ops.ts'
 
 When('I take question {string}', async function (bookmark: string) {
     await this.workspacePage.goto(this.workspaceGuid)
-    await this.workspacePage.takeQuestion(this.questionBookmarks[bookmark].question)
+    await this.workspacePage.takeQuestion(this.questionBookmarks[bookmark].text)
     this.activeQuestionBookmark = bookmark
 })
 
@@ -74,7 +74,7 @@ Then('no answer is selected', async function () {
 })
 
 Then('I see the question explanation', async function () {
-    await expectTextToBe(this.takeQuestionPage.questionExplanationLocator(), this.activeQuestion.explanation)
+    await expectTextToBe(this.takeQuestionPage.questionExplanationLocator(), this.activeQuestion.explanation ?? '')
 })
 
 Then('I see individual explanations per answer:', async function (dataTable: DataTable) {

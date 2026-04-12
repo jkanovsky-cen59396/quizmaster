@@ -1,7 +1,8 @@
+import { isNumericalSpec } from '#steps/shared/specs.ts'
 import type { QuizmasterWorld } from '#steps/world'
 
-const findQuestionByTitle = (world: QuizmasterWorld, title: string) =>
-    Object.values(world.questionBookmarks).find(q => q.question === title)
+const findQuestionByText = (world: QuizmasterWorld, text: string) =>
+    Object.values(world.questionBookmarks).find(q => q.text === text)
 
 export const answerQuestion = async (world: QuizmasterWorld, answerList: string) => {
     if (world.lastAnsweredTitle) {
@@ -13,8 +14,8 @@ export const answerQuestion = async (world: QuizmasterWorld, answerList: string)
     await world.takeQuestionPage.waitForLoaded()
     const title = (await world.takeQuestionPage.questionText()) ?? ''
     world.lastAnsweredTitle = title
-    const question = findQuestionByTitle(world, title)
-    if (question?.isNumerical) {
+    const question = findQuestionByText(world, title)
+    if (question && isNumericalSpec(question)) {
         await world.takeQuestionPage.fillNumericalAnswer(answerList)
         return
     }

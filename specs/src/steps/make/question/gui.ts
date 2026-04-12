@@ -25,13 +25,11 @@ import {
     expectErrorMessages,
 } from '#steps/question/expects.ts'
 import { parseAnswerTable } from '#steps/shared/parsers.ts'
-import { emptyQuestion } from '#steps/world'
 
 Given('I start creating a question', async function () {
     await ensureWorkspace(this)
     await navigateToWorkspace(this)
     await this.workspacePage.createNewQuestion()
-    this.questionWip = emptyQuestion()
 })
 
 Given('page {string}', async () => {
@@ -43,8 +41,9 @@ When('I start creating a new question', async function () {
 })
 
 Given('I start editing question {string}', async function (bookmark: string) {
+    this.questionWip = this.questionBookmarks[bookmark]
     await this.workspacePage.goto(this.workspaceGuid)
-    await this.workspacePage.editQuestion(this.questionBookmarks[bookmark].question)
+    await this.workspacePage.editQuestion(this.questionWip.text)
     this.activeQuestionBookmark = bookmark
 })
 

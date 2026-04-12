@@ -41,7 +41,7 @@ export const finishQuizInSeconds = async (world: QuizmasterWorld, seconds: numbe
 export const progressThroughQuestions = async (world: QuizmasterWorld) => {
     const textToBookmark: Record<string, string> = {}
     for (const [bookmark, question] of Object.entries(world.questionBookmarks)) {
-        textToBookmark[question.question] = bookmark
+        textToBookmark[question.text] = bookmark
     }
 
     const questionCount = Object.keys(textToBookmark).length
