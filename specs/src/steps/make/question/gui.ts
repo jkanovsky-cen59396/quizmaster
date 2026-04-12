@@ -16,7 +16,7 @@ import {
     submitQuestion,
     enterTag,
 } from '#steps/make/question/ops.ts'
-import { ensureWorkspace, navigateToWorkspace } from '#steps/make/workspace/ops.ts'
+import { ensureWorkspace } from '#steps/make/workspace/ops.ts'
 import {
     expectAnswer,
     expectDeleteButtonsState,
@@ -28,7 +28,6 @@ import { parseAnswerTable } from '#steps/shared/parsers.ts'
 
 Given('I start creating a question', async function () {
     await ensureWorkspace(this)
-    await navigateToWorkspace(this)
     await this.workspacePage.createNewQuestion()
     this.questionWip = { text: '', answers: [] }
 })

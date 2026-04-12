@@ -14,9 +14,6 @@ export const createWorkspace = async (world: QuizmasterWorld, name: string) => {
 export const ensureWorkspace = async (world: QuizmasterWorld) => {
     if (!world.workspaceGuid) {
         await createWorkspace(world, 'Default Workspace')
+        await world.workspacePage.waitForUrl(world.workspaceGuid)
     }
-}
-
-export const navigateToWorkspace = async (world: QuizmasterWorld) => {
-    await world.workspacePage.goto(world.workspaceGuid)
 }

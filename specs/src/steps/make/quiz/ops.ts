@@ -1,4 +1,4 @@
-import { ensureWorkspace, navigateToWorkspace } from '#steps/make/workspace/ops.ts'
+import { ensureWorkspace } from '#steps/make/workspace/ops.ts'
 import type { Difficulty, QuizMode, QuizSpec } from '#steps/shared/specs.ts'
 import { type QuizmasterWorld } from '#steps/world'
 
@@ -15,7 +15,6 @@ const toDifficulty = (difficulty: string): Difficulty => {
 
 export const createQuiz = async (world: QuizmasterWorld, spec: QuizSpec) => {
     await ensureWorkspace(world)
-    await navigateToWorkspace(world)
     await world.workspacePage.createNewQuiz()
 
     const quizPage = world.quizCreatePage

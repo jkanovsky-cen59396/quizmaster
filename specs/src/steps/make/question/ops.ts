@@ -1,5 +1,5 @@
 import type { QuestionEditPage } from '#pages/index.ts'
-import { ensureWorkspace, navigateToWorkspace } from '#steps/make/workspace/ops.ts'
+import { ensureWorkspace } from '#steps/make/workspace/ops.ts'
 import {
     hasExplanations,
     isMultipleChoiceSpec,
@@ -93,7 +93,6 @@ export async function submitQuestion(this: QuizmasterWorld) {
 
 export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec) => {
     await ensureWorkspace(world)
-    await navigateToWorkspace(world)
     await world.workspacePage.createNewQuestion()
 
     const questionPage = world.questionEditPage
