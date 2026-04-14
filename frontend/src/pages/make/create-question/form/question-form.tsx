@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { postAiAssistant } from '#api/ai-assistant.ts'
 import type { QuestionApiData } from '#api/question.ts'
-import type { Question } from '#model/question.ts'
+import type { Question, QuestionType } from '#model/question.ts'
 import {
     SubmitButton,
     Form,
@@ -27,6 +27,18 @@ interface QuestionEditProps {
     readonly onBack?: () => void
 }
 
+const buildAiPrompt = (prompt: string, questionType: QuestionType) => {
+    const trimmedPrompt = prompt.trim()
+    const typeInstructionByQuestionType: Record<QuestionType, string> = {
+        single: 'This must be a single choice question with exactly 1 correct answer.',
+        multiple: 'This must be a multiple choice question with at least 2 correct answers. Never return exactly 1 correct answer.',
+        numerical: ''
+    }
+
+    const typeInstruction = typeInstructionByQuestionType[questionType]
+    return typeInstruction ? `${trimmedPrompt}\n\n${typeInstruction}` : trimmedPrompt
+}
+
 export const QuestionEditForm = ({ question, onSubmit, onBack }: QuestionEditProps) => {
     const isEditing = question != null
     const state = useQuestionFormState(question)
@@ -45,7 +57,7 @@ export const QuestionEditForm = ({ question, onSubmit, onBack }: QuestionEditPro
         setAiLoading(true)
 
         try {
-            const response = await postAiAssistant(state.aiPromptText)
+            const response = await postAiAssistant(buildAiPrompt(state.aiPromptText, state.questionType))
             state.applyAiResponse(response)
         } catch (error) {
             const message = error instanceof Error ? error.message : 'AI assistant request failed.'

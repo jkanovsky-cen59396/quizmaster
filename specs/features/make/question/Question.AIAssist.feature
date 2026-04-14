@@ -3,9 +3,9 @@ Feature: Generate question using AI
   @ai @slow
   Scenario: Generate a single-choice question
     Given I start creating a new question
+    And the question is single choice
     When I ask AI:
       | Generate a question about capital cities |
-      | with 1 correct answer                   |
       | and 2 incorrect answers                 |
     Then Question field is not empty
     And the question is single choice
@@ -15,9 +15,9 @@ Feature: Generate question using AI
   @ai @slow
   Scenario: Generate a multiple-choice question
     Given I start creating a new question
+    And I mark the question as multiple choice
     When I ask AI:
       | Generate a question about European capitals |
-      | with 2 correct answers                      |
       | and 2 incorrect answers                     |
     Then Question field is not empty
     And the question is multiple choice
@@ -60,11 +60,12 @@ Feature: Generate question using AI
   @ai @slow
   Scenario: Regenerate replaces previous AI response
     Given I start creating a new question
+    And the question is single choice
     When I ask AI:
       | Generate a question about capital cities |
-      | with 1 correct answer                   |
       | and 2 incorrect answers                 |
     Then the question is single choice
+    And I mark the question as multiple choice
     When I ask AI:
       | Generate a question about European capitals |
       | with 2 correct answers                      |
