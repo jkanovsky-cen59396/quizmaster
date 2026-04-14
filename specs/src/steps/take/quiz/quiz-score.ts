@@ -35,6 +35,11 @@ Then(
     },
 )
 
+Then('I see correct answer {string} for question {string}', async function (correctAnswer: string, question: string) {
+    const answers = await this.quizScorePage.answers(question)
+    expect(answers).toContain(correctAnswer)
+})
+
 Then('I see user select {string} for question {string}', async function (userSelect: string, question: string) {
     const answerLabel = await this.quizScorePage.checkedAnswerLabel(question)
     expect(answerLabel).toBe(userSelect)
