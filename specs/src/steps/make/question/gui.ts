@@ -140,6 +140,14 @@ Then('I do not see explanation fields', async function () {
     await this.questionEditPage.expectNoExplanationFields()
 })
 
+Then('I do not see Generate Explanations button', async function () {
+    await this.questionEditPage.expectGenerateExplanationsButtonNotVisible()
+})
+
+Then('I see Generate Explanations button', async function () {
+    await this.questionEditPage.expectGenerateExplanationsButtonVisible()
+})
+
 Then('I see 2 default empty answers', async function () {
     await this.questionEditPage.expectAnswerRowCount(2)
 
@@ -192,6 +200,10 @@ Then('all answers have explanations', async function () {
     await this.questionEditPage.expectAllAnswersHaveExplanations()
 })
 
+Then('all explanation fields are empty', async function () {
+    await this.questionEditPage.expectAllAnswerExplanationsEmpty()
+})
+
 Then('Question field is not empty', async function () {
     await this.questionEditPage.expectQuestionValueNotEmpty()
 })
@@ -213,6 +225,10 @@ When('I ask AI:', async function (dataTable: DataTable) {
         }),
         this.questionEditPage.clickAiAssist(),
     ])
+})
+
+When('I click Generate Explanations', async function () {
+    await this.questionEditPage.clickGenerateExplanations()
 })
 
 When(/I mark the question as (single|multiple|numerical) choice/, async function (choice: string) {

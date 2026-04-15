@@ -30,6 +30,7 @@ export interface QuestionFormState {
     readonly questionExplanation: string
     readonly showExplanations: boolean
     readonly imageUrl: string
+    readonly isAiGenerated: boolean
 }
 
 export type { QuestionType }
@@ -50,6 +51,8 @@ export const useQuestionFormState = (question?: Question) => {
     const [showExplanations, setShowExplanations] = useState(
         question?.explanations?.some(explanation => !!explanation) ?? false,
     )
+    const [isAiGenerated, setIsAiGenerated] = useState(false)
+    const [generatedExplanations, setGeneratedExplanations] = useState<readonly string[]>([])
     const nextId = useRef(0)
     const genId = () => nextId.current++
     const [answerIds, setAnswerIds] = useState<readonly number[]>(() =>
@@ -93,6 +96,7 @@ export const useQuestionFormState = (question?: Question) => {
     const addAnswer = () => {
         setAnswers([...answers, ''])
         setExplanations([...explanations, ''])
+        setGeneratedExplanations([...generatedExplanations, ''])
         setAnswerIds([...answerIds, genId()])
     }
 
@@ -105,18 +109,26 @@ export const useQuestionFormState = (question?: Question) => {
         setQuestionText(response.question)
         setQuestionType(response.correctAnswers.length > 1 ? 'multiple' : 'single')
         setAnswers(response.answers)
-        setExplanations(responseExplanations)
+        setExplanations(response.answers.map(() => ''))
+        setGeneratedExplanations(responseExplanations)
         setCorrectAnswers(Array.from(response.correctAnswers))
-        setShowExplanations(responseExplanations.some(explanation => explanation.trim() !== ''))
+        setShowExplanations(false)
         setNumericalAnswer('')
         setTolerance('')
         setIsEasy(false)
+        setIsAiGenerated(true)
         setAnswerIds(response.answers.map(() => genId()))
+    }
+
+    const generateExplanations = () => {
+        setExplanations(Array.from(generatedExplanations))
+        setShowExplanations(true)
     }
 
     const removeAnswer = (idx: number) => {
         setAnswers(answers.filter((_, i) => i !== idx))
         setExplanations(explanations.filter((_, i) => i !== idx))
+        setGeneratedExplanations(generatedExplanations.filter((_, i) => i !== idx))
         setAnswerIds(answerIds.filter((_, i) => i !== idx))
 
         const sortedCorrectAnswers = [...correctAnswers]
@@ -153,6 +165,7 @@ export const useQuestionFormState = (question?: Question) => {
         isEasy,
         showExplanations,
         imageUrl,
+        isAiGenerated,
         setQuestionText,
         setTagText,
         setAiPromptText,
@@ -166,6 +179,7 @@ export const useQuestionFormState = (question?: Question) => {
         setShowExplanations,
         setImageUrl,
         applyAiResponse,
+        generateExplanations,
     }
 }
 

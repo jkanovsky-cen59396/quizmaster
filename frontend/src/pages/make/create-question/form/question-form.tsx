@@ -30,9 +30,9 @@ interface QuestionEditProps {
 const buildAiPrompt = (prompt: string, questionType: QuestionType) => {
     const trimmedPrompt = prompt.trim()
     const typeInstructionByQuestionType: Record<QuestionType, string> = {
-        single: 'This must be a single choice question with exactly 1 correct answer.',
+        single: 'This must be a single choice question with exactly 1 correct answer. Return a non-empty explanation for every answer.',
         multiple:
-            'This must be a multiple choice question with at least 2 correct answers. Never return exactly 1 correct answer.',
+            'This must be a multiple choice question with at least 2 correct answers. Never return exactly 1 correct answer. Return a non-empty explanation for every answer.',
         numerical: '',
     }
 
@@ -162,6 +162,8 @@ export const QuestionEditForm = ({ question, onSubmit, onBack }: QuestionEditPro
                 <AnswersEdit
                     setShowExplanations={state.setShowExplanations}
                     showExplanations={state.showExplanations}
+                    showGenerateExplanationsButton={state.isAiGenerated}
+                    generateExplanations={state.generateExplanations}
                     answerStates={state.answerStates}
                     isMultipleChoice={state.isMultipleChoice}
                     addAnswer={state.addAnswer}

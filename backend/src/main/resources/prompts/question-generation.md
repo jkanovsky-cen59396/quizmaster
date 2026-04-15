@@ -16,6 +16,7 @@ Generate:
 - Exactly 1 question related to the topic
 - The correct and incorrect answer options as specified above
 - Use the same language as the user's prompt
+- ALWAYS provide a concise explanation for EVERY answer option
 
 Return ONLY valid JSON with no additional text, no markdown, no code fences:
 
@@ -35,8 +36,9 @@ CRITICAL REQUIREMENTS FOR JSON RESPONSE:
    - explanations[2] explains answers[2]
    - And so on...
 4. The length of "explanations" MUST EQUAL the length of "answers". ALWAYS.
-5. If the user did not request explanations, use empty strings ("") for each explanation.
+5. EVERY explanation must be non-empty, specific, and educational.
 6. NEVER skip or omit any explanation. NEVER return fewer explanations than answers.
+7. This applies to BOTH single-choice and multiple-choice questions.
 
 Example with 3 answers (1 correct, 2 incorrect):
 {
@@ -46,12 +48,12 @@ Example with 3 answers (1 correct, 2 incorrect):
     "explanations": ["Paris is the capital city of France.", "Lyon is the third-largest city but not the capital.", "Marseille is a major port city but not the capital."]
 }
 
-Example with explanations as empty strings (if not requested):
+Example with single-choice topic:
 {
-    "question": "What is 2 + 2?",
-    "answers": ["4", "5", "3"],
+    "question": "Which particle has a positive electric charge?",
+    "answers": ["Proton", "Neutron", "Photon"],
     "correctAnswers": [0],
-    "explanations": ["", "", ""]
+    "explanations": ["A proton carries a positive electric charge and is found in the atomic nucleus.", "A neutron is electrically neutral, so it does not have a positive charge.", "A photon is a quantum of electromagnetic radiation and has no electric charge."]
 }
 
 Rules:

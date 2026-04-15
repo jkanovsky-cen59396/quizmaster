@@ -37,6 +37,13 @@
         white-space: nowrap;
     }
 
+    .answer-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
     .question-input-with-action {
         position: relative;
     }
@@ -134,6 +141,10 @@
         > .row > .check {
             min-width: 0;
             margin-left: 0;
+        }
+
+        .answer-controls {
+            align-items: stretch;
         }
 
         .question-textarea-with-action {

@@ -38,7 +38,9 @@ interface AnswersProps {
     readonly answerStates: readonly AnswerState[]
     readonly isMultipleChoice: boolean
     readonly addAnswer: () => void
+    readonly generateExplanations: () => void
     readonly showExplanations: boolean
+    readonly showGenerateExplanationsButton: boolean
     readonly setShowExplanations: (show: boolean | ((show: boolean) => boolean)) => void
     readonly removeAnswer: (idx: number) => void
 }
@@ -47,7 +49,9 @@ export const AnswersEdit = ({
     answerStates,
     isMultipleChoice,
     addAnswer,
+    generateExplanations,
     showExplanations,
+    showGenerateExplanationsButton,
     setShowExplanations,
     removeAnswer,
 }: AnswersProps) => {
@@ -55,12 +59,19 @@ export const AnswersEdit = ({
 
     return (
         <Field label="Enter your answers" required>
-            <CheckField
-                id="show-explanation"
-                label="Show explanations"
-                onToggle={handleToggleExplanations}
-                checked={showExplanations}
-            />
+            <div className="answer-controls">
+                <CheckField
+                    id="show-explanation"
+                    label="Show explanations"
+                    onToggle={handleToggleExplanations}
+                    checked={showExplanations}
+                />
+                {showGenerateExplanationsButton && (
+                    <Button id="generate-explanations" className="secondary button" onClick={generateExplanations}>
+                        Generate Explanations
+                    </Button>
+                )}
+            </div>
             {answerStates.map((state, idx) => (
                 <AnswerRow
                     key={state.id}

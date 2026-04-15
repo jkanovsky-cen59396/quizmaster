@@ -22,10 +22,12 @@ export class QuestionEditPage {
     enterAIPrompt = (prompt: string) => this.aiPromptLocator().fill(prompt)
     questionValue = () => this.questionLocator().inputValue()
 
-    private aiAssistButtonLocator = () => this.page.getByRole('button', { name: /Generate/i })
+    private aiAssistButtonLocator = () => this.page.locator('#question-ai-assistant-button')
     clickAiAssist = () => this.aiAssistButtonLocator().click()
+    clickGenerateExplanations = () => this.generateExplanationsButtonLocator().click()
 
     private showExplanationLocator = () => this.page.locator('#show-explanation')
+    private generateExplanationsButtonLocator = () => this.page.locator('#generate-explanations')
     explanationsEnabled = () => this.showExplanationLocator().isChecked()
     enableExplanations = () => this.showExplanationLocator().check()
     disableExplanations = () => this.showExplanationLocator().uncheck()
@@ -134,6 +136,9 @@ export class QuestionEditPage {
     expectAiBlockVisible = () => expect(this.aiPromptLocator().first()).toBeVisible()
     expectAiBlockNotVisible = () => expect(this.aiPromptLocator().first()).not.toBeVisible()
     expectNoExplanationFields = () => expect(this.explanationFieldsLocator()).toHaveCount(0)
+    expectGenerateExplanationsButtonNotVisible = () =>
+        expect(this.generateExplanationsButtonLocator()).not.toBeVisible()
+    expectGenerateExplanationsButtonVisible = () => expect(this.generateExplanationsButtonLocator()).toBeVisible()
     expectAnswerRowCount = (count: number) => expect(this.answerRowsLocator()).toHaveCount(count)
     expectAnswerRowCountGreaterThanOrEqual = async (count: number) =>
         expect(await this.answerRowsLocator().count()).toBeGreaterThanOrEqual(count)
@@ -162,6 +167,16 @@ export class QuestionEditPage {
         for (let i = 0; i < count; i++) {
             const value = await answerExplanations.nth(i).inputValue()
             expect(value.trim().length).toBeGreaterThan(0)
+        }
+    }
+
+    expectAllAnswerExplanationsEmpty = async () => {
+        const answerExplanations = this.explanationFieldsLocator()
+        const count = await answerExplanations.count()
+        expect(count).toBeGreaterThan(0)
+
+        for (let i = 0; i < count; i++) {
+            await expect(answerExplanations.nth(i)).toHaveValue('')
         }
     }
 }
