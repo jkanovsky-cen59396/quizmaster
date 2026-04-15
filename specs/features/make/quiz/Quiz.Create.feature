@@ -57,6 +57,7 @@ Feature: Create Quiz from Workspace
       | 3 * 3 = ?                      | 9 (*), 6           |
       | 4 / 2 = ?                      | 2 (*), 3           |
       | Jaký nábytek má Ikea?          | Stůl (*), Auto     |
+      | Jaké má nádobí Ikea?           | Talíř (*), Kolo    |
       | Jaké nádobí má Ikea?           | Talíř (*), Kolo    |
       | Jaký venkovní Nábytek má Ikea? | Židle (*), Triangl |
     When I start creating a new quiz
@@ -67,10 +68,13 @@ Feature: Create Quiz from Workspace
     And I don't see quiz questions "<hiddenQuestion2>"
 
     Examples:
-      | filter  | visibleQuestion1      | visibleQuestion2               | hiddenQuestion1 | hiddenQuestion2       |
-      |       2 |             2 + 2 = ? |                      4 / 2 = ? |       3 * 3 = ? | Jaký nábytek má Ikea? |
-      | Ikea    | Jaký nábytek má Ikea? | Jaké nádobí má Ikea?           |       2 + 2 = ? |             3 * 3 = ? |
-      | nábytek | Jaký nábytek má Ikea? | Jaký venkovní Nábytek má Ikea? |       2 + 2 = ? |             4 / 2 = ? |
+      | filter    | visibleQuestion1      | visibleQuestion2               | hiddenQuestion1       | hiddenQuestion2                |
+      |         2 |             2 + 2 = ? |                      4 / 2 = ? |             3 * 3 = ? | Jaký nábytek má Ikea?          |
+      | Ikea      | Jaký nábytek má Ikea? | Jaké nádobí má Ikea?           |             2 + 2 = ? |                      3 * 3 = ? |
+      | nábytek   | Jaký nábytek má Ikea? | Jaký venkovní Nábytek má Ikea? |             2 + 2 = ? |                      4 / 2 = ? |
+      | nábyt     | Jaký nábytek má Ikea? | Jaký venkovní Nábytek má Ikea? |             2 + 2 = ? |                      4 / 2 = ? |
+#      | má nádobí | Jaké má nádobí Ikea?  | Jaké nádobí má Ikea?           |             2 + 2 = ? |                      4 / 2 = ? |
+#      | má nád    | Jaké má nádobí Ikea?  | Jaké nádobí má Ikea?           | Jaký nábytek má Ikea? | Jaký venkovní Nábytek má Ikea? |
 
   Scenario: Filter questions in quiz creation by tag
     Given workspace "Tags" with questions
