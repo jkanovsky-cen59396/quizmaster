@@ -8,6 +8,11 @@ Given('I open quiz {string}', async function (quizBookmark: string) {
     await openQuiz(this, quizBookmark)
 })
 
+Given('I open quiz questions for {string}', async function (quizBookmark: string) {
+    const quizUrl = this.quizBookmarks[quizBookmark]
+    await this.page.goto(`${quizUrl}/questions`)
+})
+
 Given('I start quiz {string}', async function (quizBookmark: string) {
     await startQuiz(this, quizBookmark)
 })

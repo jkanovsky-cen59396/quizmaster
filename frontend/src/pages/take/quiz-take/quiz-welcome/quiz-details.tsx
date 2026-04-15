@@ -4,6 +4,7 @@ import './quiz-details.scss'
 
 export interface QuizDetailsProps {
     readonly quiz: Quiz
+    readonly canStart: boolean
     readonly onStart: () => void
 }
 
@@ -11,7 +12,7 @@ const getFeedbackText = (mode: string): string => {
     return mode === 'learn' ? 'Continuous feedback' : 'Feedback at the end'
 }
 
-export const QuizDetails = ({ quiz, onStart }: QuizDetailsProps) => (
+export const QuizDetails = ({ quiz, canStart, onStart }: QuizDetailsProps) => (
     <div className="quiz-details-container">
         <h1 className="quiz-details-page-title">Welcome to the quiz</h1>
         <div className="quiz-details-card">
@@ -38,7 +39,7 @@ export const QuizDetails = ({ quiz, onStart }: QuizDetailsProps) => (
                 </div>
             </div>
             <div className="quiz-details-footer">
-                <StartButton onClick={onStart} />
+                <StartButton onClick={onStart} disabled={!canStart} />
             </div>
         </div>
     </div>

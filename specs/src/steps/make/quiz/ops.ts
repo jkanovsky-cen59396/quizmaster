@@ -31,6 +31,8 @@ export const createQuiz = async (world: QuizmasterWorld, spec: QuizSpec) => {
     if (spec.passScore) await quizPage.passScoreInput().fill(spec.passScore)
     if (spec.timeLimit) await quizPage.timeLimitInput().fill(spec.timeLimit)
     if (spec.difficulty) await quizPage.selectDifficulty(toDifficulty(spec.difficulty))
+    if (spec.startAt) await quizPage.enterStartDateTime(spec.startAt)
+    if (spec.endAt) await quizPage.enterEndDateTime(spec.endAt)
     if (spec.size) {
         await quizPage.selectRandomizedFunction()
         await quizPage.enterQuizFinalCount(spec.size)

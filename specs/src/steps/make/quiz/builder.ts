@@ -6,7 +6,38 @@ import { createQuiz } from '#steps/make/quiz/ops.ts'
 import type { QuizSpec } from '#steps/shared/specs.ts'
 import { parseKey } from '#steps/world'
 
-const KNOWN_PROPS = new Set(['description', 'mode', 'pass score', 'time limit', 'difficulty', 'size'])
+const KNOWN_PROPS = new Set([
+    'description',
+    'mode',
+    'pass score',
+    'time limit',
+    'difficulty',
+    'size',
+    'start date',
+    'end date',
+])
+
+const RELATIVE_DATE_PATTERN = /^today(?:\s*([+-])\s*(\d+))?$/i
+
+const pad = (value: number) => String(value).padStart(2, '0')
+
+const formatDate = (date: Date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+
+const resolveDateTimeInput = (value: string, boundary: 'start' | 'end') => {
+    const normalized = value.trim()
+    const match = normalized.match(RELATIVE_DATE_PATTERN)
+
+    if (!match) return normalized
+
+    const [, operator, offsetRaw] = match
+    const offset = offsetRaw ? Number.parseInt(offsetRaw, 10) : 0
+    const delta = operator === '-' ? -offset : offset
+    const date = new Date()
+    date.setHours(0, 0, 0, 0)
+    date.setDate(date.getDate() + delta)
+
+    return `${formatDate(date)}T${boundary === 'start' ? '00:00' : '23:59'}`
+}
 
 const applyProperties = (spec: QuizSpec, properties?: DataTable) => {
     if (!properties) return
@@ -18,6 +49,8 @@ const applyProperties = (spec: QuizSpec, properties?: DataTable) => {
         if (key === 'time limit') spec.timeLimit = value
         if (key === 'difficulty') spec.difficulty = value
         if (key === 'size') spec.size = value
+        if (key === 'start date') spec.startAt = resolveDateTimeInput(value, 'start')
+        if (key === 'end date') spec.endAt = resolveDateTimeInput(value, 'end')
     }
 }
 

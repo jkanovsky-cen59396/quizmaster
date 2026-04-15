@@ -4,31 +4,40 @@ import { useNavigate, useParams } from 'react-router'
 import { useApi } from '#api/hooks.ts'
 import { fetchQuiz } from '#api/quiz.ts'
 import { createAttempt } from '#api/stats.ts'
-import { setQuizRunId } from '#fe/helpers.ts'
+import { setQuizRun } from '#fe/helpers.ts'
+import { urls } from '#fe/urls.ts'
 import type { Quiz } from '#model/quiz.ts'
 
+import { isQuizAvailable } from '../quiz-availability.ts'
 import { QuizDetails } from './quiz-details.tsx'
 
 export const QuizWelcomePage = () => {
     const navigate = useNavigate()
     const params = useParams()
     const [quiz, setQuiz] = useState<Quiz>()
+    const [isStarting, setIsStarting] = useState(false)
 
     useApi(params.id, fetchQuiz, setQuiz)
 
+    const canStart = quiz ? isQuizAvailable(quiz) && !isStarting : false
+
     const onStart = async () => {
-        const quizId = params.id
-        navigate(`/quiz/${quizId}/questions`)
+        if (!quiz || !canStart) return
+
+        setIsStarting(true)
         sessionStorage.removeItem('quizAnswers')
 
-        if (quiz) {
+        try {
             const attempt = await createAttempt({
                 quizId: quiz.id,
                 startedAt: new Date().toISOString(),
             })
-            setQuizRunId(attempt.id)
+            setQuizRun(attempt.id, quiz.id)
+            navigate(urls.quizTake(quiz.id))
+        } catch {
+            setIsStarting(false)
         }
     }
 
-    return quiz && <QuizDetails quiz={quiz} onStart={onStart} />
+    return quiz && <QuizDetails quiz={quiz} canStart={canStart} onStart={onStart} />
 }

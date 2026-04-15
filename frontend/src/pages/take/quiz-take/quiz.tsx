@@ -2,7 +2,6 @@ import './quiz.scss'
 import { useRef, useState } from 'react'
 
 import { patchAttempt } from '#api/stats.ts'
-import { getQuizRunId } from '#fe/helpers.ts'
 import { type AnswerIdxs, type QuestionAnswer, evaluateAnswer } from '#model/question.ts'
 import type { Quiz } from '#model/quiz.ts'
 import { QuestionForm as StandaloneQuestionForm, QuizQuestionProvider } from '#pages/take/question-take/index.ts'
@@ -17,6 +16,7 @@ import { TimeLimit } from './time-limit/with-time-limit.tsx'
 
 interface QuestionProps {
     readonly quiz: Quiz
+    readonly quizRunId: number
     readonly onEvaluate: (quizAnswers: QuizAnswers, timedOut?: boolean) => void
 }
 
@@ -53,7 +53,7 @@ export const QuestionForm = (props: QuestionProps) => {
     }
 
     const handleTimeOut = () => {
-        patchAttempt(getQuizRunId(), { timedOutAt: new Date().toISOString() })
+        patchAttempt(props.quizRunId, { timedOutAt: new Date().toISOString() })
     }
 
     const evaluateTimedOut = () => {
@@ -94,7 +94,7 @@ export const QuestionForm = (props: QuestionProps) => {
         } else {
             answerCounts.current.incorrect++
         }
-        patchAttempt(getQuizRunId(), {
+        patchAttempt(props.quizRunId, {
             correctAnswers: answerCounts.current.correct,
             incorrectAnswers: answerCounts.current.incorrect,
         })

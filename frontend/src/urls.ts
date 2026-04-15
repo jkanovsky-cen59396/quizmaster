@@ -32,6 +32,7 @@ export const urls = {
     workspaceQuizStats: (workspaceId: string, id: number | string) => `/workspace/${workspaceId}/quiz/${id}/stats`,
 
     quizWelcome: (id: number | string) => `/quiz/${id}`,
+    quizTake: (id: number | string) => `/quiz/${id}/questions`,
 }
 
 export const useWorkspaceId = () => {

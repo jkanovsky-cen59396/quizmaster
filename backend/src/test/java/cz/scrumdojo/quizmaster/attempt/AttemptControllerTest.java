@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -50,6 +52,59 @@ public class AttemptControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(id))
             .andExpect(jsonPath("$.quizId").value(quiz.getId()));
+    }
+
+    @Test
+    public void createAttemptWhenQuizIsWithinAvailabilityWindow() throws Exception {
+        Question question = fixtures.save(fixtures.question());
+        Quiz quiz = fixtures.save(fixtures.quiz(question)
+            .startAt(LocalDateTime.now().minusDays(1))
+            .endAt(LocalDateTime.now().plusDays(1))
+            .build());
+
+        mockMvc.perform(post("/api/attempt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {
+                        "quizId": %d,
+                        "startedAt": "2026-01-01T10:00:00"
+                    }
+                    """.formatted(quiz.getId())))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").isNumber());
+    }
+
+    @Test
+    public void createAttemptBeforeQuizAvailabilityWindowReturnsForbidden() throws Exception {
+        Question question = fixtures.save(fixtures.question());
+        Quiz quiz = fixtures.save(fixtures.quiz(question)
+            .startAt(LocalDateTime.now().plusDays(1))
+            .endAt(LocalDateTime.now().plusDays(2))
+            .build());
+
+        mockMvc.perform(post("/api/attempt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {
+                        "quizId": %d,
+                        "startedAt": "2026-01-01T10:00:00"
+                    }
+                    """.formatted(quiz.getId())))
+            .andExpect(status().isForbidden())
+            .andExpect(jsonPath("$.message").value("Quiz is not currently available."));
+    }
+
+    @Test
+    public void createAttemptForNonExistentQuizReturnsNotFound() throws Exception {
+        mockMvc.perform(post("/api/attempt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {
+                        "quizId": -1,
+                        "startedAt": "2026-01-01T10:00:00"
+                    }
+                    """))
+            .andExpect(status().isNotFound());
     }
 
     @Test

@@ -103,3 +103,16 @@
 .quiz-details-footer #start:active {
     transform: translateY(0);
 }
+
+.quiz-details-footer #start:disabled {
+    background: #dbe2eb;
+    color: #8b98aa;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.quiz-details-footer #start:disabled:hover,
+.quiz-details-footer #start:disabled:active {
+    transform: none;
+    box-shadow: none;
+}

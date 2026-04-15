@@ -17,8 +17,12 @@ export const BackButton = ({ onClick }: WithOnClick) => (
     </Button>
 )
 
-export const StartButton = ({ onClick }: WithOnClick) => (
-    <Button id="start" type="button" onClick={onClick}>
+interface StartButtonProps extends WithOnClick {
+    readonly disabled?: boolean
+}
+
+export const StartButton = ({ onClick, disabled = false }: StartButtonProps) => (
+    <Button id="start" type="button" onClick={onClick} disabled={disabled}>
         Start
     </Button>
 )

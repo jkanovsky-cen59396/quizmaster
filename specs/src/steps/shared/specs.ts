@@ -38,5 +38,7 @@ export interface QuizSpec {
     timeLimit?: string
     difficulty?: string
     size?: string
+    startAt?: string
+    endAt?: string
     bookmark?: string
 }

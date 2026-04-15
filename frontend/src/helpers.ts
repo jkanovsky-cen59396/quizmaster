@@ -43,14 +43,19 @@ export const updated = <T>(answers: readonly T[], questionIdx: number, answerIdx
     return newAnswers
 }
 
-export const getRandomRunId = (): number => Math.floor(Math.random() * 1000000000)
-export const setQuizRunId = (runId: number) => sessionStorage.setItem('quizRunId', runId.toString())
-export const getQuizRunId = (): number => {
-    if (sessionStorage.getItem('quizRunId')) {
-        return Number.parseInt(sessionStorage.getItem('quizRunId') ?? '0')
-    }
+const quizRunIdKey = (quizId: number) => `quizRunId:${quizId}`
 
-    const runId = getRandomRunId()
-    setQuizRunId(runId)
-    return runId
+export const setQuizRun = (runId: number, quizId: number) => {
+    sessionStorage.setItem(quizRunIdKey(quizId), runId.toString())
+}
+
+export const clearQuizRun = (quizId: number) => sessionStorage.removeItem(quizRunIdKey(quizId))
+
+export const getStoredQuizRunId = (quizId: number): number | null => {
+    const storedRunId = sessionStorage.getItem(quizRunIdKey(quizId))
+
+    if (!storedRunId) return null
+
+    const runId = Number.parseInt(storedRunId, 10)
+    return Number.isNaN(runId) ? null : runId
 }
