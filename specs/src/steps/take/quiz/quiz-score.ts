@@ -44,3 +44,28 @@ Then('I see user select {string} for question {string}', async function (userSel
     const answerLabel = await this.quizScorePage.checkedAnswerLabel(question)
     expect(answerLabel).toBe(userSelect)
 })
+
+Then('I see the correct answer bar {string} for question {string}', async function (value: string, question: string) {
+    await expect(this.quizScorePage.correctAnswerBarLocator(question)).toBeVisible()
+    await expect(this.quizScorePage.correctAnswerBarLocator(question)).toContainText(value)
+})
+
+Then('I do not see my answer bar for question {string}', async function (question: string) {
+    await expect(this.quizScorePage.userAnswerBarLocator(question)).toHaveCount(0)
+})
+
+Then(
+    'I see my answer bar {string} within tolerance for question {string}',
+    async function (value: string, question: string) {
+        await expect(this.quizScorePage.numericalWithinToleranceBarLocator(question)).toBeVisible()
+        await expect(this.quizScorePage.numericalWithinToleranceBarLocator(question)).toContainText(value)
+    },
+)
+
+Then(
+    'I see my answer bar {string} as incorrect for question {string}',
+    async function (value: string, question: string) {
+        await expect(this.quizScorePage.numericalIncorrectBarLocator(question)).toBeVisible()
+        await expect(this.quizScorePage.numericalIncorrectBarLocator(question)).toContainText(value)
+    },
+)
