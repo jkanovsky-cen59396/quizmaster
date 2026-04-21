@@ -113,49 +113,49 @@ public class AiAssistantServiceTest {
     @Test
     void validateResponse_valid() {
         assertDoesNotThrow(() -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse("What is 2+2?", new String[]{"4", "5"}, new int[]{0}, new String[]{"", ""})
+            new AiAssistantService.AssistantResponse("What is 2+2?", new String[]{"4", "5"}, new int[]{0}, new String[]{"", ""}, null, null)
         ));
     }
 
     @Test
     void validateResponse_emptyQuestion() {
         assertThrows(ResponseStatusException.class, () -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse("", new String[]{"4", "5"}, new int[]{0}, new String[]{"", ""})
+            new AiAssistantService.AssistantResponse("", new String[]{"4", "5"}, new int[]{0}, new String[]{"", ""}, null, null)
         ));
     }
 
     @Test
     void validateResponse_nullQuestion() {
         assertThrows(ResponseStatusException.class, () -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse(null, new String[]{"4", "5"}, new int[]{0}, new String[]{"", ""})
+            new AiAssistantService.AssistantResponse(null, new String[]{"4", "5"}, new int[]{0}, new String[]{"", ""}, null, null)
         ));
     }
 
     @Test
     void validateResponse_tooFewAnswers() {
         assertThrows(ResponseStatusException.class, () -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse("Question?", new String[]{"only one"}, new int[]{0}, new String[]{""})
+            new AiAssistantService.AssistantResponse("Question?", new String[]{"only one"}, new int[]{0}, new String[]{""}, null, null)
         ));
     }
 
     @Test
     void validateResponse_noCorrectAnswers() {
         assertThrows(ResponseStatusException.class, () -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse("Question?", new String[]{"a", "b"}, new int[]{}, new String[]{"", ""})
+            new AiAssistantService.AssistantResponse("Question?", new String[]{"a", "b"}, new int[]{}, new String[]{"", ""}, null, null)
         ));
     }
 
     @Test
     void validateResponse_indexOutOfBounds() {
         assertThrows(ResponseStatusException.class, () -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse("Question?", new String[]{"a", "b"}, new int[]{5}, new String[]{"", ""})
+            new AiAssistantService.AssistantResponse("Question?", new String[]{"a", "b"}, new int[]{5}, new String[]{"", ""}, null, null)
         ));
     }
 
     @Test
     void validateResponse_negativeIndex() {
         assertThrows(ResponseStatusException.class, () -> AiAssistantService.validateResponse(
-            new AiAssistantService.AssistantResponse("Question?", new String[]{"a", "b"}, new int[]{-1}, new String[]{"", ""})
+            new AiAssistantService.AssistantResponse("Question?", new String[]{"a", "b"}, new int[]{-1}, new String[]{"", ""}, null, null)
         ));
     }
 
