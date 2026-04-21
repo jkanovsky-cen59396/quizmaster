@@ -1,48 +1,15 @@
-import { ensureWorkspace } from '#steps/make/workspace/ops.ts'
-import type { Difficulty, QuizMode, QuizSpec } from '#steps/shared/specs.ts'
-import { type QuizmasterWorld } from '#steps/world'
-
-const toDifficulty = (difficulty: string): Difficulty => {
-    const mapping: Record<string, Difficulty> = {
-        'Keep Question': 'keep-question',
-        Easy: 'easy',
-        Hard: 'hard',
-    }
-    const result = mapping[difficulty]
-    if (!result) throw new Error(`Unknown difficulty: "${difficulty}"`)
-    return result
-}
+import { ensureWorkspaceGuid } from '#steps/make/workspace/ops.ts'
+import { createQuizViaRest } from '#steps/shared/api.ts'
+import type { QuizSpec } from '#steps/shared/specs.ts'
+import type { QuizmasterWorld } from '#steps/world'
 
 export const createQuiz = async (world: QuizmasterWorld, spec: QuizSpec) => {
-    await ensureWorkspace(world)
-    await world.workspacePage.createNewQuiz()
+    await ensureWorkspaceGuid(world)
+    const id = await createQuizViaRest(world, world.workspaceGuid, spec)
+    world.bookmarkQuiz(spec.bookmark ?? spec.name, `/quiz/${id}`)
 
-    const quizPage = world.quizCreatePage
-    await quizPage.enterQuizName(spec.name)
-
-    for (const bookmark of spec.questions) {
-        const question = world.questionBookmarks[bookmark]
-        if (!question) throw new Error(`Question bookmark "${bookmark}" not found`)
-        await quizPage.selectQuestion(question.text)
-    }
-
-    if (spec.description) await quizPage.enterDescription(spec.description)
-    if (spec.mode) await quizPage.selectFeedbackMode(spec.mode as QuizMode)
-    if (spec.passScore) await quizPage.passScoreInput().fill(spec.passScore)
-    if (spec.timeLimit) await quizPage.timeLimitInput().fill(spec.timeLimit)
-    if (spec.difficulty) await quizPage.selectDifficulty(toDifficulty(spec.difficulty))
-    if (spec.startAt) await quizPage.enterStartDateTime(spec.startAt)
-    if (spec.endAt) await quizPage.enterEndDateTime(spec.endAt)
-    if (spec.size) {
-        await quizPage.selectRandomizedFunction()
-        await quizPage.enterQuizFinalCount(spec.size)
-    }
-
-    await quizPage.submit()
-
-    // Navigate to quiz to capture its URL, then back to workspace
-    await world.workspacePage.takeQuiz(spec.name)
-    const quizUrl = new URL(world.page.url()).pathname
-    world.bookmarkQuiz(spec.bookmark ?? spec.name, quizUrl)
-    await world.workspacePage.goto(world.workspaceGuid)
+    // Re-load the workspace page so its quiz list reflects the REST-inserted quiz.
+    // Several downstream GUI steps (e.g. "I see the quiz X in the workspace", "I take
+    // quiz X", "I navigate to edit quiz X") read from whatever page is currently loaded.
+    await world.page.goto(`/workspace/${world.workspaceGuid}`)
 }

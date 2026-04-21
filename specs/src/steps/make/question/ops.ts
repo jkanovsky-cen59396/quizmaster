@@ -88,6 +88,8 @@ export async function submitQuestion(this: QuizmasterWorld) {
 
 export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec) => {
     await ensureWorkspaceGuid(world)
-    await createQuestionViaRest(world, world.workspaceGuid, spec)
-    world.bookmarkQuestion(spec.bookmark ?? spec.text, spec)
+    const id = await createQuestionViaRest(world, world.workspaceGuid, spec)
+    const key = spec.bookmark ?? spec.text
+    world.bookmarkQuestion(key, spec)
+    world.questionIds[key] = id
 }

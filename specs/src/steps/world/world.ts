@@ -49,6 +49,7 @@ export class QuizmasterWorld {
 
     questionWip: QuestionSpec | undefined = undefined
     questionBookmarks: Record<string, QuestionSpec> = {}
+    questionIds: Record<string, number> = {}
     activeQuestionBookmark = ''
     get activeQuestion() {
         return this.questionBookmarks[this.activeQuestionBookmark]
