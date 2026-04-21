@@ -160,3 +160,27 @@ Feature: Create question - single/multiple choice
     * I edit question "What is π to two decimal places?" from the list
     Then I see question edit page
     And I see tolerance "0.5"
+
+Scenario: Create numerical question with 2 decimal digits
+    When I mark the question as numerical choice
+    * I enter question "What is π to two decimal places?"
+    * I enter numerical correct answer "3.14"
+    Then I see note "2 decimal digits will be required in the answer."
+
+Scenario: Edit numerical question with 2 decimal digits
+    When I mark the question as numerical choice
+    * I enter question "What is π to two decimal places?"
+    * I enter numerical correct answer "3.14"
+    * I submit the question
+    * I edit question "What is π to two decimal places?" from the list
+    Then I see question edit page
+    And I see note "2 decimal digits will be required in the answer."
+
+Scenario: Modify number of decimal digits
+    When I mark the question as numerical choice
+    * I enter question "What is π to two decimal places?"
+    * I enter numerical correct answer "3.14"
+    * I submit the question
+    * I edit question "What is π to two decimal places?" from the list
+    * I enter numerical correct answer "3.1415"
+    Then I see note "4 decimal digits will be required in the answer."

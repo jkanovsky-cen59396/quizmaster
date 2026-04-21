@@ -146,6 +146,13 @@ export const QuestionEditForm = ({ question, onSubmit, onBack }: QuestionEditPro
                         />
                         <ErrorMessage errorCode="empty-numerical-answer" />
                         <ErrorMessage errorCode="invalid-numerical-answer" />
+                        {(() => {
+                            const dotIndex = state.numericalAnswer.indexOf('.')
+                            if (dotIndex === -1) return null
+                            const decimalDigits = state.numericalAnswer.length - dotIndex - 1
+                            if (decimalDigits <= 0) return null
+                            return <p>{decimalDigits} decimal digits will be required in the answer.</p>
+                        })()}
                     </Field>
                     <Field label="Tolerance">
                         <input

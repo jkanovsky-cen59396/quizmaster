@@ -112,6 +112,10 @@ Then('I see tolerance {string}', async function (value: string) {
     await this.questionEditPage.expectNumericalTolerance(value)
 })
 
+Then('I see note {string}', async function (value: string) {
+    await this.questionEditPage.expectNumericalAnswerNote(value)
+})
+
 Then(/easy is (on|off)/, async function (value: string) {
     if (value === 'on') {
         await this.questionEditPage.expectEasyChecked()

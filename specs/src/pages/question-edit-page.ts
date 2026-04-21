@@ -47,6 +47,8 @@ export class QuestionEditPage {
     setNumericalChoice = () => this.questionTypeRadio('numerical').check()
 
     private numericalCorrectAnswerLocator = () => this.page.locator('#numerical-correct-answer')
+    private numericalAnswerFieldLocator = () =>
+        this.numericalCorrectAnswerLocator().locator('xpath=ancestor::div[contains(@class, "field")]')
     enterNumericalCorrectAnswer = (value: string) => this.numericalCorrectAnswerLocator().fill(value)
     numericalCorrectAnswerValue = () => this.numericalCorrectAnswerLocator().inputValue()
 
@@ -126,6 +128,7 @@ export class QuestionEditPage {
     expectNumericalAnswerVisible = () => expect(this.numericalCorrectAnswerLocator()).toBeVisible()
     expectNumericalAnswerNotVisible = () => expect(this.numericalCorrectAnswerLocator()).not.toBeVisible()
     expectNumericalCorrectAnswer = (value: string) => expect(this.numericalCorrectAnswerLocator()).toHaveValue(value)
+    expectNumericalAnswerNote = (value: string) => expect(this.numericalAnswerFieldLocator()).toContainText(value)
     expectNumericalTolerance = (value: string) => expect(this.numericalToleranceLocator()).toHaveValue(value)
     expectEasyChecked = () => expect(this.isEasyLocator()).toBeChecked()
     expectEasyUnchecked = () => expect(this.isEasyLocator()).not.toBeChecked()
