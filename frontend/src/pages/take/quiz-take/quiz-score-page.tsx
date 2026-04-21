@@ -1,7 +1,6 @@
+import { urls } from '#fe/urls.ts'
 import type { Quiz } from '#model/quiz.ts'
 import { LinkButton } from '#pages/components/link-button.tsx'
-import { urls } from '#fe/urls.ts'
-
 import './quiz.scss'
 import { QuestionFeedback } from './components/question.tsx'
 import type { QuizAnswers } from './quiz-answers-state.ts'
@@ -53,9 +52,7 @@ export const QuizScorePage = ({ quiz, quizAnswers }: QuizScorePageProps) => {
                 const answer = quizAnswers.finalAnswers[idx]
                 return <QuestionFeedback key={question.id} question={question} answer={answer} />
             })}
-            {workspaceGuid && (
-                <LinkButton id="my-workspace" label="My Workspace" to={urls.workspace(workspaceGuid)} />
-            )}
+            {workspaceGuid && <LinkButton id="my-workspace" label="My Workspace" to={urls.workspace(workspaceGuid)} />}
         </div>
     )
 }
