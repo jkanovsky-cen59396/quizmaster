@@ -15,4 +15,7 @@ Given('workspace {string} with questions', async function (name: string, data: D
     for (const row of data.hashes()) {
         await createQuestion(this, parseQuestionRow(row))
     }
+
+    // Re-load the workspace page so its question/quiz lists reflect REST-inserted data.
+    await this.page.goto(`/workspace/${this.workspaceGuid}`)
 })

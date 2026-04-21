@@ -1,12 +1,7 @@
 import type { QuestionEditPage } from '#pages/index.ts'
-import { ensureWorkspace } from '#steps/make/workspace/ops.ts'
-import {
-    hasExplanations,
-    isMultipleChoiceSpec,
-    isNumericalSpec,
-    type AnswerSpec,
-    type QuestionSpec,
-} from '#steps/shared/specs.ts'
+import { ensureWorkspaceGuid } from '#steps/make/workspace/ops.ts'
+import { createQuestionViaRest } from '#steps/shared/api.ts'
+import { hasExplanations, isMultipleChoiceSpec, type AnswerSpec, type QuestionSpec } from '#steps/shared/specs.ts'
 import type { QuizmasterWorld } from '#steps/world'
 
 // Mirrors the default count of empty answer rows shown by the question form.
@@ -92,27 +87,7 @@ export async function submitQuestion(this: QuizmasterWorld) {
 // ── createQuestion pipeline ─────────────────────────────
 
 export const createQuestion = async (world: QuizmasterWorld, spec: QuestionSpec) => {
-    await ensureWorkspace(world)
-    await world.workspacePage.createNewQuestion()
-
-    const questionPage = world.questionEditPage
-    await questionPage.enterQuestion(spec.text)
-
-    if (isNumericalSpec(spec)) {
-        await questionPage.setNumericalChoice()
-        await questionPage.enterNumericalCorrectAnswer(spec.numericalAnswer as string)
-        if (spec.tolerance) await questionPage.enterNumericalTolerance(spec.tolerance)
-    } else {
-        if (spec.tag) await questionPage.enterTag(spec.tag)
-        await fillAnswers(questionPage, spec.answers)
-        if (spec.easy) await questionPage.setEasy()
-    }
-
-    if (spec.explanation) await questionPage.enterQuestionExplanation(spec.explanation)
-    if (spec.image) await questionPage.enterImageUrl(spec.image)
-
+    await ensureWorkspaceGuid(world)
+    await createQuestionViaRest(world, world.workspaceGuid, spec)
     world.bookmarkQuestion(spec.bookmark ?? spec.text, spec)
-
-    await questionPage.submit()
-    await world.workspacePage.waitForUrl(world.workspaceGuid)
 }

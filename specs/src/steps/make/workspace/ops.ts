@@ -10,8 +10,16 @@ export const createWorkspace = async (world: QuizmasterWorld, name: string) => {
     await world.page.goto(`/workspace/${world.workspaceGuid}`)
 }
 
-export const ensureWorkspace = async (world: QuizmasterWorld) => {
+export const ensureWorkspaceGuid = async (world: QuizmasterWorld) => {
     if (!world.workspaceGuid) {
-        await createWorkspace(world, 'Default Workspace')
+        world.workspaceGuid = await createWorkspaceViaRest(world, 'Default Workspace')
+    }
+}
+
+export const ensureWorkspace = async (world: QuizmasterWorld) => {
+    await ensureWorkspaceGuid(world)
+    const path = `/workspace/${world.workspaceGuid}`
+    if (!world.page.url().endsWith(path)) {
+        await world.page.goto(path)
     }
 }
