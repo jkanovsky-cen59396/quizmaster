@@ -1,5 +1,8 @@
 import type { Quiz } from '#model/quiz.ts'
+import { LinkButton } from '#pages/components/link-button.tsx'
+import { urls } from '#fe/urls.ts'
 
+import './quiz.scss'
 import { QuestionFeedback } from './components/question.tsx'
 import type { QuizAnswers } from './quiz-answers-state.ts'
 import { evaluate } from './quiz-score.ts'
@@ -17,8 +20,10 @@ export const QuizScorePage = ({ quiz, quizAnswers }: QuizScorePageProps) => {
     const passed = percentage >= quiz.passScore
     const result = passed ? 'passed' : 'failed'
 
+    const workspaceGuid = quiz.questions[0]?.workspaceGuid ?? null
+
     return (
-        <>
+        <div className="quiz-page">
             <h1>Test result</h1>
             <div className="resultTable" id="results">
                 <div className="row header">
@@ -48,6 +53,9 @@ export const QuizScorePage = ({ quiz, quizAnswers }: QuizScorePageProps) => {
                 const answer = quizAnswers.finalAnswers[idx]
                 return <QuestionFeedback key={question.id} question={question} answer={answer} />
             })}
-        </>
+            {workspaceGuid && (
+                <LinkButton id="my-workspace" label="My Workspace" to={urls.workspace(workspaceGuid)} />
+            )}
+        </div>
     )
 }
