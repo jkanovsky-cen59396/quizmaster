@@ -9,10 +9,26 @@
     font-weight: 800;
 }
 
+.quiz-page {
+    max-width: 780px;
+    margin: 1.4rem auto 2rem;
+    padding: 0 1.5rem;
+
+    .submit-btn {
+        margin-top: 1.25rem;
+    }
+}
+
 .quiz-button-bar {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
+}
+
+@media (max-width: 720px) {
+    .quiz-page {
+        padding: 0 1rem;
+    }
 }
