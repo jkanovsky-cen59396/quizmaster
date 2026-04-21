@@ -1,3 +1,4 @@
+import { createWorkspaceViaRest } from '#steps/shared/api.ts'
 import type { QuizmasterWorld } from '#steps/world'
 
 export const openCreateWorkspacePage = async (world: QuizmasterWorld) => {
@@ -5,15 +6,12 @@ export const openCreateWorkspacePage = async (world: QuizmasterWorld) => {
 }
 
 export const createWorkspace = async (world: QuizmasterWorld, name: string) => {
-    await openCreateWorkspacePage(world)
-    await world.workspaceCreatePage.enterWorkspaceName(name)
-    await world.workspaceCreatePage.submit()
-    world.workspaceGuid = world.workspaceCreatePage.workspaceGuid()
+    world.workspaceGuid = await createWorkspaceViaRest(world, name)
+    await world.page.goto(`/workspace/${world.workspaceGuid}`)
 }
 
 export const ensureWorkspace = async (world: QuizmasterWorld) => {
     if (!world.workspaceGuid) {
         await createWorkspace(world, 'Default Workspace')
-        await world.workspacePage.waitForUrl(world.workspaceGuid)
     }
 }
