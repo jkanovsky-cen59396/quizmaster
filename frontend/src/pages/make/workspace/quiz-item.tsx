@@ -13,7 +13,7 @@ export const QuizItem = ({ quiz, onDeleteClick }: Props) => {
         <div className="quiz-item question-item">
             <span className="question-text">{quiz.title}</span>
             <LinkButton label="Edit" to={urls.workspaceQuizEdit(workspaceId, quiz.id)} />
-            <LinkButton label="Take" to={urls.quizWelcome(quiz.id)} />
+            <LinkButton label="Take" to={urls.quizWelcome(quiz.id)} target="_blank" />
             <LinkButton label="Statistics" to={urls.workspaceQuizStats(workspaceId, quiz.id)} />
             <button type="button" className="link-button" onClick={() => onDeleteClick(quiz.id)}>
                 Delete
