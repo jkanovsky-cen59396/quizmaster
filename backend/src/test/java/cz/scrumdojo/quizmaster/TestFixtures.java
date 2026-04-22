@@ -180,6 +180,7 @@ public class TestFixtures {
             .quizId(quiz.getId())
             .correctAnswers(0)
             .incorrectAnswers(0)
+            .partiallyCorrectAnswers(0)
             .startedAt(LocalDateTime.now().minusMinutes(2))
             .finishedAt(LocalDateTime.now());
     }
@@ -189,6 +190,7 @@ public class TestFixtures {
             .quizId(quiz.getId())
             .correctAnswers(0)
             .incorrectAnswers(0)
+            .partiallyCorrectAnswers(0)
             .startedAt(LocalDateTime.now());
     }
 
@@ -197,6 +199,7 @@ public class TestFixtures {
             .quizId(quiz.getId())
             .correctAnswers(0)
             .incorrectAnswers(0)
+            .partiallyCorrectAnswers(0)
             .startedAt(LocalDateTime.now().minusMinutes(5))
             .finishedAt(LocalDateTime.now())
             .timedOutAt(LocalDateTime.now().minusMinutes(5).plusSeconds(300));
