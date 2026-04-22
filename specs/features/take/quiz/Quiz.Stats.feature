@@ -161,3 +161,25 @@ Feature: Show stats
     And I see summary stats table
       | Started | Finished | Unfinished | Timeout |
       |       1 |        1 |          0 |       0 |
+
+   Scenario Outline: Quiz stats score with mixed question types
+    Given workspace "Mixed" with questions
+      | bookmark | question                           | answers                                      |
+      | Capital  | What is the capital of Italy?       | Rome (*), Naples, Florence                   |
+      | Planets  | Which are planets in solar system?  | Mars (*), Pluto, Venus (*), Titan, Earth (*) |
+      | Boiling  | What is the boiling point of water? | 100 ±5                                       |
+    And quiz "Mixed Quiz 2" with all questions
+      | pass score | 66 |
+    When I start the quiz
+    * I answer "<capital>"
+    * I answer "<planets>"
+    * I answer "<boiling>"
+    * I evaluate the quiz
+    When I open quiz "Mixed Quiz 2" statistics
+    Then I see attempt stats table
+    |  |  | Correct Answers   | Incorrect Answers | | | Partially Correct answers |
+    |  |  | 1 (33%)         | 2 (67%)              | | |                |
+
+    Examples:
+      | capital | planets                      | boiling | points | percentage | result |
+      | Rome    | Mars, Venus           | 80     | 1,5      | 50        | failed |
