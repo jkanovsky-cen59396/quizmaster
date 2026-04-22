@@ -57,6 +57,10 @@ public class QuizStatsService {
                 ? totalQuestions - correctAnswers
                 : attempt.getIncorrectAnswers();
 
+        int partiallyCorrectAnswers = attempt.getPartiallyCorrectAnswers() != null
+                ? attempt.getPartiallyCorrectAnswers()
+                : 0;
+
         int score = totalQuestions > 0
                 ? Math.round((float) correctAnswers / totalQuestions * 100)
                 : 0;
@@ -68,6 +72,7 @@ public class QuizStatsService {
                 durationSeconds,
                 correctAnswers,
                 incorrectAnswers,
+                partiallyCorrectAnswers,
                 totalQuestions,
                 score,
                 status

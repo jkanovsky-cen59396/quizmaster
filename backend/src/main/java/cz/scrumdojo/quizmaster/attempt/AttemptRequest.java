@@ -11,6 +11,7 @@ public record AttemptRequest(
                 .quizId(quizId)
                 .startedAt(startedAt)
                 .correctAnswers(0)
+                .partiallyCorrectAnswers(0)
                 .incorrectAnswers(0)
                 .build();
     }
