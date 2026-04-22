@@ -12,6 +12,7 @@ export const ROUTES = {
     workspaceQuizNew: '/workspace/:workspaceId/quiz/new',
     workspaceQuizEdit: '/workspace/:workspaceId/quiz/:id/edit',
     workspaceQuizStats: '/workspace/:workspaceId/quiz/:id/stats',
+    workspaceQuizDryRun: '/workspace/:workspaceId/quiz/:id/dry-run',
 
     quizWelcome: '/quiz/:id',
     quizTake: '/quiz/:id/questions/:questionId?',
@@ -30,6 +31,7 @@ export const urls = {
     workspaceQuizNew: (workspaceId: string) => `/workspace/${workspaceId}/quiz/new`,
     workspaceQuizEdit: (workspaceId: string, id: number | string) => `/workspace/${workspaceId}/quiz/${id}/edit`,
     workspaceQuizStats: (workspaceId: string, id: number | string) => `/workspace/${workspaceId}/quiz/${id}/stats`,
+    workspaceQuizDryRun: (workspaceId: string, id: number | string) => `/workspace/${workspaceId}/quiz/${id}/dry-run`,
 
     quizWelcome: (id: number | string) => `/quiz/${id}`,
     quizTake: (id: number | string) => `/quiz/${id}/questions`,

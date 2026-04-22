@@ -82,6 +82,7 @@ export class WorkspacePage {
     takeQuiz = (quiz: string) => this.quizLocator(quiz).getByRole('link', { name: 'Take' }).click()
     editQuiz = (quiz: string) => this.quizLocator(quiz).getByRole('link', { name: 'Edit' }).click()
     statsQuiz = (quiz: string) => this.quizLocator(quiz).getByRole('link', { name: 'Statistics' }).click()
+    dryRunQuiz = (quiz: string) => this.quizLocator(quiz).getByRole('link', { name: 'Dry run' }).click()
 
     deleteQuiz = (quiz: string) => this.quizLocator(quiz).getByRole('button', { name: 'Delete' }).click()
     confirmDeletion = () => this.page.getByRole('dialog').getByRole('button', { name: 'Confirm' }).click()

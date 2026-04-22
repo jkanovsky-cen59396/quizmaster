@@ -24,4 +24,8 @@ export class QuizWelcomePage {
 
     startButton = () => this.page.locator('button#start')
     start = () => this.startButton().click()
+
+    private dryRunIndicatorLocator = () => this.page.getByTestId('dry-run-indicator')
+    expectDryRunIndicatorVisible = () => expect(this.dryRunIndicatorLocator()).toBeVisible()
+    expectDryRunIndicatorNotVisible = () => expect(this.dryRunIndicatorLocator()).not.toBeVisible()
 }
