@@ -38,7 +38,6 @@ export class TakeQuestionPage {
     questionExplanationLocator = () => this.page.locator('p.question-explanation')
 
     numericalInputLocator = () => this.page.locator('input[type="number"]')
-    private numericalAnswerHintLocator = () => this.page.locator('.question-fieldset')
     private numericalAnswerDigitsHintLocator = () =>
         this.page.locator('.question-fieldset p', { hasText: /decimal digits/i })
     submitAnswerButtonLocator = () => this.page.locator('#submit-answer')
