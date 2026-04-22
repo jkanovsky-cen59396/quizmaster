@@ -50,7 +50,7 @@ export const QuizStats = ({ quiz, stats }: QuizStatsProps) => (
         <StatsTable
             testId="attempt-stats-table"
             caption="Attempts"
-            columns={['Duration', 'Points', 'Correct Answers', 'Incorrect Answers', 'Score', 'Status']}
+            columns={['Duration', 'Points', 'Correct Answers', 'Incorrect Answers', 'Score', 'Status', 'Partially Correct answers']}
             rows={stats.attempts.map(attemptRow)}
         />
     </div>
