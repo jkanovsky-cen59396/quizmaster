@@ -18,7 +18,7 @@ export interface QuizNavigationState {
     readonly unskip: () => void
 }
 
-export const useQuizNavigationState = (quiz: Quiz): QuizNavigationState => {
+export const useQuizNavigationState = (quiz: Quiz, questionsBaseUrl: string): QuizNavigationState => {
     const { questionId } = useParams()
 
     const navigate = useNavigate()
@@ -32,9 +32,9 @@ export const useQuizNavigationState = (quiz: Quiz): QuizNavigationState => {
 
     const next = () => {
         if (isLastQuestion) {
-            navigate(`/quiz/${quiz.id}/questions`)
+            navigate(questionsBaseUrl)
         } else {
-            navigate(`/quiz/${quiz.id}/questions/${currentQuestionIdx + 1}`)
+            navigate(`${questionsBaseUrl}/${currentQuestionIdx + 1}`)
         }
     }
 
@@ -52,14 +52,14 @@ export const useQuizNavigationState = (quiz: Quiz): QuizNavigationState => {
 
     const canBack = currentQuestionIdx > 0
 
-    const back = () => navigate(`/quiz/${quiz.id}/questions/${currentQuestionIdx - 1}`)
+    const back = () => navigate(`${questionsBaseUrl}/${currentQuestionIdx - 1}`)
 
     return {
         currentQuestionIdx,
         isFirstQuestion,
         isLastQuestion,
         skippedQuestions,
-        goto: (questionIdx: number) => navigate(`/quiz/${quiz.id}/questions/${questionIdx}`),
+        goto: (questionIdx: number) => navigate(`${questionsBaseUrl}/${questionIdx}`),
         canNext,
         canSkip,
         canBack,

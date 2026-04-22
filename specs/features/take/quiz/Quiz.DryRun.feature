@@ -42,3 +42,13 @@ Feature: Quiz dry run
     Then I see the welcome page
     * I see a dry-run indicator
     * I can start the quiz
+
+
+  Scenario: Dry run still enforces the time limit
+    Given quiz "Quiz" with 2 questions
+      | time limit | 5s |
+    When I start a dry run of quiz "Quiz"
+    * I start the dry run
+    * I answer correctly
+    * 5 seconds pass
+    Then I see the timeout message

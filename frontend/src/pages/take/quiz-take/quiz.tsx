@@ -16,13 +16,14 @@ import { TimeLimit } from './time-limit/with-time-limit.tsx'
 
 interface QuestionProps {
     readonly quiz: Quiz
-    readonly quizRunId: number
+    readonly quizRunId: number | null
+    readonly questionsBaseUrl: string
     readonly onEvaluate: (quizAnswers: QuizAnswers, timedOut?: boolean) => void
 }
 
 export const QuestionForm = (props: QuestionProps) => {
     const { quizAnswers, answerQuestion } = useQuizAnswersState()
-    const nav = useQuizNavigationState(props.quiz)
+    const nav = useQuizNavigationState(props.quiz, props.questionsBaseUrl)
     const bookmarks = useQuizBookmarkState()
     const [selectedAnswerIdxs, setSelectedAnswerIdxs] = useState<AnswerIdxs | undefined>(undefined)
     const answerCounts = useRef({ correct: 0, incorrect: 0 })
@@ -53,6 +54,7 @@ export const QuestionForm = (props: QuestionProps) => {
     }
 
     const handleTimeOut = () => {
+        if (props.quizRunId === null) return
         patchAttempt(props.quizRunId, { timedOutAt: new Date().toISOString() })
     }
 
@@ -106,10 +108,12 @@ export const QuestionForm = (props: QuestionProps) => {
         } else {
             answerCounts.current.incorrect++
         }
-        patchAttempt(props.quizRunId, {
-            correctAnswers: answerCounts.current.correct,
-            incorrectAnswers: answerCounts.current.incorrect,
-        })
+        if (props.quizRunId !== null) {
+            patchAttempt(props.quizRunId, {
+                correctAnswers: answerCounts.current.correct,
+                incorrectAnswers: answerCounts.current.incorrect,
+            })
+        }
 
         if (props.quiz.mode === 'learn') {
             answer(questionAnswer)

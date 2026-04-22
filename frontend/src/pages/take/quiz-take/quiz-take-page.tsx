@@ -45,7 +45,12 @@ export const QuizTakePage = () => {
         return quizAnswers ? (
             <QuizScorePage quiz={quiz} quizAnswers={quizAnswers} />
         ) : (
-            <QuestionForm quiz={quiz} quizRunId={quizRunId} onEvaluate={handleEvaluate} />
+            <QuestionForm
+                quiz={quiz}
+                quizRunId={quizRunId}
+                questionsBaseUrl={urls.quizTake(quiz.id)}
+                onEvaluate={handleEvaluate}
+            />
         )
     }
 }

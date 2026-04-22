@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router'
 
 import { useApi } from '#api/hooks.ts'
 import { fetchQuiz } from '#api/quiz.ts'
-import { useWorkspaceId } from '#fe/urls.ts'
+import { urls, useWorkspaceId } from '#fe/urls.ts'
 import type { Quiz } from '#model/quiz.ts'
 
 import { DryRunIndicator } from '../dry-run-indicator.tsx'
@@ -19,7 +19,7 @@ export const QuizDryRunWelcomePage = () => {
 
     const onStart = () => {
         if (!quiz) return
-        navigate(`/workspace/${workspaceId}/quiz/${quiz.id}/dry-run/questions`)
+        navigate(urls.workspaceQuizDryRunTake(workspaceId, quiz.id))
     }
 
     return (

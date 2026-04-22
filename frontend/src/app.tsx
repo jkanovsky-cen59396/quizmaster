@@ -9,6 +9,7 @@ import { QuizStatsPage } from '#pages/make/quiz-stats/quiz-stats-page.tsx'
 import { QuizEditPage } from '#pages/make/quiz/quiz-edit-page.tsx'
 import { WorkspacePage } from '#pages/make/workspace/workspace.tsx'
 import { QuestionTakePage } from '#pages/take/question-take'
+import { QuizDryRunTakePage } from '#pages/take/quiz-take/quiz-dry-run-take-page.tsx'
 import { QuizTakePage } from '#pages/take/quiz-take/quiz-take-page.tsx'
 import { QuizDryRunWelcomePage } from '#pages/take/quiz-take/quiz-welcome/quiz-dry-run-welcome-page.tsx'
 import { QuizWelcomePage } from '#pages/take/quiz-take/quiz-welcome/quiz-welcome-page.tsx'
@@ -32,6 +33,7 @@ export const App = () => (
             <Route path={ROUTES.workspaceQuizEdit} element={<QuizEditPage />} />
             <Route path={ROUTES.workspaceQuizStats} element={<QuizStatsPage />} />
             <Route path={ROUTES.workspaceQuizDryRun} element={<QuizDryRunWelcomePage />} />
+            <Route path={ROUTES.workspaceQuizDryRunTake} element={<QuizDryRunTakePage />} />
 
             {/* Quiz taking (public) */}
             <Route path={ROUTES.quizWelcome} element={<QuizWelcomePage />} />
