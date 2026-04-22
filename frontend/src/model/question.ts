@@ -29,6 +29,12 @@ export const numericalAnswer = (input: string): QuestionAnswer | undefined => {
     return Number.isNaN(value) ? undefined : { type: 'numerical', value }
 }
 
+export const countDecimalDigits = (answer: string): number => {
+    const dotIndex = answer.indexOf('.')
+    if (dotIndex === -1) return 0
+    return Math.max(0, answer.length - dotIndex - 1)
+}
+
 // Single public scoring entry point. Always called with a real answer;
 // "no answer" is the caller's concern, not a result we manufacture here.
 export const evaluateAnswer = (question: Question, answer: QuestionAnswer): QuestionResult =>

@@ -38,6 +38,9 @@ export class TakeQuestionPage {
     questionExplanationLocator = () => this.page.locator('p.question-explanation')
 
     numericalInputLocator = () => this.page.locator('input[type="number"]')
+    private numericalAnswerHintLocator = () => this.page.locator('.question-fieldset')
+    private numericalAnswerDigitsHintLocator = () =>
+        this.page.locator('.question-fieldset p', { hasText: /decimal digits/i })
     submitAnswerButtonLocator = () => this.page.locator('#submit-answer')
     fillNumericalInput = (answer: string) => this.numericalInputLocator().fill(answer)
     fillNumericalAnswer = async (answer: string) => {
@@ -67,4 +70,9 @@ export class TakeQuestionPage {
     expectNoQuestionImage = () => expect(this.questionImageLocator_()).not.toBeVisible()
     expectNoQuestionFeedback = () => expect(this.questionFeedbackLocator()).not.toBeVisible()
     expectQuestionTextNotContaining = (text: string) => expect(this.questionLocator()).not.toContainText(text)
+    expectNumericalAnswerDigitsHint = (digits: number) =>
+        expect(this.numericalAnswerDigitsHintLocator()).toContainText(
+            new RegExp(`\\b${digits}\\s+decimal\\s+digits?\\b`, 'i'),
+        )
+    expectNoNumericalAnswerDigitsHint = () => expect(this.numericalAnswerDigitsHintLocator()).not.toBeAttached()
 }

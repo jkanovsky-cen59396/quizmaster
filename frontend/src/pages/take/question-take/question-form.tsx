@@ -1,5 +1,6 @@
 import './question-form.scss'
 import type { Question } from '#model/question.ts'
+import { countDecimalDigits } from '#model/question.ts'
 import { Form } from '#pages/components'
 
 import { AnswerCountHint } from './components/answer-count-hint.tsx'
@@ -21,6 +22,8 @@ export const QuestionForm = ({ question }: QuestionFormProps) => {
 
     const state = useQuestionTakeState(question)
 
+    const decimalDigits = state.isNumerical ? countDecimalDigits(answers[0]) : 0
+
     useQuestionKeyboardShortcuts({
         enabled: !state.isNumerical,
         onDigitPressed: idx => {
@@ -41,7 +44,10 @@ export const QuestionForm = ({ question }: QuestionFormProps) => {
                 {question.imageUrl && <QuestionImage url={question.imageUrl} />}
 
                 {state.isNumerical ? (
-                    <NumericalAnswerInput value={state.numericalAnswer} onChange={state.onNumericalAnswerChange} />
+                    <>
+                        <NumericalAnswerInput value={state.numericalAnswer} onChange={state.onNumericalAnswerChange} />
+                        {decimalDigits > 0 && <p>{decimalDigits} decimal digits will be required in the answer.</p>}
+                    </>
                 ) : (
                     <ChoiceAnswerList
                         question={question}
