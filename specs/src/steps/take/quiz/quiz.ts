@@ -63,12 +63,21 @@ Then('progress shows {int} of {int}', async function (current: number, max: numb
 })
 
 When('{int} seconds pass', async function (seconds: number) {
+    await this.questionPage.timerLocator().waitFor({ state: 'visible' })
+
     // Advance fake clock in 1-second chunks. A single runFor/fastForward with large
     // values (60s+) is too slow — Playwright processes thousands of rAF callbacks
     // synchronously, exceeding the test timeout. The await between chunks also gives
     // React time to process state updates (e.g. rendering the timeout modal).
     for (let i = 0; i < seconds; i++) {
         await this.page.clock.runFor(1000)
+    }
+    // Flush timer callbacks scheduled exactly at the boundary.
+    await this.page.clock.runFor(1)
+
+    const timer = (await this.questionPage.timerLocator().textContent())?.trim()
+    if (timer === '00:00') {
+        await this.questionPage.dialogTextLocator().waitFor({ state: 'visible' })
     }
 })
 

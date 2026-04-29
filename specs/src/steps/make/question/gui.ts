@@ -248,6 +248,23 @@ When('I ask AI:', async function (dataTable: DataTable) {
     ])
 })
 
+Given('I start creating a new question when I already have generated content', async function () {
+    await ensureWorkspace(this)
+    await this.workspacePage.createNewQuestion()
+    this.questionWip = { text: '', answers: [] }
+    // Generate first AI question and remember its content
+    await this.questionEditPage.enterAIPrompt(
+        'Generate a question about capital cities with 1 correct answer and 2 incorrect answers',
+    )
+    await Promise.all([
+        this.page.waitForResponse(response => response.url().includes('/api/ai-assistant') && response.ok(), {
+            timeout: 60_000,
+        }),
+        this.questionEditPage.clickAiAssist(),
+    ])
+    this.rememberedAiQuestion = await this.questionEditPage.questionValue()
+})
+
 When('I generated a question by AI', async function () {
     await this.questionEditPage.enterAIPrompt(
         'Generate a question about capital cities with 1 correct answer and 2 incorrect answers',
@@ -258,6 +275,26 @@ When('I generated a question by AI', async function () {
         }),
         this.questionEditPage.clickAiAssist(),
     ])
+})
+
+When('I generated a new question by AI', async function () {
+    await this.questionEditPage.enterAIPrompt(
+        'Generate a question about European history with 1 correct answer and 2 incorrect answers',
+    )
+    await Promise.all([
+        this.page.waitForResponse(response => response.url().includes('/api/ai-assistant') && response.ok(), {
+            timeout: 60_000,
+        }),
+        this.questionEditPage.clickAiAssist(),
+    ])
+})
+
+When('I click on previous version button', async function () {
+    await this.questionEditPage.clickPreviousVersion()
+})
+
+Then('I see the previous generated version', async function () {
+    await this.questionEditPage.expectQuestionValue(this.rememberedAiQuestion)
 })
 
 When('I click Generate Explanations', async function () {

@@ -7,6 +7,14 @@ interface Props {
 }
 
 export const useQuestionKeyboardShortcuts = ({ enabled, onDigitPressed, onEnterPressed }: Props): void => {
+    const onDigitPressedRef = React.useRef(onDigitPressed)
+    const onEnterPressedRef = React.useRef(onEnterPressed)
+
+    React.useEffect(() => {
+        onDigitPressedRef.current = onDigitPressed
+        onEnterPressedRef.current = onEnterPressed
+    }, [onDigitPressed, onEnterPressed])
+
     React.useEffect(() => {
         if (!enabled) return
 
@@ -15,13 +23,13 @@ export const useQuestionKeyboardShortcuts = ({ enabled, onDigitPressed, onEnterP
 
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Enter') {
-                onEnterPressed()
+                onEnterPressedRef.current()
             } else if (isDigitKey(e.code)) {
-                onDigitPressed(answerIdx(e.code))
+                onDigitPressedRef.current(answerIdx(e.code))
             }
         }
 
         window.addEventListener('keydown', onKeyDown)
         return () => window.removeEventListener('keydown', onKeyDown)
-    }, [enabled, onDigitPressed, onEnterPressed])
+    }, [enabled])
 }

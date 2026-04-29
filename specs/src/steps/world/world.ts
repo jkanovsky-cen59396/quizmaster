@@ -87,6 +87,7 @@ export class QuizmasterWorld {
     clockInstalled = false
     lastAnsweredTitle?: string
     rememberedAnswerExplanations: Record<number, string> = {}
+    rememberedAiQuestion = ''
 
     parseAnswers(answersString: string) {
         return answersString.split(',').map(answer => answer.trim())

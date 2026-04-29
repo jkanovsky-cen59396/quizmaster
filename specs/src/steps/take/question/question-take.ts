@@ -21,6 +21,8 @@ When('I answer {string}', async function (answerList: string) {
 })
 
 When(/^I press the key ([0-9](?:,[0-9])*)$/, async function (keysInput: string) {
+    await this.takeQuestionPage.waitForLoaded()
+
     const keys = keysInput
         .split(',')
         .map(key => key.trim())
@@ -38,12 +40,16 @@ When(/^I press the key ([0-9](?:,[0-9])*)$/, async function (keysInput: string) 
             throw new Error(`Invalid numeric key: ${key}. Allowed keys are 1-9.`)
         }
 
-        await this.page.keyboard.press(`Numpad${num}`)
+        await this.page.keyboard.press(`Digit${num}`)
     }
 })
 
 When('I press enter to submit', async function () {
     await this.page.click('body')
+    const submitButton = this.page.locator('input[type="submit"]')
+    if ((await submitButton.count()) > 0) {
+        await expect(submitButton).toBeEnabled()
+    }
     await this.page.keyboard.press('Enter')
 })
 

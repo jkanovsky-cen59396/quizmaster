@@ -5,16 +5,16 @@ import { TimeOutReachedModal } from './timeout-reached-modal.tsx'
 
 interface TimeLimitProps {
     readonly timeLimit: number
-    readonly onTimeOut: () => void
+    readonly onTimeOut: () => Promise<void> | void
     readonly onConfirm: () => void
 }
 
 export const TimeLimit = ({ timeLimit, onTimeOut, onConfirm }: TimeLimitProps) => {
     const [timeoutReached, setTimeoutReached] = useState(false)
 
-    const handleTimeLimit = () => {
+    const handleTimeLimit = async () => {
+        await onTimeOut()
         setTimeoutReached(true)
-        onTimeOut()
     }
 
     return (

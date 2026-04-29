@@ -53,9 +53,9 @@ export const QuestionForm = (props: QuestionProps) => {
         props.onEvaluate(quizAnswers, false)
     }
 
-    const handleTimeOut = () => {
+    const handleTimeOut = async () => {
         if (props.quizRunId === null) return
-        patchAttempt(props.quizRunId, { timedOutAt: new Date().toISOString() })
+        await patchAttempt(props.quizRunId, { timedOutAt: new Date().toISOString() })
     }
 
     const evaluateTimedOut = () => {

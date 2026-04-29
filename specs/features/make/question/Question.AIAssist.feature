@@ -157,3 +157,9 @@ Feature: Generate question using AI
    Given I start creating a new question
    When I generated a question by AI
    Then button to see previous version is shown
+ @ai @slow
+ Scenario: After I clicked on button "previous version" I see the previous generated version
+   Given I start creating a new question when I already have generated content
+   When I generated a new question by AI
+   And I click on previous version button
+   Then I see the previous generated version
